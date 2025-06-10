@@ -37,7 +37,6 @@ async function generateReport() {
         inventoryTable.getRange().format.autofitRows();
         await context.sync();
         orderQty();
-
         await context.sync();
     });
 }
@@ -60,7 +59,7 @@ async function orderQty() {
 
         const inventoryReport = context.workbook.worksheets.getItem("Inventory Report");
         const inventoryICR = inventoryReport.getRange("A:A").getUsedRange().load("values"); 
-        const inventoryQR = inventoryReport.getRange("D:D").getUsedRange().load("values"); 
+        const inventoryQR = inventoryReport.getRange("E:E").getUsedRange().load("values"); 
 
         const openPOs = context.workbook.worksheets.getItem("Open PO's");
         const openPOsICR = openPOs.getRange("C:C").getUsedRange().load("values"); 
@@ -70,7 +69,7 @@ async function orderQty() {
         function buildSumMap(itemCodes, qtys) {
             const map = new Map();
             for (let i = 1; i < itemCodes.length; i++) { 
-                const code = itemCodes[i][0];
+                const code = itemCodes[i][0]?.trim();
                 const qty = Number(qtys[i][0]);
                 if (code && !isNaN(qty)) {
                     map.set(code, (map.get(code) || 0) + qty);
@@ -95,7 +94,7 @@ async function orderQty() {
             const inventoryQty = inventoryMap.get(code) || 0;
             const openPOsQty = openPOsMap.get(code) || 0;
             const toOrder = dynamicQty - inventoryQty - openPOsQty;
-          if (toOrder> 0){
+          if (toOrder > 0){
                 result.push([code, toOrder]);
           }      
         }
@@ -106,11 +105,7 @@ async function orderQty() {
         await context.sync();
     });
 }
-async function shortDesc(){
-    for(let i = 1; code.length; i++){
-        let shortDesc = context.workbook.functions.vlookup(code[i][0], context.workbook.worksheets.getItem("Inventory Report").getRange("C:C").getUsedRange(), 2, false);
-    }
-}
+
 async function resetAll() {
         await Excel.run(async (context) => {
             const sheets = context.workbook.worksheets;
