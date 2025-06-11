@@ -35,8 +35,9 @@ async function generateReport() {
         inventoryTable.columns.getItemAt(2).getRange().numberFormat = [['\u20AC#,##0.00']];
         inventoryTable.getRange().format.autofitColumns();
         inventoryTable.getRange().format.autofitRows();
-        await context.sync();
+        
         orderQty();
+        importDesc(context);
         await context.sync();
     });
 }
@@ -101,6 +102,40 @@ async function orderQty() {
 
         const orderingSheet = context.workbook.worksheets.getItem("Ordering");
         orderingSheet.getRange(`A1:B${result.length}`).values = result;
+
+        await context.sync();
+    });
+}
+
+async function importDesc() {
+    await Excel.run(async (context) => {
+        const orderingWorksheet = context.workbook.worksheets.getItem("Ordering");
+        const orderingUsedRange = orderingWorksheet.getUsedRange().load("values");
+
+        const inventoryReportWorksheet = context.workbook.worksheets.getItem("Inventory Report");
+        const inventoryCodeRange = inventoryReportWorksheet.getRange("A:A").getUsedRange().load("values");
+        const itemSD = inventoryReportWorksheet.getRange("B:B").getUsedRange().load("values");
+
+        await context.sync();
+
+        const descMap = new Map();
+        for (let i = 1; i < inventoryCodeRange.values.length; i++) { 
+            const code = String(inventoryCodeRange.values[i][0]).trim();
+            const desc = itemSD.values[i] ? String(itemSD.values[i][0]).trim() : "";
+            if (code) {
+                descMap.set(code, desc);
+            }
+        }
+
+        const orderingValues = orderingUsedRange.values;
+        const descArray = [["Short Description"]];
+        for (let i = 1; i < orderingValues.length; i++) {
+            const code = String(orderingValues[i][0]).trim();
+            const desc = descMap.get(code) || "No description found";
+            descArray.push([desc]);
+        }
+
+        orderingWorksheet.getRange(`C1:C${descArray.length}`).values = descArray;
 
         await context.sync();
     });
