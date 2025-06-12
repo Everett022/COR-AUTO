@@ -27,7 +27,7 @@ async function generateReport() {
 
         orderingTable.getHeaderRowRange().values = [["Item Code","Quantity", "Short Description", "Order Date","Start Date"]];
         inventoryTable.getHeaderRowRange().values = [["Product", "Stock", "Price", "Reorder Level"]];
-
+     
         orderingTable.columns.getItemAt(3).getRange().numberFormat = [['\u20AC#,##0.00']];
         orderingTable.getRange().format.autofitColumns();
         orderingTable.getRange().format.autofitRows();
@@ -36,8 +36,7 @@ async function generateReport() {
         inventoryTable.getRange().format.autofitColumns();
         inventoryTable.getRange().format.autofitRows();
         
-        orderQty();
-        importDesc(context);
+        importColumnData();
         await context.sync();
     });
 }
@@ -52,19 +51,58 @@ async function tryCatch(callback) {
     }
 }
 
-async function orderQty() {
+async function importColumnData() {
     await Excel.run(async (context) => {
-        const dynamic = context.workbook.worksheets.getItem("Dynamic");
-        const dynamicICR = dynamic.getRange("D:D").getUsedRange().load("values");
-        const dynamicQR = dynamic.getRange("E:E").getUsedRange().load("values"); 
+        const inventoryReportWorksheet = context.workbook.worksheets.getItem("Inventory Report");
+        const inventoryUsedRange = inventoryReportWorksheet.getUsedRange().load("values");
+        const dynamicWorksheet = context.workbook.worksheets.getItem("Dynamic");
+        const dynamicUsedRange = dynamicWorksheet.getUsedRange().load("values");
+        const openPOsWorksheet = context.workbook.worksheets.getItem("Open PO's");
+        const openPOsUsedRange = openPOsWorksheet.getUsedRange().load("values");
 
-        const inventoryReport = context.workbook.worksheets.getItem("Inventory Report");
-        const inventoryICR = inventoryReport.getRange("A:A").getUsedRange().load("values"); 
-        const inventoryQR = inventoryReport.getRange("E:E").getUsedRange().load("values"); 
+        await context.sync();
+        //Dynamic fluid Placement
+        const dynamicHeaders = dynamicUsedRange.values[0];
+        console.log("Headers:", dynamicHeaders);
+        
+        const dynItemCodeIdx = dynamicHeaders.indexOf("Corrugate");
+        const dynItemQtyIdx = dynamicHeaders.indexOf("Number of Corrugate");
+        
+        const dynItemCodeColumn = `${colIdxToLetter(dynItemCodeIdx)}:${colIdxToLetter(dynItemCodeIdx)}`;
+        const dynItemQtyColumn = `${colIdxToLetter(dynItemQtyIdx)}:${colIdxToLetter(dynItemQtyIdx)}`;
+        
+        //Open PO's fluid Placement
+        const openPOsHeaders = openPOsUsedRange.values[0];
+        console.log("Headers:", openPOsHeaders);
+        
+        const openPOItemCodeIdx = openPOsHeaders.indexOf("Item Code");
+        const openPOItemQtyIdx = openPOsHeaders.indexOf("Outstanding Qty");
+        
+        const openPOItemCodeColumn = `${colIdxToLetter(openPOItemCodeIdx)}:${colIdxToLetter(openPOItemCodeIdx)}`;
+        const openPOItemQtyColumn = `${colIdxToLetter(openPOItemQtyIdx)}:${colIdxToLetter(openPOItemQtyIdx)}`;
+        //Inventory Report Fluid Placement
+        const inventoryHeaders = inventoryUsedRange.values[0];
+        console.log("Headers:", inventoryHeaders);
+        
+        const invItemCodeIdx = inventoryHeaders.indexOf("Item Code");
+        const invItemSDIdx = inventoryHeaders.indexOf("Item Short Desc");
+        const invItemQtyIdx = inventoryHeaders.indexOf("Inventory Qty");
+        
+        const invRepItemCodeColumn = `${colIdxToLetter(invItemCodeIdx)}:${colIdxToLetter(invItemCodeIdx)}`;
+        const invRepItemShortDescColumn = `${colIdxToLetter(invItemSDIdx)}:${colIdxToLetter(invItemSDIdx)}`;
+        const invRepItemQtyColumn = `${colIdxToLetter(invItemQtyIdx)}:${colIdxToLetter(invItemQtyIdx)}`;
+
+        //Quanity and Item Code from Dynamic, Inventory Report, and Open PO's sheets
+        const dynamic = context.workbook.worksheets.getItem("Dynamic");
+        const dynamicICR = dynamic.getRange(dynItemCodeColumn).getUsedRange().load("values");
+        const dynamicQR = dynamic.getRange(dynItemQtyColumn).getUsedRange().load("values"); 
+
+        const inventoryICR = inventoryReportWorksheet.getRange(invRepItemCodeColumn).getUsedRange().load("values"); 
+        const inventoryQR = inventoryReportWorksheet.getRange(invRepItemQtyColumn).getUsedRange().load("values"); 
 
         const openPOs = context.workbook.worksheets.getItem("Open PO's");
-        const openPOsICR = openPOs.getRange("C:C").getUsedRange().load("values"); 
-        const openPOsQR = openPOs.getRange("E:E").getUsedRange().load("values"); 
+        const openPOsICR = openPOs.getRange(openPOItemCodeColumn).getUsedRange().load("values"); 
+        const openPOsQR = openPOs.getRange(openPOItemQtyColumn).getUsedRange().load("values"); 
         await context.sync();
 
         function buildSumMap(itemCodes, qtys) {
@@ -102,44 +140,59 @@ async function orderQty() {
 
         const orderingSheet = context.workbook.worksheets.getItem("Ordering");
         orderingSheet.getRange(`A1:B${result.length}`).values = result;
-
+         
         await context.sync();
-    });
-}
-
-async function importDesc() {
-    await Excel.run(async (context) => {
+        
+        //Start of the Short Description Creation Column  
         const orderingWorksheet = context.workbook.worksheets.getItem("Ordering");
         const orderingUsedRange = orderingWorksheet.getUsedRange().load("values");
 
-        const inventoryReportWorksheet = context.workbook.worksheets.getItem("Inventory Report");
-        const inventoryCodeRange = inventoryReportWorksheet.getRange("A:A").getUsedRange().load("values");
-        const itemSD = inventoryReportWorksheet.getRange("B:B").getUsedRange().load("values");
-
         await context.sync();
-
+        const inventoryCodeRange = inventoryReportWorksheet.getRange(invRepItemCodeColumn).getUsedRange().load("values");
+        const itemSD = inventoryReportWorksheet.getRange(invRepItemShortDescColumn).getUsedRange().load("values");    
+        
+        await context.sync();
         const descMap = new Map();
         for (let i = 1; i < inventoryCodeRange.values.length; i++) { 
-            const code = String(inventoryCodeRange.values[i][0]).trim();
+            const code1 = String(inventoryCodeRange.values[i][0]).trim();
             const desc = itemSD.values[i] ? String(itemSD.values[i][0]).trim() : "";
-            if (code) {
-                descMap.set(code, desc);
+            if (code1) {
+                descMap.set(code1, desc);
             }
         }
 
         const orderingValues = orderingUsedRange.values;
         const descArray = [["Short Description"]];
         for (let i = 1; i < orderingValues.length; i++) {
-            const code = String(orderingValues[i][0]).trim();
-            const desc = descMap.get(code) || "No description found";
+            const code1 = String(orderingValues[i][0]).trim();
+            const desc = descMap.get(code1) || "No description found";
             descArray.push([desc]);
         }
 
         orderingWorksheet.getRange(`C1:C${descArray.length}`).values = descArray;
 
+        orderingWorksheet.getRange("A:E").format.autofitColumns();
+        orderingWorksheet.getRange("A:E").format.horizontalAlignment = "Center";
+        
+        const usedRange = orderingWorksheet.getUsedRange();
+        const borders = usedRange.format.borders;
+        [
+            "EdgeTop",
+            "EdgeBottom",
+            "EdgeLeft",
+            "EdgeRight",
+            "InsideVertical",
+            "InsideHorizontal"
+        ].forEach(edge => {
+            borders.getItem(edge).style = "Continuous";
+            borders.getItem(edge).weight = "Thin";
+            borders.getItem(edge).color = "#000000"; 
+        });
+
         await context.sync();
     });
 }
+
 
 async function resetAll() {
         await Excel.run(async (context) => {
@@ -150,3 +203,12 @@ async function resetAll() {
         await context.sync();
     });
 }
+
+function colIdxToLetter(idx) {
+            let letter = "";
+            while (idx >= 0) {
+                letter = String.fromCharCode((idx % 26) + 65) + letter;
+                idx = Math.floor(idx / 26) - 1;
+            }
+            return letter;
+        }
