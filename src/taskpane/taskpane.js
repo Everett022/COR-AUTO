@@ -55,8 +55,10 @@ async function importColumnData() {
     await Excel.run(async (context) => {
         const inventoryReportWorksheet = context.workbook.worksheets.getItem("Inventory Report");
         const inventoryUsedRange = inventoryReportWorksheet.getUsedRange().load("values");
+
         const dynamicWorksheet = context.workbook.worksheets.getItem("Dynamic");
-        const dynamicUsedRange = dynamicWorksheet.getUsedRange().load("values");
+        const dynamicUsedRange = dynamicWorksheet.getUsedRange().load("values");;
+        
         const openPOsWorksheet = context.workbook.worksheets.getItem("Open PO's");
         const openPOsUsedRange = openPOsWorksheet.getUsedRange().load("values");
 
@@ -67,10 +69,13 @@ async function importColumnData() {
         
         const dynItemCodeIdx = dynamicHeaders.indexOf("Corrugate");
         const dynItemQtyIdx = dynamicHeaders.indexOf("Number of Corrugate");
+        const dynStartIdx = dynamicHeaders.indexOf("Planned Start");
         
         const dynItemCodeColumn = `${colIdxToLetter(dynItemCodeIdx)}:${colIdxToLetter(dynItemCodeIdx)}`;
         const dynItemQtyColumn = `${colIdxToLetter(dynItemQtyIdx)}:${colIdxToLetter(dynItemQtyIdx)}`;
-        
+        const dynStartColumn = `${colIdxToLetter(dynStartIdx)}:${colIdxToLetter(dynStartIdx)}`;
+        console.log("Dynamic start column: ", dynStartColumn);
+
         //Open PO's fluid Placement
         const openPOsHeaders = openPOsUsedRange.values[0];
         console.log("Headers:", openPOsHeaders);
@@ -80,6 +85,7 @@ async function importColumnData() {
         
         const openPOItemCodeColumn = `${colIdxToLetter(openPOItemCodeIdx)}:${colIdxToLetter(openPOItemCodeIdx)}`;
         const openPOItemQtyColumn = `${colIdxToLetter(openPOItemQtyIdx)}:${colIdxToLetter(openPOItemQtyIdx)}`;
+       
         //Inventory Report Fluid Placement
         const inventoryHeaders = inventoryUsedRange.values[0];
         console.log("Headers:", inventoryHeaders);
@@ -148,19 +154,18 @@ async function importColumnData() {
         const orderingUsedRange = orderingWorksheet.getUsedRange().load("values");
 
         await context.sync();
-        const inventoryCodeRange = inventoryReportWorksheet.getRange(invRepItemCodeColumn).getUsedRange().load("values");
         const itemSD = inventoryReportWorksheet.getRange(invRepItemShortDescColumn).getUsedRange().load("values");    
         
         await context.sync();
         const descMap = new Map();
-        for (let i = 1; i < inventoryCodeRange.values.length; i++) { 
-            const code1 = String(inventoryCodeRange.values[i][0]).trim();
+        for (let i = 1; i < inventoryICR.values.length; i++) { 
+            const code1 = String(inventoryICR.values[i][0]).trim();
             const desc = itemSD.values[i] ? String(itemSD.values[i][0]).trim() : "";
             if (code1) {
                 descMap.set(code1, desc);
             }
         }
-
+        console.log("Description Map:", descMap);
         const orderingValues = orderingUsedRange.values;
         const descArray = [["Short Description"]];
         for (let i = 1; i < orderingValues.length; i++) {
@@ -171,8 +176,33 @@ async function importColumnData() {
 
         orderingWorksheet.getRange(`C1:C${descArray.length}`).values = descArray;
 
+        //Importing the Start Date
+        const plannedStart = dynamicWorksheet.getRange(dynStartColumn).getUsedRange().load("values"); 
+        
+        await context.sync();
+
+        const startMap = new Map();
+        for (let i = 1; i < dynamicICR.values.length; i++) { 
+            const itemCode = String(dynamicICR.values[i][0]).trim();
+            const start = plannedStart.values[i] ? String(plannedStart.values[i][0]).trim() : "";
+            if (itemCode) {
+                startMap.set(itemCode, start);
+            }
+        }
+
+        console.log("Start Map:", startMap);
+        const startArray = [["Start Date"]];
+        for (let i = 1; i < orderingValues.length; i++) {
+            const itemCode = String(orderingValues[i][0]).trim();
+            const start = startMap.get(itemCode) || "No description found";
+            startArray.push([start]);
+        }
+        console.log("Start Array:", startArray);
+        orderingWorksheet.getRange(`E1:E${startArray.length}`).values = startArray;
+        orderingWorksheet.getRange("E:E").numberFormat = [['m/d/yyyy h:mm']];
         orderingWorksheet.getRange("A:E").format.autofitColumns();
         orderingWorksheet.getRange("A:E").format.horizontalAlignment = "Center";
+        orderingWorksheet.freezePanes.freezeRows(1);
         
         const usedRange = orderingWorksheet.getUsedRange();
         const borders = usedRange.format.borders;
@@ -197,9 +227,9 @@ async function importColumnData() {
 async function resetAll() {
         await Excel.run(async (context) => {
             const sheets = context.workbook.worksheets;
+            const column =
             sheets.getItemOrNullObject("Ordering").delete();
             sheets.getItemOrNullObject("Inventory").delete();
-        
         await context.sync();
     });
 }
@@ -212,3 +242,4 @@ function colIdxToLetter(idx) {
             }
             return letter;
         }
+
