@@ -25,7 +25,7 @@ async function generateReport() {
         orderingTable.name = "OrderingTable";
         inventoryTable.name = "InventoryAtTable";
 
-        orderingTable.getHeaderRowRange().values = [["Case #","Demand","Current Inventory", "On Order", "Required Amount","Order or Make", "Planned Start Date"]];
+        orderingTable.getHeaderRowRange().values = [["Case #","Demand","Current Inventory", "On Order", "Required Amount","Buy or Make", "Planned Start Date"]];
         inventoryTable.getHeaderRowRange().values = [["Material", "Demand", "MEB", "EFW", "Release", "Planned Start Date"]];
      
         orderingTable.columns.getItemAt(3).getRange().numberFormat = [['\u20AC#,##0.00']];
@@ -40,7 +40,6 @@ async function generateReport() {
         await context.sync();
     });
 }
-
 
 async function tryCatch(callback) {
     try {
@@ -223,14 +222,14 @@ async function importColumnData() {
             }
             await context.sync();
         }
-        const orderOrMake = [["Order or Make"]]; 
+        const orderOrMake = [["Buy or Make"]]; 
         for (const code of caseOrder.slice(1)) {
                 const workCentersSet = orderOrMakeMap.get(code);
                 const workCenters = workCentersSet ? Array.from(workCentersSet).join(", ") : "";
                 orderOrMake.push([workCenters]);
         }
         const orderOrMakeOutput = orderOrMake.map(row => [row[0]]);
-        const orderOrMakeCategory = [["Order or Make"]];
+        const orderOrMakeCategory = [["Buy or Make"]];
         
         for (let i = 1; i < orderOrMakeOutput.length; i++) {
             const workCenters = orderOrMakeOutput[i][0];
@@ -241,9 +240,9 @@ async function importColumnData() {
                 workCenters.includes("40FGSI2A") ||
                 workCenters.includes("40AIFG2B" )
             ) {
-                orderOrMakeCategory.push(["Order"]); 
+                orderOrMakeCategory.push(["Buy"]); 
             } else if (Number(requiredAmounts[i][0]) >= 300){
-                orderOrMakeCategory.push(["Order"]);  
+                orderOrMakeCategory.push(["Buy"]);  
             }
             else{
                 orderOrMakeCategory.push(["Make"]);    
@@ -297,3 +296,18 @@ function colIdxToLetter(idx) {
             return letter;
         }
 
+function dateFilter() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+window.onclick = function(event) {
+    if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            } 
+        }
+    }
+}

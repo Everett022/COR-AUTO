@@ -32,6 +32,15 @@
     <main id="app-body" class="ms-welcome__main" style="display: none;">
         <button class="button-80" id="generate-report">Generate Report</button><br/><br/>
         <button class="button-80" id="temp-reset">Reset</button><br/><br/>
+        <button onclick="dateFilter()" class = "dropbtn">Date Range ▼</button>
+        <div id="myDropdown" class="dropdown-content">
+            <a href="#" onclick="dateFilter('one-week')">Next Week</a>
+            <a href="#" onclick="dateFilter('two-weeks')">Next 2 Weeks</a>
+            <a href="#" onclick="dateFilter('three-weeks')">Next 3 Weeks</a>
+            <a href="#" onclick="dateFilter('four-weeks')">Next 4 Weeks</a>
+            <a href="#" onclick="dateFilter('five-weeks')">Next 5 Weeks</a>
+            <a href="#" onclick="dateFilter('six-weeks')">Next 6 Weeks</a>
+            <a href="#" onclick="dateFilter('all')">All</a>
     </main>
     <script src="taskpane.js"></script>
 </body>
