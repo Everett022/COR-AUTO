@@ -13,19 +13,25 @@ Office.onReady((info) => {
     document.getElementById("temp-reset").onclick = () => tryCatch(resetAll);
   }
 });
+//Initalize Global Variables
+let orderingWorksheet, inventoryWorksheet, orderingTable, inventoryTable, inventoryReportWorksheet, inventoryUsedRange, dynamicWorksheet,dynamicUsedRange, openPOsWorksheet,
+    openPOsUsedRange, dynamicHeaders, dynItemCodeIdx, dynItemQtyIdx, dynStartIdx, dynWorkIdx, dynItemCodeColumn, dynItemQtyColumn, dynStartColumn, dynWorkColumn,
+    openPOsHeaders, openPOItemCodeIdx, openPOItemQtyIdx, openPOItemCodeColumn, openPOItemQtyColumn, inventoryHeaders, invItemCodeIdx, invItemQtyIdx, invRepItemCodeColumn,
+    invRepItemQtyColumn, dynamic, dynamicICR, dynamicQR, dynamicWork, inventoryICR, inventoryQR, openPOs, openPOsICR, openPOsQR, dynDateColumn, plannedStart,
+    orderingUsedRange;
 
 async function generateReport() {
     await Excel.run(async (context) => {
 
-        const orderingWorksheet = context.workbook.worksheets.add("Ordering");
-        const inventoryWorksheet = context.workbook.worksheets.add("Inventory At");
-        const orderingTable = orderingWorksheet.tables.add("A1:G1", true);
-        const inventoryTable = inventoryWorksheet.tables.add("A1:F1", true);
+        orderingWorksheet = context.workbook.worksheets.add("Ordering");
+        inventoryWorksheet = context.workbook.worksheets.add("Inventory At");
+        orderingTable = orderingWorksheet.tables.add("A1:G1", true);
+        inventoryTable = inventoryWorksheet.tables.add("A1:F1", true);
 
         orderingTable.name = "OrderingTable";
         inventoryTable.name = "InventoryAtTable";
 
-        orderingTable.getHeaderRowRange().values = [["Case #","Demand","Current Inventory", "On Order", "Required Amount","Buy or Make", "Planned Start Date"]];
+        orderingTable.getHeaderRowRange().values = [["Case #","Demand","Current Inventory", "On Order", "Required Amount","Buy or Make", "Earliest Start Date"]];
         inventoryTable.getHeaderRowRange().values = [["Material", "Demand", "MEB", "EFW", "Release", "Planned Start Date"]];
      
         orderingTable.columns.getItemAt(3).getRange().numberFormat = [['\u20AC#,##0.00']];
@@ -52,73 +58,62 @@ async function tryCatch(callback) {
 
 async function importColumnData() {
     await Excel.run(async (context) => {
-        const inventoryReportWorksheet = context.workbook.worksheets.getItem("Inventory");
-        const inventoryUsedRange = inventoryReportWorksheet.getUsedRange().load("values");
+        inventoryReportWorksheet = context.workbook.worksheets.getItem("Inventory");
+        inventoryUsedRange = inventoryReportWorksheet.getUsedRange().load("values");
 
-        const dynamicWorksheet = context.workbook.worksheets.getItem("Dynamic");
-        const dynamicUsedRange = dynamicWorksheet.getUsedRange().load("values");;
+        dynamicWorksheet = context.workbook.worksheets.getItem("Dynamic");
+        dynamicUsedRange = dynamicWorksheet.getUsedRange().load("values");;
         
-        const openPOsWorksheet = context.workbook.worksheets.getItem("Open PO's");
-        const openPOsUsedRange = openPOsWorksheet.getUsedRange().load("values");
+        openPOsWorksheet = context.workbook.worksheets.getItem("Open PO's");
+        openPOsUsedRange = openPOsWorksheet.getUsedRange().load("values");
 
         await context.sync();
 
         //Dynamic fluid Placement
-        const dynamicHeaders = dynamicUsedRange.values[0];
+        dynamicHeaders = dynamicUsedRange.values[0];
         
-        const dynItemCodeIdx = dynamicHeaders.indexOf("Corrugate");
-        const dynItemQtyIdx = dynamicHeaders.indexOf("Number of Corrugate");
-        const dynStartIdx = dynamicHeaders.indexOf("Planned Start");
-        const dynWorkIdx = dynamicHeaders.indexOf("Work Center");
+        dynItemCodeIdx = dynamicHeaders.indexOf("Corrugate");
+        dynItemQtyIdx = dynamicHeaders.indexOf("Number of Corrugate");
+        dynStartIdx = dynamicHeaders.indexOf("Planned Start");
+        dynWorkIdx = dynamicHeaders.indexOf("Work Center");
         
-        const dynItemCodeColumn = `${colIdxToLetter(dynItemCodeIdx)}:${colIdxToLetter(dynItemCodeIdx)}`;
-        const dynItemQtyColumn = `${colIdxToLetter(dynItemQtyIdx)}:${colIdxToLetter(dynItemQtyIdx)}`;
-        const dynStartColumn = `${colIdxToLetter(dynStartIdx)}:${colIdxToLetter(dynStartIdx)}`;
-        const dynWorkColumn = `${colIdxToLetter(dynWorkIdx)}:${colIdxToLetter(dynWorkIdx)}`;
+        dynItemCodeColumn = `${colIdxToLetter(dynItemCodeIdx)}:${colIdxToLetter(dynItemCodeIdx)}`;
+        dynItemQtyColumn = `${colIdxToLetter(dynItemQtyIdx)}:${colIdxToLetter(dynItemQtyIdx)}`;
+        dynStartColumn = `${colIdxToLetter(dynStartIdx)}:${colIdxToLetter(dynStartIdx)}`;
+        dynWorkColumn = `${colIdxToLetter(dynWorkIdx)}:${colIdxToLetter(dynWorkIdx)}`;
 
         //Open PO's fluid Placement
-        const openPOsHeaders = openPOsUsedRange.values[0];
-        const openPOItemCodeIdx = openPOsHeaders.indexOf("Item Code");
-        const openPOItemQtyIdx = openPOsHeaders.indexOf("Outstanding Qty");
+        openPOsHeaders = openPOsUsedRange.values[0];
+        openPOItemCodeIdx = openPOsHeaders.indexOf("Item Code");
+        openPOItemQtyIdx = openPOsHeaders.indexOf("Outstanding Qty");
         
-        const openPOItemCodeColumn = `${colIdxToLetter(openPOItemCodeIdx)}:${colIdxToLetter(openPOItemCodeIdx)}`;
-        const openPOItemQtyColumn = `${colIdxToLetter(openPOItemQtyIdx)}:${colIdxToLetter(openPOItemQtyIdx)}`;
+        openPOItemCodeColumn = `${colIdxToLetter(openPOItemCodeIdx)}:${colIdxToLetter(openPOItemCodeIdx)}`;
+        openPOItemQtyColumn = `${colIdxToLetter(openPOItemQtyIdx)}:${colIdxToLetter(openPOItemQtyIdx)}`;
        
         //Inventory Report Fluid Placement
-        const inventoryHeaders = inventoryUsedRange.values[0];
+        inventoryHeaders = inventoryUsedRange.values[0];
 
-        const invItemCodeIdx = inventoryHeaders.indexOf("Item Code");
-        const invItemQtyIdx = inventoryHeaders.indexOf("Inventory Qty");
+        invItemCodeIdx = inventoryHeaders.indexOf("Item Code");
+        invItemQtyIdx = inventoryHeaders.indexOf("Inventory Qty");
         
-        const invRepItemCodeColumn = `${colIdxToLetter(invItemCodeIdx)}:${colIdxToLetter(invItemCodeIdx)}`;
-        const invRepItemQtyColumn = `${colIdxToLetter(invItemQtyIdx)}:${colIdxToLetter(invItemQtyIdx)}`;
+        invRepItemCodeColumn = `${colIdxToLetter(invItemCodeIdx)}:${colIdxToLetter(invItemCodeIdx)}`;
+        invRepItemQtyColumn = `${colIdxToLetter(invItemQtyIdx)}:${colIdxToLetter(invItemQtyIdx)}`;
 
         //Quanity and Item Code from Dynamic, Inventory Report, and Open PO's sheets
-        const dynamic = context.workbook.worksheets.getItem("Dynamic");
-        const dynamicICR = dynamic.getRange(dynItemCodeColumn).getUsedRange().load("values");
-        const dynamicQR = dynamic.getRange(dynItemQtyColumn).getUsedRange().load("values"); 
-        const dynamicWork = dynamic.getRange(dynWorkColumn).getUsedRange().load("values");
+        dynamic = context.workbook.worksheets.getItem("Dynamic");
+        dynamicICR = dynamic.getRange(dynItemCodeColumn).getUsedRange().load("values");
+        dynamicQR = dynamic.getRange(dynItemQtyColumn).getUsedRange().load("values"); 
+        dynamicWork = dynamic.getRange(dynWorkColumn).getUsedRange().load("values");
+        dyanamicDate = dynamic.getRange(dynDateColumn).getUsedRange().load("values"); 
         await context.sync();
 
-        const inventoryICR = inventoryReportWorksheet.getRange(invRepItemCodeColumn).getUsedRange().load("values"); 
-        const inventoryQR = inventoryReportWorksheet.getRange(invRepItemQtyColumn).getUsedRange().load("values"); 
+        inventoryICR = inventoryReportWorksheet.getRange(invRepItemCodeColumn).getUsedRange().load("values"); 
+        inventoryQR = inventoryReportWorksheet.getRange(invRepItemQtyColumn).getUsedRange().load("values"); 
 
-        const openPOs = context.workbook.worksheets.getItem("Open PO's");
-        const openPOsICR = openPOs.getRange(openPOItemCodeColumn).getUsedRange().load("values"); 
-        const openPOsQR = openPOs.getRange(openPOItemQtyColumn).getUsedRange().load("values"); 
+        openPOs = context.workbook.worksheets.getItem("Open PO's");
+        openPOsICR = openPOs.getRange(openPOItemCodeColumn).getUsedRange().load("values"); 
+        openPOsQR = openPOs.getRange(openPOItemQtyColumn).getUsedRange().load("values"); 
         await context.sync();
-
-        function buildSumMap(itemCodes, qtys) {
-            const map = new Map();
-            for (let i = 1; i < itemCodes.length; i++) { 
-                const code = itemCodes[i][0];
-                const qty = Number(qtys[i][0]);
-                if (code && !isNaN(qty)) {
-                    map.set(code, (map.get(code) || 0) + qty);
-                }
-            }
-            return map;
-        }
 
         const dynamicMap = buildSumMap(dynamicICR.values, dynamicQR.values);
         const inventoryMap = buildSumMap(inventoryICR.values, inventoryQR.values);
@@ -144,7 +139,6 @@ async function importColumnData() {
         const orderingSheet = context.workbook.worksheets.getItem("Ordering");
         const caseNumbers = result.map(row => [row[0]]);
         orderingSheet.getRange(`A1:A${caseNumbers.length}`).values = caseNumbers;
-        
 
         const requiredAmounts = result.map(row => [row[1]]);
         orderingSheet.getRange(`E1:E${requiredAmounts.length}`).values = requiredAmounts;
@@ -152,9 +146,9 @@ async function importColumnData() {
         console.log("Case numbers and required amounts imported successfully.");
 
         //Importing the Planned Start Date
-        const plannedStart = dynamicWorksheet.getRange(dynStartColumn).getUsedRange().load("values"); 
+        plannedStart = dynamicWorksheet.getRange(dynStartColumn).getUsedRange().load("values"); 
         const orderingWorksheet = context.workbook.worksheets.getItem("Ordering");
-        const orderingUsedRange = orderingWorksheet.getUsedRange().load("values");
+        orderingUsedRange = orderingWorksheet.getUsedRange().load("values");
         await context.sync();
 
         const orderingValues = orderingUsedRange.values;
@@ -167,10 +161,10 @@ async function importColumnData() {
             }
         }
         
-        const startArray = [["Planned Start Date"]];
+        const startArray = [["Earliest Start Date"]];
         for (let i = 1; i < orderingValues.length; i++) {
             const itemCode = String(orderingValues[i][0]).trim();
-            const start = startMap.get(itemCode) || "No Start Date found";
+            const start = startMap.get(itemCode) || "No Start Date Established";
             startArray.push([start]);
         }
         orderingWorksheet.getRange(`G1:G${startArray.length}`).values = startArray;
@@ -209,7 +203,7 @@ async function importColumnData() {
         const onOrderOutput = onOrder.map(row => [row[0]]);
         orderingSheet.getRange(`D1:D${onOrderOutput.length}`).values = onOrderOutput;
         
-        //Order to Make Logic
+        //Buy or Make Logic
         const orderOrMakeMap = new Map();
         for (let i = 1; i < dynamicICR.values.length; i++) {
             const code = String(dynamicICR.values[i][0]).trim();
@@ -220,13 +214,14 @@ async function importColumnData() {
                 }
                 orderOrMakeMap.get(code).add(work);
             }
-            await context.sync();
         }
+        await context.sync();
+
         const orderOrMake = [["Buy or Make"]]; 
         for (const code of caseOrder.slice(1)) {
-                const workCentersSet = orderOrMakeMap.get(code);
-                const workCenters = workCentersSet ? Array.from(workCentersSet).join(", ") : "";
-                orderOrMake.push([workCenters]);
+            const workCentersSet = orderOrMakeMap.get(code);
+            const workCenters = workCentersSet ? Array.from(workCentersSet).join(", ") : "";
+            orderOrMake.push([workCenters]);
         }
         const orderOrMakeOutput = orderOrMake.map(row => [row[0]]);
         const orderOrMakeCategory = [["Buy or Make"]];
@@ -238,7 +233,7 @@ async function importColumnData() {
                 workCenters.includes("40FGAL3B") ||
                 workCenters.includes("40FGAL3C") || 
                 workCenters.includes("40FGSI2A") ||
-                workCenters.includes("40AIFG2B" )
+                workCenters.includes("40AIFG2B")
             ) {
                 orderOrMakeCategory.push(["Buy"]); 
             } else if (Number(requiredAmounts[i][0]) >= 300){
@@ -250,7 +245,7 @@ async function importColumnData() {
             await context.sync();    
         }
         orderingSheet.getRange(`F1:F${orderOrMakeCategory.length}`).values = orderOrMakeCategory;
-        
+
         // Table Formatting
         orderingWorksheet.getRange("G:G").numberFormat = [['m/d/yyyy h:mm']];
         orderingWorksheet.getRange("A:G").format.autofitColumns();
@@ -295,10 +290,125 @@ function colIdxToLetter(idx) {
             }
             return letter;
         }
+function buildSumMap(itemCodes, qtys) {
+            const map = new Map();
+            for (let i = 1; i < itemCodes.length; i++) { 
+                const code = itemCodes[i][0];
+                const qty = Number(qtys[i][0]);
+                if (code && !isNaN(qty)) {
+                    map.set(code, (map.get(code) || 0) + qty);
+                }
+            }
+            return map;
+        }
 
-function dateFilter() {
-    document.getElementById("myDropdown").classList.toggle("show");
+async function dateFilter(range) {
+    await Excel.run(async (context) => {
+        document.getElementById("myDropdown").classList.toggle("show");
+        const todayDate = new Date();
+        const todaysDate = new Date(todayDate);
+        const todaysDateOut = todaysDate.toLocaleDateString('en-US');
+
+        //1 Week Out from Current
+        const currentDate1 = new Date();
+        const nextWeekDate = currentDate1.setDate(currentDate1.getDate() + 7);
+        const oneWeekOut = new Date(nextWeekDate);
+        const aWeekOut = oneWeekOut.toLocaleDateString('en-US'); 
+        const endDate1 = parseUSDate(aWeekOut);
+
+        //2 Weeks Out from Current
+        const currentDate2 = new Date();
+        const twoWeeksDate = currentDate2.setDate(currentDate2.getDate() + 14);
+        const twoWeeksOut = new Date(twoWeeksDate);
+        const weekOut2 = twoWeeksOut.toLocaleDateString('en-US'); 
+        const endDate2 = parseUSDate(weekOut2);
+
+        //3 Weeks Out from Current
+        const currentDate3 = new Date();
+        const threeWeeksDate = currentDate3.setDate(currentDate3.getDate() + 21);
+        const threeWeeksOut = new Date(threeWeeksDate);
+        const weekOut3 = threeWeeksOut.toLocaleDateString('en-US'); 
+        const endDate3 = parseUSDate(weekOut3);
+
+        //4 Weeks Out from Current
+        const currentDate4 = new Date();
+        const fourWeeksDate = currentDate4.setDate(currentDate4.getDate() + 28);
+        const fourWeeksOut = new Date(fourWeeksDate);
+        const weekOut4 = fourWeeksOut.toLocaleDateString('en-US'); 
+        const endDate4 = parseUSDate(weekOut4);
+
+        //5 Weeks Out from Current
+        const currentDate5 = new Date();
+        const fiveWeeksDate = currentDate5.setDate(currentDate5.getDate() + 35);
+        const fiveWeeksOut = new Date(fiveWeeksDate);
+        const weekOut5 = fiveWeeksOut.toLocaleDateString('en-US'); 
+        const endDate5 = parseUSDate(weekOut5);
+
+        //6 Weeks Out from Current
+        const currentDate6 = new Date();
+        const sixWeeksDate = currentDate6.setDate(currentDate6.getDate() + 42);
+        const sixWeeksOut = new Date(sixWeeksDate);
+        const weekOut6 = sixWeeksOut.toLocaleDateString('en-US'); 
+        const endDate6 = parseUSDate(weekOut6);
+
+        //7 Weeks Out From Current
+        const currentDate7 = new Date();
+        const sevenWeeksDate = currentDate7.setDate(currentDate7.getDate() + 49);
+        const sevenWeeksOut = new Date(sevenWeeksDate);
+        const weekOut7 = sevenWeeksOut.toLocaleDateString('en-US'); 
+        const endDate7 = parseUSDate(weekOut7);
+
+        //8 Weeks Out from Current
+        const currentDate8 = new Date();
+        const eightWeeksDate = currentDate8.setDate(currentDate8.getDate() + 56);
+        const eightWeeksOut = new Date(eightWeeksDate);
+        const weekOut8 = eightWeeksOut.toLocaleDateString('en-US'); 
+        const endDate8 = parseUSDate(weekOut8);
+        
+        await context.sync();
+        switch(range){
+            case 'one-week':
+                    for (let i = 1; i < dynamicICR.values.length; i++) { 
+                    const itemCode = String(dynamicICR.values[i][0]).trim();
+                    const start = plannedStart.values[i] ? String(plannedStart.values[i][0]).trim() : "";
+                    if (itemCode) {
+                        dateMap.set(itemCode, start);
+                    }
+                }
+                for (let i = 1; i < orderingValues.length; i++) {
+                    const itemCode = String(orderingValues[i][0]).trim();
+                    const start = startMap.get(itemCode) || "No Start Date Established";
+                    startArray.push([start]);
+                }
+
+                break;
+            case 'two-weeks':
+            
+                break;
+            case 'three-weeks':
+            
+                break;
+            case 'four-weeks':
+            
+                break;
+            case 'five-weeks':
+            
+                break;
+            case 'six-weeks':
+            
+                break;
+            case 'seven-weeks':
+            
+                break;
+            case 'eight-weeks':
+            
+                break;
+        }
+      await context.sync();      
+    });    
 }
+
+
 
 window.onclick = function(event) {
     if (!event.target.matches('.dropbtn')) {
@@ -311,3 +421,8 @@ window.onclick = function(event) {
         }
     }
 }
+
+function parseUSDate(str) {
+        const [month, day, year] = str.split('/').map(Number);
+        return new Date(year, month - 1, day);
+    }
