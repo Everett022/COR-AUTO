@@ -30,19 +30,22 @@
         <h2 class="ms-font-xl">Please <a target="_blank" href="https://learn.microsoft.com/office/dev/add-ins/testing/test-debug-office-add-ins#sideload-an-office-add-in-for-testing">sideload</a> your add-in to see app body.</h2>
     </section>
     <main id="app-body" class="ms-welcome__main" style="display: none;">
-        <button class="button-80" id="generate-report">Generate Report</button><br/><br/>
+        <div class="report-row">
+            <button class="button-80" id="generate-ordering-report">Ordering Report</button><br/><br/>
+            <button class="button-80" id="generate-inventory-report">Inventory Report</button><br/><br/>
+        </div>
         <button class="button-80" id="temp-reset">Reset</button><br/><br/>
-        <button onclick="dateFilter()" class = "dropbtn">Date Range ▼</button>
-        <div id="myDropdown" class="dropdown-content">
-            <a href="#" onclick="dateFilter('one-week')">Next Week</a>
-            <a href="#" onclick="dateFilter('two-weeks')">Next 2 Weeks</a>
-            <a href="#" onclick="dateFilter('three-weeks')">Next 3 Weeks</a>
-            <a href="#" onclick="dateFilter('four-weeks')">Next 4 Weeks</a>
-            <a href="#" onclick="dateFilter('five-weeks')">Next 5 Weeks</a>
-            <a href="#" onclick="dateFilter('six-weeks')">Next 6 Weeks</a>
-            <a href="#" onclick="dateFilter('seven-weeks')">Next 7 Weeks</a>
-            <a href="#" onclick="dateFilter('eight-weeks')">Next 8 Weeks</a>
-            <a href="#" onclick="dateFilter('all')">All</a>
+        <form action="/action_page.php">
+            <div class="date-row">
+                <div class ="date-col">
+                    <label class="date-font"for="start-date">Start Date: </label>
+                    <input class="date-format" type="date" id="start-date" name="start-date">
+                </div>
+                <div class ="date-col">
+                    <label class="date-font"for="start-date">Through Date: </label>
+                    <input class="date-format" type="date" id="end-date" name="end-date">
+                </div>
+        </form>
     </main>
     <script src="taskpane.js"></script>
 </body>
