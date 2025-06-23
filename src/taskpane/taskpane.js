@@ -12,6 +12,7 @@ Office.onReady((info) => {
     document.getElementById("generate-ordering-report").onclick = () => tryCatch(generateOrderingReport);
     document.getElementById("generate-inventory-report").onclick = () => tryCatch(generateInventoryReport);
     document.getElementById("temp-reset").onclick = () => tryCatch(resetAll);
+    document.getElementById('end-date').onchange = () => tryCatch(testInitialize);
   }
 });
 
@@ -280,6 +281,7 @@ async function resetAll() {
             const sheets = context.workbook.worksheets;
             sheets.getItemOrNullObject("Ordering").delete();
             sheets.getItemOrNullObject("Inventory At").delete();
+            sheets.getItemOrNullObject("Test").delete();
         await context.sync();
     });
 }
@@ -304,11 +306,37 @@ function buildSumMap(itemCodes, qtys) {
             return map;
         }
 
-async function dateFilter(range) {
+async function testInitialize() {
     await Excel.run(async (context) => {
-        const startDateInput = document.getElementById('start-date');
-        const endDateInput = document.getElementById('end-date');
+
+        const testWorksheet = context.workbook.worksheets.add("Test");
+        const testTable = testWorksheet.tables.add("A1:G1", true);
+
+        testTable.name = "TestTable";
+
+        testTable.getHeaderRowRange().values = [["Case #","Demand","Current Inventory", "On Order", "Required Amount","Buy or Make", "Earliest Start Date"]];
+     
+        testTable.columns.getItemAt(3).getRange().numberFormat = [['\u20AC#,##0.00']];
+        testTable.getRange().format.autofitColumns();
+        testTable.getRange().format.autofitRows();
         
+        dateFilter();
+        await context.sync();
+        
+    });
+}
+
+async function dateFilter() {
+    await Excel.run(async (context) => {
+        const startDateInput = document.getElementById('start-date').value;
+        const endDateInput = document.getElementById('end-date').value;
+
+        const startDate = inputDateParse(startDateInput);
+        const endDate = inputDateParse(endDateInput);
+
+        console.log(startDate);
+        console.log(endDate);
+
         const dynamicWorksheet = context.workbook.worksheets.getItem("Dynamic");
         const dynamicUsedRange = dynamicWorksheet.getUsedRange().load("values");
         await context.sync();
@@ -328,23 +356,19 @@ async function dateFilter(range) {
         const plannedStart = dynamicWorksheet.getRange(dynStartColumn).getUsedRange().load("values");
 
         await context.sync();
-        const filteredRows = [];
-            for (let i = 1; i < dynamicICR.values.length; i++) {
-                const itemCode = String(dynamicICR.values[i][0]).trim();
-                const dateStr = plannedStart.values[i] ? String(plannedStart.values[i][0]).trim() : "";
-                const qty = Number(dynamicQR.values[i][0]);
-                if (!itemCode || !dateStr) continue;
-
-                const datePart = dateStr.split(' ')[0];
-                const rowDate = parseUSDate(datePart);
-
-                if (rowDate >= startDate && rowDate <= endDate) {
-                    filteredRows.push({ itemCode, rowDate, qty });
+        const startMap = new Map();
+        for (let i = 1; i < dynamicICR.values.length; i++) { 
+            const itemCode = String(dynamicICR.values[i][0]).trim();
+            const dateStr = plannedStart.values[i] ? String(plannedStart.values[i][0]).trim() : "";
+            if(itemCode){
+                
+                if (itemCode) {
+                    startMap.set(itemCode, dateStr);
                 }
-            }  
-
+            }        
+        }
+        console.log(startMap);
         
-      await context.sync();      
     });    
 }
 
@@ -352,3 +376,8 @@ function parseUSDate(str) {
         const [month, day, year] = str.split('/').map(Number);
         return new Date(year, month - 1, day);
     }
+
+function inputDateParse(str) {
+    const [year, month, day] = str.split('-').map(Number);
+    return new Date(year, month - 1, day);
+}

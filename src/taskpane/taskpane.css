@@ -178,7 +178,7 @@ b {
   font-weight: 700;
   letter-spacing: -.01em;
   line-height: 1.5;
-  padding: .5rem .5rem;
+  padding: .625rem .825rem;
   position: relative;
   text-align: left;
   text-decoration: none;
@@ -250,6 +250,6 @@ b {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 80%;
-  margin-bottom: .5rem;
+  width: 100%;
+  margin-bottom: 1rem;
 }
