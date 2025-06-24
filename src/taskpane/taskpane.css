@@ -80,8 +80,9 @@ b {
     font-weight: bold;
 }
 
-
 .button-80 {
+  min-width: 150px;          
+  white-space: nowrap;       
   background: #fff;
   backface-visibility: hidden;
   border-radius: .375rem;
@@ -96,7 +97,7 @@ b {
   font-weight: 700;
   letter-spacing: -.01em;
   line-height: 1;
-  padding: .5rem .5rem;
+  padding: .625rem;
   position: relative;
   text-align: center;
   text-decoration: none;
@@ -174,11 +175,11 @@ b {
   display: inline-block;
   float: none;
   font-family: Circular,Helvetica,sans-serif;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: -.01em;
   line-height: 1.5;
-  padding: .625rem .825rem;
+  padding: .5rem .625rem;
   position: relative;
   text-align: left;
   text-decoration: none;
@@ -229,6 +230,7 @@ b {
   align-items: center;
   width: 10%;
   margin-bottom: .5rem;
+  gap: .3rem;
 }
 
 .date-col label {
@@ -246,10 +248,11 @@ b {
   letter-spacing: -.01rem;
 }
 
-.report-row{
+.report-row {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;   
   align-items: center;
+  gap: .1rem;                 
   width: 100%;
   margin-bottom: 1rem;
 }

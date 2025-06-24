@@ -294,6 +294,7 @@ function colIdxToLetter(idx) {
             }
             return letter;
         }
+
 function buildSumMap(itemCodes, qtys) {
             const map = new Map();
             for (let i = 1; i < itemCodes.length; i++) { 
@@ -356,28 +357,30 @@ async function dateFilter() {
         const plannedStart = dynamicWorksheet.getRange(dynStartColumn).getUsedRange().load("values");
 
         await context.sync();
-        const startMap = new Map();
-        for (let i = 1; i < dynamicICR.values.length; i++) { 
+        
+        const filter = [];
+        for (let i = 1; i < dynamicICR.values.length; i++){
             const itemCode = String(dynamicICR.values[i][0]).trim();
             const dateStr = plannedStart.values[i] ? String(plannedStart.values[i][0]).trim() : "";
-            if(itemCode){
-                
-                if (itemCode) {
-                    startMap.set(itemCode, dateStr);
-                }
-            }        
+            const date = ExcelDateToJSDate(dateStr);
+            date.setHours(0,0,0,0);
+            const qty = Number(dynamicQR.values[i][0]);
+            if(itemCode && date >= startDate && date <= endDate){
+                filter.push({itemCode,qty,date});
+            }
         }
-        console.log(startMap);
+        console.log(filter);
+        console.log(ExcelDateToJSDate(45831.96458));
+        await context.sync();
         
     });    
-}
-
-function parseUSDate(str) {
-        const [month, day, year] = str.split('/').map(Number);
-        return new Date(year, month - 1, day);
-    }
+ }
 
 function inputDateParse(str) {
     const [year, month, day] = str.split('-').map(Number);
     return new Date(year, month - 1, day);
+}
+
+function ExcelDateToJSDate(date) {
+  return new Date((date - 25569)*86400*1000);
 }
