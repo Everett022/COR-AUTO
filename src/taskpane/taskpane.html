@@ -32,10 +32,12 @@
     <main id="app-body" class="ms-welcome__main" style="display: none;">
         <div class="report-row">
             <button class="button-80" id="generate-ordering-report">Ordering Report</button><br/><br/>
-            <span style="display: inline-block; width: 150px;"></span>
             <button class="button-80" id="generate-inventory-report">Inventory Report</button><br/><br/>
         </div>
-        <button class="button-80" id="temp-reset">Reset</button><br/><br/>
+        <div id="message-area" class="msg-format"></div>
+        <div>
+            <button class="button-80" id="temp-reset">Reset</button><br/><br/>
+        </div>
         <form action="/action_page.php">
             <div class="date-row">
                 <div class ="date-col">

@@ -13,8 +13,13 @@ Office.onReady((info) => {
     document.getElementById("generate-inventory-report").onclick = () => tryCatch(generateInventoryReport);
     document.getElementById("temp-reset").onclick = () => tryCatch(resetAll);
     document.getElementById('end-date').onchange = () => tryCatch(testInitialize);
+    document.getElementById('start-date').addEventListener('input', checkDatesAndClearMessage);
+    document.getElementById('end-date').addEventListener('input', checkDatesAndClearMessage);
   }
 });
+    
+    let filter = [];
+    let earlyDateMap = new Map(); 
 
 async function generateOrderingReport() {
     await Excel.run(async (context) => {
@@ -30,7 +35,16 @@ async function generateOrderingReport() {
         orderingTable.getRange().format.autofitColumns();
         orderingTable.getRange().format.autofitRows();
         
-        importColumnData();
+        const startDateValue = document.getElementById('start-date').value;
+        const endDateValue = document.getElementById('end-date').value;
+
+        if(!startDateValue || !endDateValue){
+            document.getElementById('message-area').textContent = "Please enter the dates";
+            return;
+        }else{
+            document.getElementById('message-area').textContent = " ";
+            importColumnData();
+        }
         await context.sync();
     });
 }
@@ -46,7 +60,7 @@ async function generateInventoryReport() {
         inventoryTable.columns.getItemAt(2).getRange().numberFormat = [['\u20AC#,##0.00']];
         inventoryTable.getRange().format.autofitColumns();
         inventoryTable.getRange().format.autofitRows();
-        
+
         await context.sync();
     });
 }
@@ -77,12 +91,10 @@ async function importColumnData() {
         const dynamicHeaders = dynamicUsedRange.values[0];
         
         const dynItemCodeIdx = dynamicHeaders.indexOf("Corrugate");
-        const dynItemQtyIdx = dynamicHeaders.indexOf("Number of Corrugate");
         const dynStartIdx = dynamicHeaders.indexOf("Planned Start");
         const dynWorkIdx = dynamicHeaders.indexOf("Work Center");
         
         const dynItemCodeColumn = `${colIdxToLetter(dynItemCodeIdx)}:${colIdxToLetter(dynItemCodeIdx)}`;
-        const dynItemQtyColumn = `${colIdxToLetter(dynItemQtyIdx)}:${colIdxToLetter(dynItemQtyIdx)}`;
         const dynStartColumn = `${colIdxToLetter(dynStartIdx)}:${colIdxToLetter(dynStartIdx)}`;
         const dynWorkColumn = `${colIdxToLetter(dynWorkIdx)}:${colIdxToLetter(dynWorkIdx)}`;
 
@@ -106,7 +118,6 @@ async function importColumnData() {
         //Quanity and Item Code from Dynamic, Inventory Report, and Open PO's sheets
         const dynamic = context.workbook.worksheets.getItem("Dynamic");
         const dynamicICR = dynamic.getRange(dynItemCodeColumn).getUsedRange().load("values");
-        const dynamicQR = dynamic.getRange(dynItemQtyColumn).getUsedRange().load("values"); 
         const dynamicWork = dynamic.getRange(dynWorkColumn).getUsedRange().load("values");
         await context.sync();
 
@@ -118,9 +129,15 @@ async function importColumnData() {
         const openPOsQR = openPOs.getRange(openPOItemQtyColumn).getUsedRange().load("values"); 
         await context.sync();
 
-        const dynamicMap = buildSumMap(dynamicICR.values, dynamicQR.values);
+        //Date Filtering
+        const filteredICR = filter.map(item => [item.itemCode]);
+        const filteredQR = filter.map(item => [item.qty]);
+
+        //Sum Map Building
+        const dynamicMap = buildSumMap(filteredICR, filteredQR);
         const inventoryMap = buildSumMap(inventoryICR.values, inventoryQR.values);
         const openPOsMap = buildSumMap(openPOsICR.values, openPOsQR.values);
+        console.log(dynamicMap);
 
         const allItemCodes = new Set([
             ...dynamicMap.keys(),
@@ -138,32 +155,21 @@ async function importColumnData() {
                 result.push([code, toOrder]);
           }      
         }
-        
+
+        console.log(result);
+
         const orderingSheet = context.workbook.worksheets.getItem("Ordering");
         const caseNumbers = result.map(row => [row[0]]);
         orderingSheet.getRange(`A1:A${caseNumbers.length}`).values = caseNumbers;
+        console.log(caseNumbers);
 
         const requiredAmounts = result.map(row => [row[1]]);
         orderingSheet.getRange(`E1:E${requiredAmounts.length}`).values = requiredAmounts;
         await context.sync();
-        console.log("Case numbers and required amounts imported successfully.");
+        console.log(requiredAmounts);
 
         //Importing the Planned Start Date
-        const plannedStart = dynamicWorksheet.getRange(dynStartColumn).getUsedRange().load("values"); 
-        const orderingWorksheet = context.workbook.worksheets.getItem("Ordering");
-        const orderingUsedRange = orderingWorksheet.getUsedRange().load("values");
-        await context.sync();
-
-        const orderingValues = orderingUsedRange.values;
-        const startMap = new Map();
-        for (let i = 1; i < dynamicICR.values.length; i++) { 
-            const itemCode = String(dynamicICR.values[i][0]).trim();
-            const start = plannedStart.values[i] ? String(plannedStart.values[i][0]).trim() : "";
-            if (itemCode) {
-                startMap.set(itemCode, start);
-            }
-        }
-    
+       
         const startArray = [["Earliest Start Date"]];
         for (let i = 1; i < orderingValues.length; i++) {
             const itemCode = String(orderingValues[i][0]).trim();
@@ -185,16 +191,17 @@ async function importColumnData() {
         
         const demandOutput = demand.map(row => [row[0]]);
         orderingSheet.getRange(`B1:B${demandOutput.length}`).values = demandOutput;
+        console.log(demandOutput);
 
         const currentInventory = [["Current Inventory"]]; 
         for (const code of caseOrder.slice(1)) {
             const currentInvQty = inventoryMap.get(code) || 0;
             currentInventory.push([currentInvQty]);
-              
         }
         
         const currentInventoryOutput = currentInventory.map(row => [row[0]]);
         orderingSheet.getRange(`C1:C${currentInventoryOutput.length}`).values = currentInventoryOutput;
+        console.log(currentInventoryOutput);
 
         const onOrder = [["On Order"]]; 
         for (const code of caseOrder.slice(1)) {
@@ -205,7 +212,8 @@ async function importColumnData() {
         
         const onOrderOutput = onOrder.map(row => [row[0]]);
         orderingSheet.getRange(`D1:D${onOrderOutput.length}`).values = onOrderOutput;
-        
+        console.log(onOrderOutput);
+
         //Buy or Make Logic
         const orderOrMakeMap = new Map();
         for (let i = 1; i < dynamicICR.values.length; i++) {
@@ -248,6 +256,7 @@ async function importColumnData() {
             await context.sync();    
         }
         orderingSheet.getRange(`F1:F${orderOrMakeCategory.length}`).values = orderOrMakeCategory;
+        console.log(orderOrMakeCategory);
 
         // Table Formatting
         orderingWorksheet.getRange("G:G").numberFormat = [['m/d/yyyy h:mm']];
@@ -282,6 +291,8 @@ async function resetAll() {
             sheets.getItemOrNullObject("Ordering").delete();
             sheets.getItemOrNullObject("Inventory At").delete();
             sheets.getItemOrNullObject("Test").delete();
+            document.getElementById('start-date').value = "";
+            document.getElementById('end-date').value = "";
         await context.sync();
     });
 }
@@ -358,7 +369,6 @@ async function dateFilter() {
 
         await context.sync();
         
-        const filter = [];
         for (let i = 1; i < dynamicICR.values.length; i++){
             const itemCode = String(dynamicICR.values[i][0]).trim();
             const dateStr = plannedStart.values[i] ? String(plannedStart.values[i][0]).trim() : "";
@@ -367,10 +377,13 @@ async function dateFilter() {
             const qty = Number(dynamicQR.values[i][0]);
             if(itemCode && date >= startDate && date <= endDate){
                 filter.push({itemCode,qty,date});
+                if (earlyDateMap.has(itemCode) && date <= earlyDateMap.get(itemCode)){
+                    earlyDateMap.set(itemCode, date);
+                }else if (!earlyDateMap.has(itemCode)){
+                    earlyDateMap.set(itemCode, date);
+                }
             }
         }
-        console.log(filter);
-        console.log(ExcelDateToJSDate(45831.96458));
         await context.sync();
         
     });    
@@ -381,6 +394,16 @@ function inputDateParse(str) {
     return new Date(year, month - 1, day);
 }
 
-function ExcelDateToJSDate(date) {
-  return new Date((date - 25569)*86400*1000);
+
+function ExcelDateToJSDate(excelDate) {
+    const utcDate = new Date((excelDate - 25569) * 86400 * 1000);
+    return new Date(utcDate.getTime() + (utcDate.getTimezoneOffset() * 60000));
+}
+
+function checkDatesAndClearMessage() {
+    const startDateValue = document.getElementById('start-date').value;
+    const endDateValue = document.getElementById('end-date').value;
+    if (startDateValue && endDateValue) {
+        document.getElementById('message-area').textContent = "";
+    }
 }

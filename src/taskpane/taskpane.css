@@ -256,3 +256,11 @@ b {
   width: 100%;
   margin-bottom: 1rem;
 }
+
+.msg-format{
+  margin-bottom: .1rem;
+  margin-top: .1rem;
+  justify-content: center;   
+  align-items: center;
+  color: #ff2e09;
+}
