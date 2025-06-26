@@ -25,11 +25,11 @@ async function generateOrderingReport() {
     await Excel.run(async (context) => {
 
         const orderingWorksheet = context.workbook.worksheets.add("Ordering");
-        const orderingTable = orderingWorksheet.tables.add("A1:G1", true);
+        const orderingTable = orderingWorksheet.tables.add("A1:H1", true);
 
         orderingTable.name = "OrderingTable";
 
-        orderingTable.getHeaderRowRange().values = [["Case #","Demand","Current Inventory", "On Order", "Required Amount","Buy or Make", "Earliest Start Date"]];
+        orderingTable.getHeaderRowRange().values = [["Case #","Demand","Current Inventory", "On Order", "Required Amount","Buy or Make", "Earliest Start Date", "Remove From Order"]];
      
         orderingTable.columns.getItemAt(3).getRange().numberFormat = [['\u20AC#,##0.00']];
         orderingTable.getRange().format.autofitColumns();
@@ -37,7 +37,7 @@ async function generateOrderingReport() {
         
         const startDateValue = document.getElementById('start-date').value;
         const endDateValue = document.getElementById('end-date').value;
-
+        
         if(!startDateValue || !endDateValue){
             document.getElementById('message-area').textContent = "Please enter the dates";
             return;
@@ -84,6 +84,7 @@ async function importColumnData() {
         
         const openPOsWorksheet = context.workbook.worksheets.getItem("Open PO's");
         const openPOsUsedRange = openPOsWorksheet.getUsedRange().load("values");
+        const orderingWorksheet = context.workbook.worksheets.getItem("Ordering");
 
         await context.sync();
 
@@ -146,37 +147,47 @@ async function importColumnData() {
         ]);
 
         const result = [["Case #", "Required Amount"]]; 
+        const sell = [["Case #","Remove From Order"]];
         for (const code of allItemCodes) {
             const dynamicQty = dynamicMap.get(code) || 0;
             const inventoryQty = inventoryMap.get(code) || 0;
             const openPOsQty = openPOsMap.get(code) || 0;
             const toOrder = dynamicQty - inventoryQty - openPOsQty;
+            const removeOrder = openPOsQty - dynamicQty;
           if (toOrder > 0){
                 result.push([code, toOrder]);
+          }
+          if (removeOrder > 0){
+                sell.push([code, removeOrder]);
           }      
         }
 
-        console.log(result);
+        console.log(sell);
 
-        const orderingSheet = context.workbook.worksheets.getItem("Ordering");
         const caseNumbers = result.map(row => [row[0]]);
-        orderingSheet.getRange(`A1:A${caseNumbers.length}`).values = caseNumbers;
+        orderingWorksheet.getRange(`A1:A${caseNumbers.length}`).values = caseNumbers;
         console.log(caseNumbers);
 
         const requiredAmounts = result.map(row => [row[1]]);
-        orderingSheet.getRange(`E1:E${requiredAmounts.length}`).values = requiredAmounts;
+        orderingWorksheet.getRange(`E1:E${requiredAmounts.length}`).values = requiredAmounts;
         await context.sync();
         console.log(requiredAmounts);
 
         //Importing the Planned Start Date
-       
+        const orderingUsedRange = orderingWorksheet.getUsedRange().load("values");
+        await context.sync();
+
+        const orderingValues = orderingUsedRange.values;
+        
         const startArray = [["Earliest Start Date"]];
         for (let i = 1; i < orderingValues.length; i++) {
             const itemCode = String(orderingValues[i][0]).trim();
-            const start = startMap.get(itemCode) || "No Start Date Established";
-            startArray.push([start]);
+            const start = String(earlyDateMap.get(itemCode)) || "No Start Date Established";
+            const dateOnly = start.split(' ').slice(0, 4).join(' ');
+            startArray.push([dateOnly]);
         }
         orderingWorksheet.getRange(`G1:G${startArray.length}`).values = startArray;
+        
 
         //Importing Demand, Current Inventory, and On Order
         const caseOrder = result.map(row => row[0]);
@@ -190,9 +201,8 @@ async function importColumnData() {
         }
         
         const demandOutput = demand.map(row => [row[0]]);
-        orderingSheet.getRange(`B1:B${demandOutput.length}`).values = demandOutput;
-        console.log(demandOutput);
-
+        orderingWorksheet.getRange(`B1:B${demandOutput.length}`).values = demandOutput;
+        
         const currentInventory = [["Current Inventory"]]; 
         for (const code of caseOrder.slice(1)) {
             const currentInvQty = inventoryMap.get(code) || 0;
@@ -200,7 +210,7 @@ async function importColumnData() {
         }
         
         const currentInventoryOutput = currentInventory.map(row => [row[0]]);
-        orderingSheet.getRange(`C1:C${currentInventoryOutput.length}`).values = currentInventoryOutput;
+        orderingWorksheet.getRange(`C1:C${currentInventoryOutput.length}`).values = currentInventoryOutput;
         console.log(currentInventoryOutput);
 
         const onOrder = [["On Order"]]; 
@@ -211,7 +221,7 @@ async function importColumnData() {
         }
         
         const onOrderOutput = onOrder.map(row => [row[0]]);
-        orderingSheet.getRange(`D1:D${onOrderOutput.length}`).values = onOrderOutput;
+        orderingWorksheet.getRange(`D1:D${onOrderOutput.length}`).values = onOrderOutput;
         console.log(onOrderOutput);
 
         //Buy or Make Logic
@@ -255,17 +265,18 @@ async function importColumnData() {
             }    
             await context.sync();    
         }
-        orderingSheet.getRange(`F1:F${orderOrMakeCategory.length}`).values = orderOrMakeCategory;
+        orderingWorksheet.getRange(`F1:F${orderOrMakeCategory.length}`).values = orderOrMakeCategory;
         console.log(orderOrMakeCategory);
 
         // Table Formatting
-        orderingWorksheet.getRange("G:G").numberFormat = [['m/d/yyyy h:mm']];
         orderingWorksheet.getRange("A:G").format.autofitColumns();
-        orderingWorksheet.getRange("A:G").format.horizontalAlignment = "Center";
-        orderingWorksheet.getRange("A:G").format.verticalAlignment = "Center";
+        orderingWorksheet.getRange("A:H").format.horizontalAlignment = "Center";
+        orderingWorksheet.getRange("A:H").format.verticalAlignment = "Center";
         orderingWorksheet.getRange("D:D").numberFormat = [['General']];
+        orderingWorksheet.getRange("A:A").format.columnWidth = 150;
+        orderingWorksheet.getUsedRange().format.rowHeight = 30;
         orderingWorksheet.freezePanes.freezeRows(1);
-
+                
         const usedRange = orderingWorksheet.getUsedRange();
         const borders = usedRange.format.borders;
         [
@@ -280,7 +291,19 @@ async function importColumnData() {
             borders.getItem(edge).weight = "Thin";
             borders.getItem(edge).color = "#000000"; 
         });
-
+        
+        const lastRow = demandOutput.length;
+        const highlight = orderingWorksheet.getRange(`E1:E${lastRow}`).format.borders;
+         [
+            "EdgeTop",
+            "EdgeBottom",
+            "EdgeLeft",
+            "EdgeRight",
+        ].forEach(side => {
+            highlight.getItem(side).style = "Continuous";
+            highlight.getItem(side).weight = "Thick";
+            highlight.getItem(side).color = "#000000"; 
+        });
         await context.sync();
     });
 }
