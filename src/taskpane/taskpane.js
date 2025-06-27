@@ -12,7 +12,6 @@ Office.onReady((info) => {
     document.getElementById("generate-ordering-report").onclick = () => tryCatch(generateOrderingReport);
     document.getElementById("generate-inventory-report").onclick = () => tryCatch(generateInventoryReport);
     document.getElementById("temp-reset").onclick = () => tryCatch(resetAll);
-    document.getElementById('end-date').onchange = () => tryCatch(testInitialize);
     document.getElementById('start-date').addEventListener('input', checkDatesAndClearMessage);
     document.getElementById('end-date').addEventListener('input', checkDatesAndClearMessage);
   }
@@ -23,6 +22,8 @@ Office.onReady((info) => {
 
 async function generateOrderingReport() {
     await Excel.run(async (context) => {
+        resetGenerateOrdering();
+        await context.sync();
 
         const orderingWorksheet = context.workbook.worksheets.add("Ordering");
         const orderingTable = orderingWorksheet.tables.add("A1:H1", true);
@@ -43,6 +44,8 @@ async function generateOrderingReport() {
             return;
         }else{
             document.getElementById('message-area').textContent = " ";
+            dateFilter();
+            await context.sync();
             importColumnData();
         }
         await context.sync();
@@ -133,12 +136,17 @@ async function importColumnData() {
         //Date Filtering
         const filteredICR = filter.map(item => [item.itemCode]);
         const filteredQR = filter.map(item => [item.qty]);
-
+        
+        console.log(filteredICR);
+        console.log(filteredQR);
+        
         //Sum Map Building
         const dynamicMap = buildSumMap(filteredICR, filteredQR);
         const inventoryMap = buildSumMap(inventoryICR.values, inventoryQR.values);
         const openPOsMap = buildSumMap(openPOsICR.values, openPOsQR.values);
         console.log(dynamicMap);
+        console.log(inventoryMap);
+        console.log(openPOsMap);
 
         const allItemCodes = new Set([
             ...dynamicMap.keys(),
@@ -153,17 +161,10 @@ async function importColumnData() {
             const inventoryQty = inventoryMap.get(code) || 0;
             const openPOsQty = openPOsMap.get(code) || 0;
             const toOrder = dynamicQty - inventoryQty - openPOsQty;
-            const removeOrder = openPOsQty - dynamicQty;
           if (toOrder > 0){
                 result.push([code, toOrder]);
-          }
-          if (removeOrder > 0){
-                sell.push([code, removeOrder]);
-          }      
+          }   
         }
-
-        console.log(sell);
-
         const caseNumbers = result.map(row => [row[0]]);
         orderingWorksheet.getRange(`A1:A${caseNumbers.length}`).values = caseNumbers;
         console.log(caseNumbers);
@@ -172,6 +173,8 @@ async function importColumnData() {
         orderingWorksheet.getRange(`E1:E${requiredAmounts.length}`).values = requiredAmounts;
         await context.sync();
         console.log(requiredAmounts);
+
+        // Remove From Order
 
         //Importing the Planned Start Date
         const orderingUsedRange = orderingWorksheet.getUsedRange().load("values");
@@ -187,7 +190,7 @@ async function importColumnData() {
             startArray.push([dateOnly]);
         }
         orderingWorksheet.getRange(`G1:G${startArray.length}`).values = startArray;
-        
+        console.log(startArray);
 
         //Importing Demand, Current Inventory, and On Order
         const caseOrder = result.map(row => row[0]);
@@ -202,7 +205,8 @@ async function importColumnData() {
         
         const demandOutput = demand.map(row => [row[0]]);
         orderingWorksheet.getRange(`B1:B${demandOutput.length}`).values = demandOutput;
-        
+        console.log(demandOutput);
+
         const currentInventory = [["Current Inventory"]]; 
         for (const code of caseOrder.slice(1)) {
             const currentInvQty = inventoryMap.get(code) || 0;
@@ -216,8 +220,7 @@ async function importColumnData() {
         const onOrder = [["On Order"]]; 
         for (const code of caseOrder.slice(1)) {
             const onOrderQty = openPOsMap.get(code) || 0;
-            onOrder.push([onOrderQty]);
-              
+            onOrder.push([onOrderQty]);           
         }
         
         const onOrderOutput = onOrder.map(row => [row[0]]);
@@ -275,9 +278,13 @@ async function importColumnData() {
         orderingWorksheet.getRange("D:D").numberFormat = [['General']];
         orderingWorksheet.getRange("A:A").format.columnWidth = 150;
         orderingWorksheet.getUsedRange().format.rowHeight = 30;
-        orderingWorksheet.freezePanes.freezeRows(1);
-                
-        const usedRange = orderingWorksheet.getUsedRange();
+        orderingWorksheet.freezePanes.freezeRows(1); 
+        
+        orderingWorksheet.getRange("E1:E1").format.fill.color = "#BE5014";
+        orderingWorksheet.getRange("E1:E1").format.font.color = "yellow";     
+
+        //All border lines
+        const usedRange = orderingWorksheet.getUsedRange();   
         const borders = usedRange.format.borders;
         [
             "EdgeTop",
@@ -291,7 +298,7 @@ async function importColumnData() {
             borders.getItem(edge).weight = "Thin";
             borders.getItem(edge).color = "#000000"; 
         });
-        
+        //Bold Outline Lines
         const lastRow = demandOutput.length;
         const highlight = orderingWorksheet.getRange(`E1:E${lastRow}`).format.borders;
          [
@@ -304,6 +311,8 @@ async function importColumnData() {
             highlight.getItem(side).weight = "Thick";
             highlight.getItem(side).color = "#000000"; 
         });
+
+
         await context.sync();
     });
 }
@@ -320,6 +329,15 @@ async function resetAll() {
     });
 }
 
+async function resetGenerateOrdering() {
+        await Excel.run(async (context) => {
+            const sheets = context.workbook.worksheets;
+            sheets.getItemOrNullObject("Ordering").delete();
+            filter = [];
+        await context.sync();
+    });
+}
+
 function colIdxToLetter(idx) {
             let letter = "";
             while (idx >= 0) {
@@ -327,7 +345,7 @@ function colIdxToLetter(idx) {
                 idx = Math.floor(idx / 26) - 1;
             }
             return letter;
-        }
+}
 
 function buildSumMap(itemCodes, qtys) {
             const map = new Map();
@@ -339,26 +357,6 @@ function buildSumMap(itemCodes, qtys) {
                 }
             }
             return map;
-        }
-
-async function testInitialize() {
-    await Excel.run(async (context) => {
-
-        const testWorksheet = context.workbook.worksheets.add("Test");
-        const testTable = testWorksheet.tables.add("A1:G1", true);
-
-        testTable.name = "TestTable";
-
-        testTable.getHeaderRowRange().values = [["Case #","Demand","Current Inventory", "On Order", "Required Amount","Buy or Make", "Earliest Start Date"]];
-     
-        testTable.columns.getItemAt(3).getRange().numberFormat = [['\u20AC#,##0.00']];
-        testTable.getRange().format.autofitColumns();
-        testTable.getRange().format.autofitRows();
-        
-        dateFilter();
-        await context.sync();
-        
-    });
 }
 
 async function dateFilter() {
@@ -408,7 +406,7 @@ async function dateFilter() {
             }
         }
         await context.sync();
-        
+        scd
     });    
  }
 
@@ -416,7 +414,6 @@ function inputDateParse(str) {
     const [year, month, day] = str.split('-').map(Number);
     return new Date(year, month - 1, day);
 }
-
 
 function ExcelDateToJSDate(excelDate) {
     const utcDate = new Date((excelDate - 25569) * 86400 * 1000);
