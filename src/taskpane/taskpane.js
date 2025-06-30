@@ -19,18 +19,20 @@ Office.onReady((info) => {
     
     let filter = [];
     let earlyDateMap = new Map(); 
+    let orderingWorksheet;
+    let orderingTable;
 
 async function generateOrderingReport() {
     await Excel.run(async (context) => {
         resetGenerateOrdering();
         await context.sync();
 
-        const orderingWorksheet = context.workbook.worksheets.add("Ordering");
-        const orderingTable = orderingWorksheet.tables.add("A1:H1", true);
+        orderingWorksheet = context.workbook.worksheets.add("Ordering");
+        orderingTable = orderingWorksheet.tables.add("A1:G1", true);
 
         orderingTable.name = "OrderingTable";
 
-        orderingTable.getHeaderRowRange().values = [["Case #","Demand","Current Inventory", "On Order", "Required Amount","Buy or Make", "Earliest Start Date", "Remove From Order"]];
+        orderingTable.getHeaderRowRange().values = [["Case #","Demand","Current Inventory", "On Order", "Required Amount","Buy or Make", "Earliest Start Date"]];
      
         orderingTable.columns.getItemAt(3).getRange().numberFormat = [['\u20AC#,##0.00']];
         orderingTable.getRange().format.autofitColumns();
@@ -95,11 +97,11 @@ async function importColumnData() {
         const dynamicHeaders = dynamicUsedRange.values[0];
         
         const dynItemCodeIdx = dynamicHeaders.indexOf("Corrugate");
-        const dynStartIdx = dynamicHeaders.indexOf("Planned Start");
+        const dynItemQtyIdx = dynamicHeaders.indexOf("Number of Corrugate");
         const dynWorkIdx = dynamicHeaders.indexOf("Work Center");
         
         const dynItemCodeColumn = `${colIdxToLetter(dynItemCodeIdx)}:${colIdxToLetter(dynItemCodeIdx)}`;
-        const dynStartColumn = `${colIdxToLetter(dynStartIdx)}:${colIdxToLetter(dynStartIdx)}`;
+        const dynItemQtyColumn = `${colIdxToLetter(dynItemQtyIdx)}:${colIdxToLetter(dynItemQtyIdx)}`;
         const dynWorkColumn = `${colIdxToLetter(dynWorkIdx)}:${colIdxToLetter(dynWorkIdx)}`;
 
         //Open PO's fluid Placement
@@ -121,6 +123,7 @@ async function importColumnData() {
 
         //Quanity and Item Code from Dynamic, Inventory Report, and Open PO's sheets
         const dynamic = context.workbook.worksheets.getItem("Dynamic");
+        const dynamicQR = dynamic.getRange(dynItemQtyColumn).getUsedRange().load("values");
         const dynamicICR = dynamic.getRange(dynItemCodeColumn).getUsedRange().load("values");
         const dynamicWork = dynamic.getRange(dynWorkColumn).getUsedRange().load("values");
         await context.sync();
@@ -137,16 +140,11 @@ async function importColumnData() {
         const filteredICR = filter.map(item => [item.itemCode]);
         const filteredQR = filter.map(item => [item.qty]);
         
-        console.log(filteredICR);
-        console.log(filteredQR);
-        
         //Sum Map Building
+        const fullDynamicMap = buildSumMap(dynamicICR.values, dynamicQR.values);
         const dynamicMap = buildSumMap(filteredICR, filteredQR);
         const inventoryMap = buildSumMap(inventoryICR.values, inventoryQR.values);
         const openPOsMap = buildSumMap(openPOsICR.values, openPOsQR.values);
-        console.log(dynamicMap);
-        console.log(inventoryMap);
-        console.log(openPOsMap);
 
         const allItemCodes = new Set([
             ...dynamicMap.keys(),
@@ -155,7 +153,6 @@ async function importColumnData() {
         ]);
 
         const result = [["Case #", "Required Amount"]]; 
-        const sell = [["Case #","Remove From Order"]];
         for (const code of allItemCodes) {
             const dynamicQty = dynamicMap.get(code) || 0;
             const inventoryQty = inventoryMap.get(code) || 0;
@@ -163,18 +160,29 @@ async function importColumnData() {
             const toOrder = dynamicQty - inventoryQty - openPOsQty;
           if (toOrder > 0){
                 result.push([code, toOrder]);
-          }   
+          } 
         }
+
         const caseNumbers = result.map(row => [row[0]]);
         orderingWorksheet.getRange(`A1:A${caseNumbers.length}`).values = caseNumbers;
-        console.log(caseNumbers);
 
         const requiredAmounts = result.map(row => [row[1]]);
         orderingWorksheet.getRange(`E1:E${requiredAmounts.length}`).values = requiredAmounts;
         await context.sync();
-        console.log(requiredAmounts);
 
         // Remove From Order
+        const sell = [["Case #","Remove From Order"]];
+        for (const code of allItemCodes){
+            const dynamicQty = Number(fullDynamicMap.get(code)) || 0;
+            const openPOsQty = Number(openPOsMap.get(code)) || 0;
+            const overBuy = openPOsQty - dynamicQty;
+            if (!isNaN(dynamicQty) && !isNaN(openPOsQty)) {
+                if (String(code).includes("COR") && openPOsQty > dynamicQty) {
+                    sell.push([code, overBuy]);
+                    console.log(sell, dynamicQty, openPOsQty);
+                }
+            }
+        }
 
         //Importing the Planned Start Date
         const orderingUsedRange = orderingWorksheet.getUsedRange().load("values");
@@ -215,7 +223,6 @@ async function importColumnData() {
         
         const currentInventoryOutput = currentInventory.map(row => [row[0]]);
         orderingWorksheet.getRange(`C1:C${currentInventoryOutput.length}`).values = currentInventoryOutput;
-        console.log(currentInventoryOutput);
 
         const onOrder = [["On Order"]]; 
         for (const code of caseOrder.slice(1)) {
@@ -225,7 +232,6 @@ async function importColumnData() {
         
         const onOrderOutput = onOrder.map(row => [row[0]]);
         orderingWorksheet.getRange(`D1:D${onOrderOutput.length}`).values = onOrderOutput;
-        console.log(onOrderOutput);
 
         //Buy or Make Logic
         const orderOrMakeMap = new Map();
@@ -259,25 +265,32 @@ async function importColumnData() {
                 workCenters.includes("40FGSI2A") ||
                 workCenters.includes("40AIFG2B")
             ) {
-                orderOrMakeCategory.push(["Buy"]); 
+                orderOrMakeCategory.push(["Must Buy"]); 
             } else if (Number(requiredAmounts[i][0]) >= 300){
-                orderOrMakeCategory.push(["Buy"]);  
+                orderOrMakeCategory.push(["Can Buy"]);  
             }
             else{
-                orderOrMakeCategory.push(["Make"]);    
+                orderOrMakeCategory.push(["Can Make"]);    
             }    
             await context.sync();    
         }
         orderingWorksheet.getRange(`F1:F${orderOrMakeCategory.length}`).values = orderOrMakeCategory;
-        console.log(orderOrMakeCategory);
 
         // Table Formatting
         orderingWorksheet.getRange("A:G").format.autofitColumns();
         orderingWorksheet.getRange("A:H").format.horizontalAlignment = "Center";
         orderingWorksheet.getRange("A:H").format.verticalAlignment = "Center";
         orderingWorksheet.getRange("D:D").numberFormat = [['General']];
+
         orderingWorksheet.getRange("A:A").format.columnWidth = 150;
+        orderingWorksheet.getRange("B:B").format.columnWidth = 90;
+        orderingWorksheet.getRange("C:C").format.columnWidth = 120;
+        orderingWorksheet.getRange("D:D").format.columnWidth = 90;
+        orderingWorksheet.getRange("E:E").format.columnWidth = 130;
+        orderingWorksheet.getRange("F:F").format.columnWidth = 100;
+        orderingWorksheet.getRange("B:B").format.columnWidth = 130;
         orderingWorksheet.getUsedRange().format.rowHeight = 30;
+
         orderingWorksheet.freezePanes.freezeRows(1); 
         
         orderingWorksheet.getRange("E1:E1").format.fill.color = "#BE5014";
@@ -285,6 +298,8 @@ async function importColumnData() {
 
         //All border lines
         const usedRange = orderingWorksheet.getUsedRange();   
+        console.log(usedRange);
+
         const borders = usedRange.format.borders;
         [
             "EdgeTop",
@@ -309,7 +324,7 @@ async function importColumnData() {
         ].forEach(side => {
             highlight.getItem(side).style = "Continuous";
             highlight.getItem(side).weight = "Thick";
-            highlight.getItem(side).color = "#000000"; 
+            highlight.getItem(side).color = "#BE5014"; 
         });
 
 
@@ -367,9 +382,6 @@ async function dateFilter() {
         const startDate = inputDateParse(startDateInput);
         const endDate = inputDateParse(endDateInput);
 
-        console.log(startDate);
-        console.log(endDate);
-
         const dynamicWorksheet = context.workbook.worksheets.getItem("Dynamic");
         const dynamicUsedRange = dynamicWorksheet.getUsedRange().load("values");
         await context.sync();
@@ -378,22 +390,27 @@ async function dateFilter() {
         const dynItemCodeIdx = dynamicHeaders.indexOf("Corrugate");
         const dynStartIdx = dynamicHeaders.indexOf("Planned Start");
         const dynItemQtyIdx = dynamicHeaders.indexOf("Number of Corrugate");
+        const dynJobIdx = dynamicHeaders.indexOf("Order Number");
 
         const dynStartColumn = `${colIdxToLetter(dynStartIdx)}:${colIdxToLetter(dynStartIdx)}`;
         const dynItemQtyColumn = `${colIdxToLetter(dynItemQtyIdx)}:${colIdxToLetter(dynItemQtyIdx)}`;
         const dynItemCodeColumn = `${colIdxToLetter(dynItemCodeIdx)}:${colIdxToLetter(dynItemCodeIdx)}`;
-        
+        const dynJobColumn =`${colIdxToLetter(dynJobIdx)}:${colIdxToLetter(dynJobIdx)}`;
+
         const dynamic = context.workbook.worksheets.getItem("Dynamic");
         const dynamicICR = dynamic.getRange(dynItemCodeColumn).getUsedRange().load("values");
         const dynamicQR = dynamic.getRange(dynItemQtyColumn).getUsedRange().load("values"); 
         const plannedStart = dynamicWorksheet.getRange(dynStartColumn).getUsedRange().load("values");
+        const jobNumber = dynamicWorksheet.getRange(dynJobColumn).getUsedRange().load("values");
 
         await context.sync();
         
+        const seenJobs = new Set();
         for (let i = 1; i < dynamicICR.values.length; i++){
             const itemCode = String(dynamicICR.values[i][0]).trim();
             const dateStr = plannedStart.values[i] ? String(plannedStart.values[i][0]).trim() : "";
             const date = ExcelDateToJSDate(dateStr);
+            const job = String(jobNumber.values[i][0]).trim();
             date.setHours(0,0,0,0);
             const qty = Number(dynamicQR.values[i][0]);
             if(itemCode && date >= startDate && date <= endDate){
@@ -405,10 +422,10 @@ async function dateFilter() {
                 }
             }
         }
+        filter.sort((a,b) => a.date - b.date);
         await context.sync();
-        scd
     });    
- }
+}
 
 function inputDateParse(str) {
     const [year, month, day] = str.split('-').map(Number);
