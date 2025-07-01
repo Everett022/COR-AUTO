@@ -14,13 +14,21 @@ Office.onReady((info) => {
     document.getElementById("temp-reset").onclick = () => tryCatch(resetAll);
     document.getElementById('start-date').addEventListener('input', checkDatesAndClearMessage);
     document.getElementById('end-date').addEventListener('input', checkDatesAndClearMessage);
+    orderingWorksheet.onSelectionChanged.add(onSelectionChanged);
   }
 });
-    
+
+// Global Variable inits     
     let filter = [];
     let earlyDateMap = new Map(); 
     let orderingWorksheet;
     let orderingTable;
+    let seenJobs = new Set();
+    let allData = [];
+
+let lastClickTime = 0;
+
+
 
 async function generateOrderingReport() {
     await Excel.run(async (context) => {
@@ -179,7 +187,6 @@ async function importColumnData() {
             if (!isNaN(dynamicQty) && !isNaN(openPOsQty)) {
                 if (String(code).includes("COR") && openPOsQty > dynamicQty) {
                     sell.push([code, overBuy]);
-                    console.log(sell, dynamicQty, openPOsQty);
                 }
             }
         }
@@ -198,7 +205,6 @@ async function importColumnData() {
             startArray.push([dateOnly]);
         }
         orderingWorksheet.getRange(`G1:G${startArray.length}`).values = startArray;
-        console.log(startArray);
 
         //Importing Demand, Current Inventory, and On Order
         const caseOrder = result.map(row => row[0]);
@@ -213,7 +219,6 @@ async function importColumnData() {
         
         const demandOutput = demand.map(row => [row[0]]);
         orderingWorksheet.getRange(`B1:B${demandOutput.length}`).values = demandOutput;
-        console.log(demandOutput);
 
         const currentInventory = [["Current Inventory"]]; 
         for (const code of caseOrder.slice(1)) {
@@ -298,8 +303,6 @@ async function importColumnData() {
 
         //All border lines
         const usedRange = orderingWorksheet.getUsedRange();   
-        console.log(usedRange);
-
         const borders = usedRange.format.borders;
         [
             "EdgeTop",
@@ -349,6 +352,8 @@ async function resetGenerateOrdering() {
             const sheets = context.workbook.worksheets;
             sheets.getItemOrNullObject("Ordering").delete();
             filter = [];
+            seenJobs.clear();
+            earlyDateMap.clear();
         await context.sync();
     });
 }
@@ -404,8 +409,7 @@ async function dateFilter() {
         const jobNumber = dynamicWorksheet.getRange(dynJobColumn).getUsedRange().load("values");
 
         await context.sync();
-        
-        const seenJobs = new Set();
+   
         for (let i = 1; i < dynamicICR.values.length; i++){
             const itemCode = String(dynamicICR.values[i][0]).trim();
             const dateStr = plannedStart.values[i] ? String(plannedStart.values[i][0]).trim() : "";
@@ -413,8 +417,9 @@ async function dateFilter() {
             const job = String(jobNumber.values[i][0]).trim();
             date.setHours(0,0,0,0);
             const qty = Number(dynamicQR.values[i][0]);
-            if(itemCode && date >= startDate && date <= endDate){
+            if(itemCode && date >= startDate && date <= endDate && !seenJobs.has(job)){
                 filter.push({itemCode,qty,date});
+                seenJobs.add(job);
                 if (earlyDateMap.has(itemCode) && date <= earlyDateMap.get(itemCode)){
                     earlyDateMap.set(itemCode, date);
                 }else if (!earlyDateMap.has(itemCode)){
@@ -424,6 +429,18 @@ async function dateFilter() {
         }
         filter.sort((a,b) => a.date - b.date);
         await context.sync();
+
+        for (let i = 1; i < dynamicICR.values.length; i++){
+            const itemCode = String(dynamicICR.values[i][0]).trim();
+            const dateStr = plannedStart.values[i] ? String(plannedStart.values[i][0]).trim() : "";
+            const date = ExcelDateToJSDate(dateStr);
+            date.setHours(0,0,0,0);
+            const job = String(jobNumber.values[i][0]).trim();
+            const qty = Number(dynamicQR.values[i][0]);
+            if (itemCode){
+                allData.push({itemCode, qty, job, date});
+            }
+        }
     });    
 }
 

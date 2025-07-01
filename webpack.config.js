@@ -20,6 +20,7 @@ module.exports = async (env, options) => {
       polyfill: ["core-js/stable", "regenerator-runtime/runtime"],
       taskpane: ["./src/taskpane/taskpane.js", "./src/taskpane/taskpane.html"],
       commands: "./src/commands/commands.js",
+      popup: ".src/display/display.js"
     },
     output: {
       clean: true,
@@ -80,6 +81,11 @@ module.exports = async (env, options) => {
         template: "./src/commands/commands.html",
         chunks: ["polyfill", "commands"],
       }),
+      new HtmlWebpackPlugin({
+      filename: "display.html",
+      template: "./src/display/display.html",
+      chunks: ["polyfill", "popup"]
+    })
     ],
     devServer: {
       headers: {
