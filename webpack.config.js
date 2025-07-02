@@ -19,8 +19,8 @@ module.exports = async (env, options) => {
     entry: {
       polyfill: ["core-js/stable", "regenerator-runtime/runtime"],
       taskpane: ["./src/taskpane/taskpane.js", "./src/taskpane/taskpane.html"],
-      commands: "./src/commands/commands.js",
-      popup: ".src/display/display.js"
+      commands: ["./src/commands/commands.js"],
+      display: ["./src/display/display.js"],
     },
     output: {
       clean: true,
@@ -84,7 +84,7 @@ module.exports = async (env, options) => {
       new HtmlWebpackPlugin({
       filename: "display.html",
       template: "./src/display/display.html",
-      chunks: ["polyfill", "popup"]
+      chunks: ["polyfill", "display"]
     })
     ],
     devServer: {

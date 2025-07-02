@@ -1,10 +1,3 @@
-/*
- * Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
- * See LICENSE in the project root for license information.
- */
-
-/* global console, document, Excel, Office */
-
 Office.onReady((info) => {
   if (info.host === Office.HostType.Excel) {
     document.getElementById("sideload-msg").style.display = "none";
@@ -14,7 +7,6 @@ Office.onReady((info) => {
     document.getElementById("temp-reset").onclick = () => tryCatch(resetAll);
     document.getElementById('start-date').addEventListener('input', checkDatesAndClearMessage);
     document.getElementById('end-date').addEventListener('input', checkDatesAndClearMessage);
-    orderingWorksheet.onSelectionChanged.add(onSelectionChanged);
   }
 });
 
@@ -25,10 +17,7 @@ Office.onReady((info) => {
     let orderingTable;
     let seenJobs = new Set();
     let allData = [];
-
-let lastClickTime = 0;
-
-
+    let matchingData = [];
 
 async function generateOrderingReport() {
     await Excel.run(async (context) => {
@@ -48,7 +37,8 @@ async function generateOrderingReport() {
         
         const startDateValue = document.getElementById('start-date').value;
         const endDateValue = document.getElementById('end-date').value;
-        
+        orderingWorksheet.onSelectionChanged.add(displayData);
+
         if(!startDateValue || !endDateValue){
             document.getElementById('message-area').textContent = "Please enter the dates";
             return;
@@ -460,4 +450,31 @@ function checkDatesAndClearMessage() {
     if (startDateValue && endDateValue) {
         document.getElementById('message-area').textContent = "";
     }
+}
+
+async function displayData (event){
+    console.log("displayData event fired");
+    await Excel.run(async (context) => {
+        const sheet = context.workbook.worksheets.getItem("Ordering");
+        const range = sheet.getRange(event.address);
+        range.load(["columnIndex", "values", "address"]);
+        await context.sync(); 
+        const match = range.values[0];
+        
+        const allDataICR = allData.map(item => [item.itemCode]);
+        const allDatajob = allData.map(item => [item.job]);
+        const allDataQR = allData.map(item => [item.qty]);
+        const allDatadate = allData.map(item => [item.date]);
+
+        for (let i = 0; i < allDataICR.length; i++){
+            const code = allDataICR[i][0];
+            const job = allDatajob[i][0];
+            const qty = allDataQR[i][0];
+            const date = allDatadate[i][0];
+
+            if (match == code){
+                matchingData.push({code, job, qty, date});
+            }
+        }
+  });
 }
