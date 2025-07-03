@@ -1,3 +1,5 @@
+import { handleCellChange } from '../display/display.js';
+
 Office.onReady((info) => {
   if (info.host === Office.HostType.Excel) {
     document.getElementById("sideload-msg").style.display = "none";
@@ -17,7 +19,7 @@ Office.onReady((info) => {
     let orderingTable;
     let seenJobs = new Set();
     let allData = [];
-    let matchingData = [];
+    export let matchingData = [];
 
 async function generateOrderingReport() {
     await Excel.run(async (context) => {
@@ -38,6 +40,7 @@ async function generateOrderingReport() {
         const startDateValue = document.getElementById('start-date').value;
         const endDateValue = document.getElementById('end-date').value;
         orderingWorksheet.onSelectionChanged.add(displayData);
+        orderingWorksheet.onSelectionChanged.add(onCellChange); 
 
         if(!startDateValue || !endDateValue){
             document.getElementById('message-area').textContent = "Please enter the dates";
@@ -459,22 +462,46 @@ async function displayData (event){
         const range = sheet.getRange(event.address);
         range.load(["columnIndex", "values", "address"]);
         await context.sync(); 
-        const match = range.values[0];
+        console.log("Index Number", range.columnIndex);
         
-        const allDataICR = allData.map(item => [item.itemCode]);
-        const allDatajob = allData.map(item => [item.job]);
-        const allDataQR = allData.map(item => [item.qty]);
-        const allDatadate = allData.map(item => [item.date]);
+        if (range.columnIndex == 0){
+            const match = range.values[0];
+        
+            const allDataICR = allData.map(item => [item.itemCode]);
+            const allDatajob = allData.map(item => [item.job]);
+            const allDataQR = allData.map(item => [item.qty]);
+            const allDatadate = allData.map(item => [item.date]);
 
-        for (let i = 0; i < allDataICR.length; i++){
-            const code = allDataICR[i][0];
-            const job = allDatajob[i][0];
-            const qty = allDataQR[i][0];
-            const date = allDatadate[i][0];
+            for (let i = 0; i < allDataICR.length; i++){
+                const code = allDataICR[i][0];
+                const job = allDatajob[i][0];
+                const qty = allDataQR[i][0];
+                const date = allDatadate[i][0];
 
-            if (match == code){
-                matchingData.push({code, job, qty, date});
+                if (match == code){
+                    matchingData.push({code, job, qty, date});
+                }
             }
         }
+        else{
+            console.log("Not in range");
+        }
+        
   });
+}
+
+async function onCellChange(event) {
+    await Excel.run(async (context) => {
+        const sheet = context.workbook.worksheets.getItem("Ordering");
+        const range = sheet.getRange(event.address);
+        range.load(["columnIndex", "values", "address"]);
+        await context.sync(); 
+        console.log("Index Number", range.columnIndex);
+        
+        if (range.columnIndex == 0){
+            matchingData = [];
+            handleCellChange(matchingData);
+            await context.sync();
+        } 
+    });
 }

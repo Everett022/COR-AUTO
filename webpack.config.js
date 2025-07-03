@@ -85,7 +85,7 @@ module.exports = async (env, options) => {
       filename: "display.html",
       template: "./src/display/display.html",
       chunks: ["polyfill", "display"]
-    })
+    }),
     ],
     devServer: {
       headers: {
