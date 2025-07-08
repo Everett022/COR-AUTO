@@ -39,8 +39,6 @@ async function generateOrderingReport() {
         
         const startDateValue = document.getElementById('start-date').value;
         const endDateValue = document.getElementById('end-date').value;
-        orderingWorksheet.onSelectionChanged.add(displayData);
-        orderingWorksheet.onSelectionChanged.add(onCellChange); 
 
         if(!startDateValue || !endDateValue){
             document.getElementById('message-area').textContent = "Please enter the dates";
@@ -51,6 +49,8 @@ async function generateOrderingReport() {
             await context.sync();
             importColumnData();
         }
+        
+        orderingWorksheet.onSelectionChanged.add(displayData);
         await context.sync();
     });
 }
@@ -183,7 +183,8 @@ async function importColumnData() {
                 }
             }
         }
-
+        console.log("Sell these", sell);
+        
         //Importing the Planned Start Date
         const orderingUsedRange = orderingWorksheet.getUsedRange().load("values");
         await context.sync();
@@ -456,17 +457,17 @@ function checkDatesAndClearMessage() {
 }
 
 async function displayData (event){
-    console.log("displayData event fired");
     await Excel.run(async (context) => {
         const sheet = context.workbook.worksheets.getItem("Ordering");
         const range = sheet.getRange(event.address);
         range.load(["columnIndex", "values", "address"]);
         await context.sync(); 
         console.log("Index Number", range.columnIndex);
-        
+
         if (range.columnIndex == 0){
+            matchingData.length = 0; 
             const match = range.values[0];
-        
+
             const allDataICR = allData.map(item => [item.itemCode]);
             const allDatajob = allData.map(item => [item.job]);
             const allDataQR = allData.map(item => [item.qty]);
@@ -482,6 +483,12 @@ async function displayData (event){
                     matchingData.push({code, job, qty, date});
                 }
             }
+            console.log("intial finding of Matching Data", matchingData);
+            handleCellChange([...matchingData]);
+
+            localStorage.setItem("matchingData", JSON.stringify(matchingData));
+            const myLocalData = JSON.parse(localStorage.getItem("matchingData"));
+            console.log("Local Storage Data", myLocalData);
         }
         else{
             console.log("Not in range");
@@ -490,18 +497,4 @@ async function displayData (event){
   });
 }
 
-async function onCellChange(event) {
-    await Excel.run(async (context) => {
-        const sheet = context.workbook.worksheets.getItem("Ordering");
-        const range = sheet.getRange(event.address);
-        range.load(["columnIndex", "values", "address"]);
-        await context.sync(); 
-        console.log("Index Number", range.columnIndex);
-        
-        if (range.columnIndex == 0){
-            matchingData = [];
-            handleCellChange(matchingData);
-            await context.sync();
-        } 
-    });
-}
+
