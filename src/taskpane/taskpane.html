@@ -35,7 +35,15 @@
             <button class="button-80" id="generate-inventory-report">Inventory Report</button><br/><br/>
         </div>
         <div id="message-area" class="msg-format"></div>
-        <div>
+        <div class = "filter-row">
+            <label for="order-filtering"></label>
+            <select class="filtering-dropdown" name="order-filtering" id="order-filtering">
+                <option class="button-80" value="Intial">Order Filtering ⮟</option>
+                <option class="button-80" value="over-300">Over 300</option>
+                <option class="button-80" value="Must-buy">Must Buy</option>
+                <option class="button-80" value="Can-buy">Can Buy</option>
+                <option class="button-80" value="Can-make">Can Make</option>
+            </select>
             <button class="button-80" id="temp-reset">Reset</button><br/><br/>
         </div>
         <form action="/action_page.php">

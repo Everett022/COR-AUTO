@@ -9,6 +9,7 @@ Office.onReady((info) => {
     document.getElementById("temp-reset").onclick = () => tryCatch(resetAll);
     document.getElementById('start-date').addEventListener('input', checkDatesAndClearMessage);
     document.getElementById('end-date').addEventListener('input', checkDatesAndClearMessage);
+    document.getElementById('order-filtering').addEventListener('change', filteringDropdown);
   }
 });
 
@@ -18,6 +19,7 @@ Office.onReady((info) => {
     let orderingWorksheet;
     let orderingTable;
     let seenJobs = new Set();
+    let outputJobs = new Set();
     let allData = [];
     export let matchingData = [];
 
@@ -463,6 +465,7 @@ async function displayData (event){
         range.load(["columnIndex", "values", "address"]);
         await context.sync(); 
         console.log("Index Number", range.columnIndex);
+        outputJobs.clear();
 
         if (range.columnIndex == 0){
             matchingData.length = 0; 
@@ -477,10 +480,11 @@ async function displayData (event){
                 const code = allDataICR[i][0];
                 const job = allDatajob[i][0];
                 const qty = allDataQR[i][0];
-                const date = allDatadate[i][0];
+                const date = allDatadate[i][0]; 
 
-                if (match == code){
+                if (match == code && !outputJobs.has(job)){
                     matchingData.push({code, job, qty, date});
+                    outputJobs.add(job);
                 }
             }
             console.log("intial finding of Matching Data", matchingData);
@@ -497,4 +501,31 @@ async function displayData (event){
   });
 }
 
+async function filteringDropdown() {
+    await Excel.run(async (context) => {
+        const orderingWorksheet = context.workbook.worksheets.getItem("Ordering");
+        const orderingTable = orderingWorksheet.tables.getItem("OrderingTable");
+        const amountFilter = orderingTable.columns.getItem("Required Amount").filter;
 
+        switch(document.getElementById('order-filtering').value) {
+            case "Intial":
+                break;
+            case "over-300":
+                amountFilter.applyValuesFilter("GreaterThan", 300);
+                break;
+            case "Must-buy":
+                // Handle AnotherOption case
+                break;
+            case "Can-buy":
+                // Handle AnotherOption case
+                break;
+            case "Can-make":
+
+                break;
+                default:
+                // Handle default case
+                break;
+        }
+        await context.sync();
+    });
+}
