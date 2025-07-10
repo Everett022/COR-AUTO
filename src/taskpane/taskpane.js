@@ -9,7 +9,8 @@ Office.onReady((info) => {
     document.getElementById("temp-reset").onclick = () => tryCatch(resetAll);
     document.getElementById('start-date').addEventListener('input', checkDatesAndClearMessage);
     document.getElementById('end-date').addEventListener('input', checkDatesAndClearMessage);
-    document.getElementById('order-filtering').addEventListener('change', filteringDropdown);
+    document.getElementById("order-filtering").addEventListener('change', filteringDropdown);
+    document.getElementById("settings").onclick = () => tryCatch(generateInventoryReport);
   }
 });
 
@@ -506,24 +507,36 @@ async function filteringDropdown() {
         const orderingWorksheet = context.workbook.worksheets.getItem("Ordering");
         const orderingTable = orderingWorksheet.tables.getItem("OrderingTable");
         const amountFilter = orderingTable.columns.getItem("Required Amount").filter;
+        const buyOrMakeFilter = orderingTable.columns.getItem("Buy or Make").filter;
 
         switch(document.getElementById('order-filtering').value) {
             case "Intial":
+                console.log("no changes made");
+                amountFilter.clear();
+                buyOrMakeFilter.clear();
                 break;
             case "over-300":
-                amountFilter.applyValuesFilter("GreaterThan", 300);
+                amountFilter.clear();
+                buyOrMakeFilter.clear();
+                amountFilter.applyCustomFilter(">=300");
                 break;
             case "Must-buy":
-                // Handle AnotherOption case
+                amountFilter.clear();
+                buyOrMakeFilter.clear();
+                buyOrMakeFilter.applyValuesFilter(["Must Buy"]);
                 break;
             case "Can-buy":
-                // Handle AnotherOption case
+                amountFilter.clear();
+                buyOrMakeFilter.clear();
+                buyOrMakeFilter.applyValuesFilter(["Can Buy"]);
                 break;
             case "Can-make":
-
+                amountFilter.clear();
+                buyOrMakeFilter.clear();
+                buyOrMakeFilter.applyValuesFilter(["Can Make"]);
                 break;
-                default:
-                // Handle default case
+            default:
+                console.log("No valid filter selected");
                 break;
         }
         await context.sync();

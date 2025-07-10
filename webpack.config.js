@@ -21,6 +21,7 @@ module.exports = async (env, options) => {
       taskpane: ["./src/taskpane/taskpane.js", "./src/taskpane/taskpane.html"],
       commands: ["./src/commands/commands.js"],
       display: ["./src/display/display.js"],
+      settings:["./src/settings/settings.js"],
     },
     output: {
       clean: true,
@@ -85,6 +86,11 @@ module.exports = async (env, options) => {
       filename: "display.html",
       template: "./src/display/display.html",
       chunks: ["polyfill", "display"],
+      }),
+      new HtmlWebpackPlugin({
+      filename: "settings.html",
+      template: "./src/settings/settings.html",
+      chunks: ["polyfill", "settings"],
     }),
     ],
     devServer: {

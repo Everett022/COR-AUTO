@@ -9,7 +9,7 @@ export async function handleCellChange(matchingData) {
         console.log("Matching data: ", matchingData);
         Office.context.ui.displayDialogAsync(
             'https://localhost:3000/display.html',
-            {height: 45, width: 55},
+            {height: 65, width: 55},
         );
         await context.sync();
     });
