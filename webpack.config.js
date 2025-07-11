@@ -88,10 +88,15 @@ module.exports = async (env, options) => {
       chunks: ["polyfill", "display"],
       }),
       new HtmlWebpackPlugin({
-      filename: "settings.html",
-      template: "./src/settings/settings.html",
+      filename: "orderingSet.html",
+      template: "./src/settings/orderingSet.html",
       chunks: ["polyfill", "settings"],
-    }),
+      }),
+      new HtmlWebpackPlugin({
+        filename: "inventorySet.html",
+        template: "./src/settings/inventorySet.html",
+        chunks: ["polyfill", "settings"],
+      }),
     ],
     devServer: {
       headers: {

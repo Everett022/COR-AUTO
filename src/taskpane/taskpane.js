@@ -1,4 +1,5 @@
 import { handleCellChange } from '../display/display.js';
+import { openSettings } from '../settings/settings.js';
 
 Office.onReady((info) => {
   if (info.host === Office.HostType.Excel) {
@@ -10,7 +11,7 @@ Office.onReady((info) => {
     document.getElementById('start-date').addEventListener('input', checkDatesAndClearMessage);
     document.getElementById('end-date').addEventListener('input', checkDatesAndClearMessage);
     document.getElementById("order-filtering").addEventListener('change', filteringDropdown);
-    document.getElementById("settings").onclick = () => tryCatch(generateInventoryReport);
+    document.getElementById("settings-button").onclick = () => tryCatch(openSettings);
   }
 });
 
@@ -60,16 +61,29 @@ async function generateOrderingReport() {
 
 async function generateInventoryReport() {
     await Excel.run(async (context) => {
+        resetGenerateInventory();
         const inventoryWorksheet = context.workbook.worksheets.add("Inventory At");
-        const inventoryTable = inventoryWorksheet.tables.add("A1:F1", true);
+        const inventoryTable = inventoryWorksheet.tables.add("A1:J1", true);
         
         inventoryTable.name = "InventoryAtTable";
-        inventoryTable.getHeaderRowRange().values = [["Material", "Demand", "MEB", "EFW", "Release", "Planned Start Date"]];
+        inventoryTable.getHeaderRowRange().values = [["Case #", "Demand", "Qty MEB", "Qty EFW", "Total MEB + EFW", "On Order", "Start Date", "Release Date", "Qty Needed (MEB)", "Notes"]];
 
         inventoryTable.columns.getItemAt(2).getRange().numberFormat = [['\u20AC#,##0.00']];
         inventoryTable.getRange().format.autofitColumns();
         inventoryTable.getRange().format.autofitRows();
 
+        const startDateValue = document.getElementById('start-date').value;
+        const endDateValue = document.getElementById('end-date').value;
+
+        if(!startDateValue || !endDateValue){
+            document.getElementById('message-area').textContent = "Please enter the dates";
+            return;
+        }else{
+            document.getElementById('message-area').textContent = " ";
+            
+            await context.sync();
+            
+        }
         await context.sync();
     });
 }
@@ -110,6 +124,7 @@ async function importColumnData() {
 
         //Open PO's fluid Placement
         const openPOsHeaders = openPOsUsedRange.values[0];
+
         const openPOItemCodeIdx = openPOsHeaders.indexOf("Item Code");
         const openPOItemQtyIdx = openPOsHeaders.indexOf("Outstanding Qty");
         
@@ -331,7 +346,70 @@ async function importColumnData() {
         await context.sync();
     });
 }
+
+async function importOtherColumnData() {
+    await Excel.run(async (context) => {
+        const inventoryReportWorksheet = context.workbook.worksheets.getItem("Inventory");
+        const inventoryUsedRange = inventoryReportWorksheet.getUsedRange().load("values");
+
+        const dynamicWorksheet = context.workbook.worksheets.getItem("Dynamic");
+        const dynamicUsedRange = dynamicWorksheet.getUsedRange().load("values");
         
+        const openPOsWorksheet = context.workbook.worksheets.getItem("Open PO's");
+        const openPOsUsedRange = openPOsWorksheet.getUsedRange().load("values");
+
+        const inventoryWorksheet = context.workbook.worksheets.getItem("Inventory At");
+
+        await context.sync();
+
+        //Dynamic fluid Placement
+        const dynamicHeaders = dynamicUsedRange.values[0];
+        
+        const dynItemCodeIdx = dynamicHeaders.indexOf("Corrugate");
+        const dynItemQtyIdx = dynamicHeaders.indexOf("Number of Corrugate");
+        
+        const dynItemCodeColumn = `${colIdxToLetter(dynItemCodeIdx)}:${colIdxToLetter(dynItemCodeIdx)}`;
+        const dynItemQtyColumn = `${colIdxToLetter(dynItemQtyIdx)}:${colIdxToLetter(dynItemQtyIdx)}`;
+
+        //Open PO's fluid Placement
+        const openPOsHeaders = openPOsUsedRange.values[0];
+
+        const openPOItemCodeIdx = openPOsHeaders.indexOf("Item Code");
+        const openPOItemQtyIdx = openPOsHeaders.indexOf("Outstanding Qty");
+        
+        const openPOItemCodeColumn = `${colIdxToLetter(openPOItemCodeIdx)}:${colIdxToLetter(openPOItemCodeIdx)}`;
+        const openPOItemQtyColumn = `${colIdxToLetter(openPOItemQtyIdx)}:${colIdxToLetter(openPOItemQtyIdx)}`;
+       
+        //Inventory Report Fluid Placement
+        const inventoryHeaders = inventoryUsedRange.values[0];
+
+        const invItemCodeIdx = inventoryHeaders.indexOf("Item Code");
+        const invItemQtyIdx = inventoryHeaders.indexOf("Inventory Qty");
+        const invLocationIdx = inventoryHeaders.indexOf("Location");
+        
+        const invRepItemCodeColumn = `${colIdxToLetter(invItemCodeIdx)}:${colIdxToLetter(invItemCodeIdx)}`;
+        const invRepItemQtyColumn = `${colIdxToLetter(invItemQtyIdx)}:${colIdxToLetter(invItemQtyIdx)}`;
+        const invRepLocationColumn = `${colIdxToLetter(invLocationIdx)}:${colIdxToLetter(invLocationIdx)}`;
+
+
+        //Quanity and Item Code from Dynamic, Inventory Report, and Open PO's sheets
+        const dynamic = context.workbook.worksheets.getItem("Dynamic");
+        const dynamicQR = dynamic.getRange(dynItemQtyColumn).getUsedRange().load("values");
+        const dynamicICR = dynamic.getRange(dynItemCodeColumn).getUsedRange().load("values");
+        const dynamicWork = dynamic.getRange(dynWorkColumn).getUsedRange().load("values");
+        await context.sync();
+
+        const inventoryICR = inventoryReportWorksheet.getRange(invRepItemCodeColumn).getUsedRange().load("values"); 
+        const inventoryQR = inventoryReportWorksheet.getRange(invRepItemQtyColumn).getUsedRange().load("values"); 
+
+        const openPOs = context.workbook.worksheets.getItem("Open PO's");
+        const openPOsICR = openPOs.getRange(openPOItemCodeColumn).getUsedRange().load("values"); 
+        const openPOsQR = openPOs.getRange(openPOItemQtyColumn).getUsedRange().load("values"); 
+        await context.sync();
+
+    });
+}
+
 async function resetAll() {
         await Excel.run(async (context) => {
             const sheets = context.workbook.worksheets;
@@ -351,6 +429,14 @@ async function resetGenerateOrdering() {
             filter = [];
             seenJobs.clear();
             earlyDateMap.clear();
+        await context.sync();
+    });
+}
+
+async function resetGenerateInventory() {
+        await Excel.run(async (context) => {
+            const sheets = context.workbook.worksheets;
+            sheets.getItemOrNullObject("Inventory At").delete();
         await context.sync();
     });
 }
@@ -441,6 +527,11 @@ async function dateFilter() {
     });    
 }
 
+async function otherDateFilter() {
+    await Excel.run(async (context) => {
+    
+    });    
+} 
 function inputDateParse(str) {
     const [year, month, day] = str.split('-').map(Number);
     return new Date(year, month - 1, day);
@@ -542,3 +633,4 @@ async function filteringDropdown() {
         await context.sync();
     });
 }
+
