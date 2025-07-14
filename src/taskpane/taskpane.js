@@ -62,6 +62,8 @@ async function generateOrderingReport() {
 async function generateInventoryReport() {
     await Excel.run(async (context) => {
         resetGenerateInventory();
+        await context.sync();
+
         const inventoryWorksheet = context.workbook.worksheets.add("Inventory At");
         const inventoryTable = inventoryWorksheet.tables.add("A1:J1", true);
         
@@ -529,7 +531,34 @@ async function dateFilter() {
 
 async function otherDateFilter() {
     await Excel.run(async (context) => {
-    
+        const startDateInput = document.getElementById('start-date').value;
+        const endDateInput = document.getElementById('end-date').value;
+
+        const startDate = inputDateParse(startDateInput);
+        const endDate = inputDateParse(endDateInput);
+
+        const dynamicWorksheet = context.workbook.worksheets.getItem("Dynamic");
+        const dynamicUsedRange = dynamicWorksheet.getUsedRange().load("values");
+        await context.sync();
+        const dynamicHeaders = dynamicUsedRange.values[0];
+
+        const dynItemCodeIdx = dynamicHeaders.indexOf("Corrugate");
+        const dynStartIdx = dynamicHeaders.indexOf("Planned Start");
+        const dynItemQtyIdx = dynamicHeaders.indexOf("Number of Corrugate");
+        const dynJobIdx = dynamicHeaders.indexOf("Order Number");
+
+        const dynStartColumn = `${colIdxToLetter(dynStartIdx)}:${colIdxToLetter(dynStartIdx)}`;
+        const dynItemQtyColumn = `${colIdxToLetter(dynItemQtyIdx)}:${colIdxToLetter(dynItemQtyIdx)}`;
+        const dynItemCodeColumn = `${colIdxToLetter(dynItemCodeIdx)}:${colIdxToLetter(dynItemCodeIdx)}`;
+        const dynJobColumn =`${colIdxToLetter(dynJobIdx)}:${colIdxToLetter(dynJobIdx)}`;
+
+        const dynamic = context.workbook.worksheets.getItem("Dynamic");
+        const dynamicICR = dynamic.getRange(dynItemCodeColumn).getUsedRange().load("values");
+        const dynamicQR = dynamic.getRange(dynItemQtyColumn).getUsedRange().load("values"); 
+        const plannedStart = dynamicWorksheet.getRange(dynStartColumn).getUsedRange().load("values");
+        const jobNumber = dynamicWorksheet.getRange(dynJobColumn).getUsedRange().load("values");
+
+        await context.sync();
     });    
 } 
 function inputDateParse(str) {
