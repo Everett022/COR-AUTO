@@ -17,11 +17,12 @@ Office.onReady((info) => {
 
 // Global Variable inits     
     let filter = [];
+    let invFilter = [];
     let earlyDateMap = new Map(); 
     let orderingWorksheet;
     let orderingTable;
-    let seenJobs = new Set();
     let outputJobs = new Set();
+
     let allData = [];
     export let matchingData = [];
 
@@ -82,7 +83,7 @@ async function generateInventoryReport() {
             return;
         }else{
             document.getElementById('message-area').textContent = " ";
-            
+            otherDateFilter();
             await context.sync();
             
         }
@@ -429,7 +430,6 @@ async function resetGenerateOrdering() {
             const sheets = context.workbook.worksheets;
             sheets.getItemOrNullObject("Ordering").delete();
             filter = [];
-            seenJobs.clear();
             earlyDateMap.clear();
         await context.sync();
     });
@@ -495,23 +495,32 @@ async function dateFilter() {
 
         await context.sync();
    
-        for (let i = 1; i < dynamicICR.values.length; i++){
+        const jobLatestMap = new Map();
+
+        for (let i = 1; i < dynamicICR.values.length; i++) {
             const itemCode = String(dynamicICR.values[i][0]).trim();
             const dateStr = plannedStart.values[i] ? String(plannedStart.values[i][0]).trim() : "";
             const date = ExcelDateToJSDate(dateStr);
-            const job = String(jobNumber.values[i][0]).trim();
             date.setHours(0,0,0,0);
+            const job = String(jobNumber.values[i][0]).trim();
             const qty = Number(dynamicQR.values[i][0]);
-            if(itemCode && date >= startDate && date <= endDate && !seenJobs.has(job)){
-                filter.push({itemCode,qty,date});
-                seenJobs.add(job);
-                if (earlyDateMap.has(itemCode) && date <= earlyDateMap.get(itemCode)){
-                    earlyDateMap.set(itemCode, date);
-                }else if (!earlyDateMap.has(itemCode)){
-                    earlyDateMap.set(itemCode, date);
+
+            if (itemCode && date >= startDate && date <= endDate) {
+                if (!jobLatestMap.has(job) || date > jobLatestMap.get(job).date) {
+                    jobLatestMap.set(job, {itemCode, qty, date, job});
                 }
             }
         }
+        filter = Array.from(jobLatestMap.values());
+
+        earlyDateMap.clear();
+        for (const entry of filter) {
+            const { itemCode, date } = entry;
+            if (!earlyDateMap.has(itemCode) || date < earlyDateMap.get(itemCode)) {
+                earlyDateMap.set(itemCode, date);
+            }
+        }
+
         filter.sort((a,b) => a.date - b.date);
         await context.sync();
 
@@ -558,6 +567,33 @@ async function otherDateFilter() {
         const plannedStart = dynamicWorksheet.getRange(dynStartColumn).getUsedRange().load("values");
         const jobNumber = dynamicWorksheet.getRange(dynJobColumn).getUsedRange().load("values");
 
+        const jobLatestMap = new Map();
+
+        for (let i = 1; i < dynamicICR.values.length; i++) {
+            const itemCode = String(dynamicICR.values[i][0]).trim();
+            const dateStr = plannedStart.values[i] ? String(plannedStart.values[i][0]).trim() : "";
+            const date = ExcelDateToJSDate(dateStr);
+            date.setHours(0,0,0,0);
+            const job = String(jobNumber.values[i][0]).trim();
+            const qty = Number(dynamicQR.values[i][0]);
+
+            if (itemCode && date >= startDate && date <= endDate) {
+                if (!jobLatestMap.has(job) || date > jobLatestMap.get(job).date) {
+                    jobLatestMap.set(job, {itemCode, qty, date, job});
+                }
+            }
+        }
+        invFilter = Array.from(jobLatestMap.values());
+
+        earlyDateMap.clear();
+        for (const entry of invFilter) {
+            const { itemCode, date } = entry;
+            if (!earlyDateMap.has(itemCode) || date < earlyDateMap.get(itemCode)) {
+                earlyDateMap.set(itemCode, date);
+            }
+        }
+
+        invFilter.sort((a,b) => a.date - b.date);
         await context.sync();
     });    
 } 
@@ -602,18 +638,27 @@ async function displayData (event){
                 const job = allDatajob[i][0];
                 const qty = allDataQR[i][0];
                 const date = allDatadate[i][0]; 
+                const fd = formatDateToMMDDYYYY(date);
+                console.log("Formatted Date", fd);
 
-                if (match == code && !outputJobs.has(job)){
-                    matchingData.push({code, job, qty, date});
+                if (match == code) {
+                    if (!outputJobs.has(job)) {
+                    matchingData.push({ code, job, qty, date });
                     outputJobs.add(job);
+                    }else {
+                        const duplicateDate = earlyDateMap.get(code);
+                        const idx = matchingData.findIndex(entry => entry.job === job && entry.code === code);
+                        if (idx !== -1) {
+                            matchingData[idx].date = duplicateDate;
+                        }
+                    }
                 }
             }
             console.log("intial finding of Matching Data", matchingData);
             handleCellChange([...matchingData]);
+            matchingData.sort((a,b) => a.date - b.date);
 
             localStorage.setItem("matchingData", JSON.stringify(matchingData));
-            const myLocalData = JSON.parse(localStorage.getItem("matchingData"));
-            console.log("Local Storage Data", myLocalData);
         }
         else{
             console.log("Not in range");
@@ -663,3 +708,6 @@ async function filteringDropdown() {
     });
 }
 
+function formatDateToMMDDYYYY(dateString) {
+    return new Date(dateString);
+}
