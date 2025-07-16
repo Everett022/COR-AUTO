@@ -85,7 +85,7 @@ async function generateInventoryReport() {
             document.getElementById('message-area').textContent = " ";
             otherDateFilter();
             await context.sync();
-            
+            importOtherColumnData();
         }
         await context.sync();
     });
@@ -180,9 +180,9 @@ async function importColumnData() {
             const inventoryQty = inventoryMap.get(code) || 0;
             const openPOsQty = openPOsMap.get(code) || 0;
             const toOrder = dynamicQty - inventoryQty - openPOsQty;
-          if (toOrder > 0){
-                result.push([code, toOrder]);
-          } 
+            if (toOrder > 0){
+                    result.push([code, toOrder]);
+            } 
         }
 
         const caseNumbers = result.map(row => [row[0]]);
@@ -399,17 +399,50 @@ async function importOtherColumnData() {
         const dynamic = context.workbook.worksheets.getItem("Dynamic");
         const dynamicQR = dynamic.getRange(dynItemQtyColumn).getUsedRange().load("values");
         const dynamicICR = dynamic.getRange(dynItemCodeColumn).getUsedRange().load("values");
-        const dynamicWork = dynamic.getRange(dynWorkColumn).getUsedRange().load("values");
         await context.sync();
 
         const inventoryICR = inventoryReportWorksheet.getRange(invRepItemCodeColumn).getUsedRange().load("values"); 
         const inventoryQR = inventoryReportWorksheet.getRange(invRepItemQtyColumn).getUsedRange().load("values"); 
+        const inventoryLOC = inventoryReportWorksheet.getRange(invRepLocationColumn).getUsedRange().load("values");
 
         const openPOs = context.workbook.worksheets.getItem("Open PO's");
         const openPOsICR = openPOs.getRange(openPOItemCodeColumn).getUsedRange().load("values"); 
         const openPOsQR = openPOs.getRange(openPOItemQtyColumn).getUsedRange().load("values"); 
         await context.sync();
 
+        //Date Filtering
+        const invFilterICR = invFilter.map(item => [item.itemCode]);
+        const invFilterQR = invFilter.map(item => [item.qty]);
+
+        //Sum Map Building
+        const initialEntry = buildSumMap(invFilterICR, invFilterQR);
+        const locationMap = buildSumMap(inventoryICR.values, inventoryLOC.values);
+
+        const result = [["Case #","Demand"]];
+        for (const code of initialEntry.keys()) {
+            const demandQty = initialEntry.get(code) || 0;
+            if (demandQty > 0) {
+                result.push([code, demandQty]);
+            }
+        }
+
+        const caseNumbers = result.map(row => [row[0]]);
+        inventoryWorksheet.getRange(`A1:A${caseNumbers.length}`).values = caseNumbers;
+
+        const requiredAmounts = result.map(row => [row[1]]);
+        inventoryWorksheet.getRange(`B1:B${requiredAmounts.length}`).values = requiredAmounts;
+
+        // Importing MEB Qty
+        const inventoryValues = inventoryUsedRange.values;
+
+        const MEBInv = [["Qty MEB"]];
+        for (let i = 1; i < inventoryValues.length; i++) {
+            const itemCode = String(inventoryValues[i][0]).trim();
+            const inv = String(locationMap.get(itemCode)) || " - ";
+            MEBInv.push([inv]);
+        }
+        
+        inventoryWorksheet.getRange(`C1:C${MEBInv.length}`).values = MEBInv;
     });
 }
 
@@ -549,6 +582,7 @@ async function otherDateFilter() {
         const dynamicWorksheet = context.workbook.worksheets.getItem("Dynamic");
         const dynamicUsedRange = dynamicWorksheet.getUsedRange().load("values");
         await context.sync();
+
         const dynamicHeaders = dynamicUsedRange.values[0];
 
         const dynItemCodeIdx = dynamicHeaders.indexOf("Corrugate");
@@ -566,7 +600,7 @@ async function otherDateFilter() {
         const dynamicQR = dynamic.getRange(dynItemQtyColumn).getUsedRange().load("values"); 
         const plannedStart = dynamicWorksheet.getRange(dynStartColumn).getUsedRange().load("values");
         const jobNumber = dynamicWorksheet.getRange(dynJobColumn).getUsedRange().load("values");
-
+        await context.sync();
         const jobLatestMap = new Map();
 
         for (let i = 1; i < dynamicICR.values.length; i++) {
@@ -638,12 +672,11 @@ async function displayData (event){
                 const job = allDatajob[i][0];
                 const qty = allDataQR[i][0];
                 const date = allDatadate[i][0]; 
-                const fd = formatDateToMMDDYYYY(date);
-                console.log("Formatted Date", fd);
+                const fDate = formatDate(date);
 
                 if (match == code) {
                     if (!outputJobs.has(job)) {
-                    matchingData.push({ code, job, qty, date });
+                    matchingData.push({ code, job, qty, fDate });
                     outputJobs.add(job);
                     }else {
                         const duplicateDate = earlyDateMap.get(code);
@@ -708,6 +741,11 @@ async function filteringDropdown() {
     });
 }
 
-function formatDateToMMDDYYYY(dateString) {
-    return new Date(dateString);
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }).replace(/\//g, '-');
 }

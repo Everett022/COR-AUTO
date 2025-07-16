@@ -40,7 +40,7 @@ async function outputData(){
             <td>${row.code ?? ""}</td>
             <td>${row.job ?? ""}</td>
             <td>${row.qty ?? ""}</td>
-            <td>${row.date ?? ""}</td>
+            <td>${row.fDate ?? ""}</td>
             </tr>
         `;
                 });
