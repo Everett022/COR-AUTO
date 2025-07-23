@@ -1,326 +1,3 @@
-/******/ (function() { // webpackBootstrap
-/******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ({
-
-/***/ "./assets/SW.png":
-/*!***********************!*\
-  !*** ./assets/SW.png ***!
-  \***********************/
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "assets/SW.png";
-
-/***/ }),
-
-/***/ "./assets/settings.jpeg":
-/*!******************************!*\
-  !*** ./assets/settings.jpeg ***!
-  \******************************/
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "assets/settings.jpeg";
-
-/***/ }),
-
-/***/ "./src/display/display.js":
-/*!********************************!*\
-  !*** ./src/display/display.js ***!
-  \********************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   handleCellChange: function() { return /* binding */ handleCellChange; }
-/* harmony export */ });
-function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i.return) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
-function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { if (r) i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n;else { var o = function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); }; o("next", 0), o("throw", 1), o("return", 2); } }, _regeneratorDefine2(e, r, n, t); }
-function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
-function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-Office.onReady(function (info) {
-  if (info.host === Office.HostType.Excel) {
-    window.onload = outputData();
-  }
-});
-function handleCellChange(_x) {
-  return _handleCellChange.apply(this, arguments);
-}
-function _handleCellChange() {
-  _handleCellChange = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(matchingData) {
-    return _regenerator().w(function (_context2) {
-      while (1) switch (_context2.n) {
-        case 0:
-          _context2.n = 1;
-          return Excel.run(/*#__PURE__*/function () {
-            var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(context) {
-              return _regenerator().w(function (_context) {
-                while (1) switch (_context.n) {
-                  case 0:
-                    console.log("Matching data: ", matchingData);
-                    Office.context.ui.displayDialogAsync('https://localhost:3000/display.html', {
-                      height: 65,
-                      width: 55
-                    });
-                    _context.n = 1;
-                    return context.sync();
-                  case 1:
-                    return _context.a(2);
-                }
-              }, _callee);
-            }));
-            return function (_x2) {
-              return _ref.apply(this, arguments);
-            };
-          }());
-        case 1:
-          return _context2.a(2);
-      }
-    }, _callee2);
-  }));
-  return _handleCellChange.apply(this, arguments);
-}
-function outputData() {
-  return _outputData.apply(this, arguments);
-}
-function _outputData() {
-  _outputData = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3() {
-    var storedValue, data, output, html;
-    return _regenerator().w(function (_context3) {
-      while (1) switch (_context3.n) {
-        case 0:
-          storedValue = localStorage.getItem('matchingData');
-          console.log("Stored Value:", storedValue);
-          if (storedValue) {
-            data = JSON.parse(storedValue);
-            output = document.getElementById('data-output');
-            html = "<table>\n        <thead>\n            <tr>\n            <th>Item Code</th>\n            <th>Job Number</th>\n            <th>Quantity</th>\n            <th>Start Date</th>\n            </tr>\n        </thead>\n        <tbody>\n        ";
-            data.forEach(function (row) {
-              var _row$code, _row$job, _row$qty, _row$fDate;
-              var isDisabled = row.qty === 0 || row.date === "" || row.date == null;
-              html += "<tr".concat(isDisabled ? ' class="disabled"' : '', ">\n            <td>").concat((_row$code = row.code) !== null && _row$code !== void 0 ? _row$code : "", "</td>\n            <td>").concat((_row$job = row.job) !== null && _row$job !== void 0 ? _row$job : "", "</td>\n            <td>").concat((_row$qty = row.qty) !== null && _row$qty !== void 0 ? _row$qty : "", "</td>\n            <td>").concat((_row$fDate = row.fDate) !== null && _row$fDate !== void 0 ? _row$fDate : "", "</td>\n            </tr>\n        ");
-            });
-            html += "  </tbody>\n        </table>";
-            output.innerHTML = html;
-          }
-        case 1:
-          return _context3.a(2);
-      }
-    }, _callee3);
-  }));
-  return _outputData.apply(this, arguments);
-}
-
-/***/ }),
-
-/***/ "./src/settings/settings.js":
-/*!**********************************!*\
-  !*** ./src/settings/settings.js ***!
-  \**********************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   openSettings: function() { return /* binding */ openSettings; }
-/* harmony export */ });
-function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i.return) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
-function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { if (r) i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n;else { var o = function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); }; o("next", 0), o("throw", 1), o("return", 2); } }, _regeneratorDefine2(e, r, n, t); }
-function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
-function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-Office.onReady(function (info) {
-  if (info.host === Office.HostType.Excel) {}
-});
-function openSettings() {
-  return _openSettings.apply(this, arguments);
-}
-function _openSettings() {
-  _openSettings = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
-    return _regenerator().w(function (_context2) {
-      while (1) switch (_context2.n) {
-        case 0:
-          _context2.n = 1;
-          return Excel.run(/*#__PURE__*/function () {
-            var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(context) {
-              return _regenerator().w(function (_context) {
-                while (1) switch (_context.n) {
-                  case 0:
-                    console.log("Opening settings dialog");
-                    Office.context.ui.displayDialogAsync('https://localhost:3000/orderingSet.html', {
-                      height: 65,
-                      width: 85
-                    });
-                    _context.n = 1;
-                    return context.sync();
-                  case 1:
-                    return _context.a(2);
-                }
-              }, _callee);
-            }));
-            return function (_x) {
-              return _ref.apply(this, arguments);
-            };
-          }());
-        case 1:
-          return _context2.a(2);
-      }
-    }, _callee2);
-  }));
-  return _openSettings.apply(this, arguments);
-}
-
-/***/ }),
-
-/***/ "./src/taskpane/taskpane.css":
-/*!***********************************!*\
-  !*** ./src/taskpane/taskpane.css ***!
-  \***********************************/
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "0d4eb8db7fb5335a19cb.css";
-
-/***/ }),
-
-/***/ "./src/taskpane/taskpane.js?4727":
-/*!**********************************!*\
-  !*** ./src/taskpane/taskpane.js ***!
-  \**********************************/
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "089d6bc854642ce5bcc7.js";
-
-/***/ })
-
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = __webpack_modules__;
-/******/ 	
-/************************************************************************/
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	!function() {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = function(exports, definition) {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	}();
-/******/ 	
-/******/ 	/* webpack/runtime/global */
-/******/ 	!function() {
-/******/ 		__webpack_require__.g = (function() {
-/******/ 			if (typeof globalThis === 'object') return globalThis;
-/******/ 			try {
-/******/ 				return this || new Function('return this')();
-/******/ 			} catch (e) {
-/******/ 				if (typeof window === 'object') return window;
-/******/ 			}
-/******/ 		})();
-/******/ 	}();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	!function() {
-/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
-/******/ 	}();
-/******/ 	
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	!function() {
-/******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = function(exports) {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	}();
-/******/ 	
-/******/ 	/* webpack/runtime/publicPath */
-/******/ 	!function() {
-/******/ 		var scriptUrl;
-/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
-/******/ 		var document = __webpack_require__.g.document;
-/******/ 		if (!scriptUrl && document) {
-/******/ 			if (document.currentScript && document.currentScript.tagName.toUpperCase() === 'SCRIPT')
-/******/ 				scriptUrl = document.currentScript.src;
-/******/ 			if (!scriptUrl) {
-/******/ 				var scripts = document.getElementsByTagName("script");
-/******/ 				if(scripts.length) {
-/******/ 					var i = scripts.length - 1;
-/******/ 					while (i > -1 && (!scriptUrl || !/^http(s?):/.test(scriptUrl))) scriptUrl = scripts[i--].src;
-/******/ 				}
-/******/ 			}
-/******/ 		}
-/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
-/******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
-/******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
-/******/ 		scriptUrl = scriptUrl.replace(/^blob:/, "").replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
-/******/ 		__webpack_require__.p = scriptUrl;
-/******/ 	}();
-/******/ 	
-/******/ 	/* webpack/runtime/jsonp chunk loading */
-/******/ 	!function() {
-/******/ 		__webpack_require__.b = document.baseURI || self.location.href;
-/******/ 		
-/******/ 		// object to store loaded and loading chunks
-/******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
-/******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
-/******/ 		var installedChunks = {
-/******/ 			"taskpane": 0
-/******/ 		};
-/******/ 		
-/******/ 		// no chunk on demand loading
-/******/ 		
-/******/ 		// no prefetching
-/******/ 		
-/******/ 		// no preloaded
-/******/ 		
-/******/ 		// no HMR
-/******/ 		
-/******/ 		// no HMR manifest
-/******/ 		
-/******/ 		// no on chunks loaded
-/******/ 		
-/******/ 		// no jsonp function
-/******/ 	}();
-/******/ 	
-/************************************************************************/
-var __webpack_exports__ = {};
-// This entry needs to be wrapped in an IIFE because it needs to be isolated against other entry modules.
-!function() {
-var __webpack_exports__ = {};
-/*!**********************************!*\
-  !*** ./src/taskpane/taskpane.js ***!
-  \**********************************/
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   matchingData: function() { return /* binding */ matchingData; }
-/* harmony export */ });
-/* harmony import */ var _display_display_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../display/display.js */ "./src/display/display.js");
-/* harmony import */ var _settings_settings_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../settings/settings.js */ "./src/settings/settings.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorValues(e) { if (null != e) { var t = e["function" == typeof Symbol && Symbol.iterator || "@@iterator"], r = 0; if (t) return t.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) return { next: function next() { return e && r >= e.length && (e = void 0), { value: e && e[r++], done: !e }; } }; } throw new TypeError(_typeof(e) + " is not iterable"); }
 function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t.return || t.return(); } finally { if (u) throw o; } } }; }
@@ -338,8 +15,8 @@ function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" !=
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-
-
+import { handleCellChange } from '../display/display.js';
+import { openSettings } from '../settings/settings.js';
 Office.onReady(function (info) {
   if (info.host === Office.HostType.Excel) {
     document.getElementById("sideload-msg").style.display = "none";
@@ -357,7 +34,7 @@ Office.onReady(function (info) {
     document.getElementById('end-date').addEventListener('input', checkDatesAndClearMessage);
     document.getElementById("order-filtering").addEventListener('change', filteringDropdown);
     document.getElementById("settings-button").onclick = function () {
-      return tryCatch(_settings_settings_js__WEBPACK_IMPORTED_MODULE_1__.openSettings);
+      return tryCatch(openSettings);
     };
   }
 });
@@ -370,7 +47,7 @@ var orderingWorksheet;
 var orderingTable;
 var outputJobs = new Set();
 var allData = [];
-var matchingData = [];
+export var matchingData = [];
 function generateOrderingReport() {
   return _generateOrderingReport.apply(this, arguments);
 }
@@ -1401,7 +1078,7 @@ function _displayData() {
                     break;
                   case 4:
                     console.log("intial finding of Matching Data", matchingData);
-                    (0,_display_display_js__WEBPACK_IMPORTED_MODULE_0__.handleCellChange)([].concat(matchingData));
+                    handleCellChange([].concat(matchingData));
                     matchingData.sort(function (a, b) {
                       return a.date - b.date;
                     });
@@ -1503,23 +1180,3 @@ function formatDate(dateString) {
     day: '2-digit'
   }).replace(/\//g, '-');
 }
-}();
-// This entry needs to be wrapped in an IIFE because it needs to be isolated against other entry modules.
-!function() {
-/*!************************************!*\
-  !*** ./src/taskpane/taskpane.html ***!
-  \************************************/
-__webpack_require__.r(__webpack_exports__);
-// Imports
-var ___HTML_LOADER_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(/*! ./taskpane.css */ "./src/taskpane/taskpane.css"), __webpack_require__.b);
-var ___HTML_LOADER_IMPORT_1___ = new URL(/* asset import */ __webpack_require__(/*! ../../assets/settings.jpeg */ "./assets/settings.jpeg"), __webpack_require__.b);
-var ___HTML_LOADER_IMPORT_2___ = new URL(/* asset import */ __webpack_require__(/*! ../../assets/SW.png */ "./assets/SW.png"), __webpack_require__.b);
-var ___HTML_LOADER_IMPORT_3___ = new URL(/* asset import */ __webpack_require__(/*! ./taskpane.js */ "./src/taskpane/taskpane.js?4727"), __webpack_require__.b);
-// Module
-var code = "<!-- Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT License. -->\r\n<!-- This file shows how to design a first-run page that provides a welcome screen to the user about the features of the add-in. -->\r\n\r\n<!DOCTYPE html>\r\n<html>\r\n\r\n<head>\r\n    <meta charset=\"UTF-8\" />\r\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\" />\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\r\n    <title>COR-AUTO Task Pane</title>\r\n\r\n    <!-- Office JavaScript API -->\r\n    <" + "script type=\"text/javascript\" src=\"https://appsforoffice.microsoft.com/lib/1/hosted/office.js\"><" + "/script>\r\n\r\n    <!-- For more information on Fluent UI, visit https://developer.microsoft.com/fluentui#/. -->\r\n    <link rel=\"stylesheet\" href=\"https://res-1.cdn.office.net/files/fabric-cdn-prod_20230815.002/office-ui-fabric-core/11.1.0/css/fabric.min.css\"/>\r\n\r\n    <!-- Template styles -->\r\n    <link href=\"" + ___HTML_LOADER_IMPORT_0___ + "\" rel=\"stylesheet\" type=\"text/css\" />\r\n</head>\r\n\r\n<body class=\"ms-font-m ms-welcome ms-Fabric\">\r\n    <header class=\"ms-welcome__header ms-bgColor-neutralLighter\">\r\n        <button class=\"setttings\" id=\"settings-button\" title=\"Settings\" aria-label=\"Settings\">\r\n            <img width=\"30\" height=\"30\" src=\"" + ___HTML_LOADER_IMPORT_1___ + "\" alt=\"Settings\">\r\n        </button>\r\n        <img width=\"90\" height=\"90\" src=\"" + ___HTML_LOADER_IMPORT_2___ + "\" alt=\"Contoso\" title=\"Contoso\" />\r\n        <h1 class=\"header_font\">COR-AUTO</h1>\r\n        <h5 class=\"subheader_font\">Corrugated Supply Made Easy</h5>\r\n    </header>\r\n    <section id=\"sideload-msg\" class=\"ms-welcome__main\">\r\n        <h2 class=\"ms-font-xl\">Please <a target=\"_blank\" href=\"https://learn.microsoft.com/office/dev/add-ins/testing/test-debug-office-add-ins#sideload-an-office-add-in-for-testing\">sideload</a> your add-in to see app body.</h2>\r\n    </section>\r\n    <main id=\"app-body\" class=\"ms-welcome__main\" style=\"display: none;\">\r\n        <div class=\"report-row\">\r\n            <button class=\"button-80\" id=\"generate-ordering-report\">Ordering Report</button><br/><br/>\r\n            <button class=\"button-80\" id=\"generate-inventory-report\">Inventory Report</button><br/><br/>\r\n        </div>\r\n        <div id=\"message-area\" class=\"msg-format\"></div>\r\n        <div class = \"filter-row\">\r\n            <label for=\"order-filtering\"></label>\r\n            <select class=\"button-80\" name=\"order-filtering\" id=\"order-filtering\">\r\n                <option class=\"button-80\" value=\"Intial\">Order Filtering</option>\r\n                <option class=\"button-80\" value=\"over-300\">Over 300</option>\r\n                <option class=\"button-80\" value=\"Must-buy\">Must Buy</option>\r\n                <option class=\"button-80\" value=\"Can-buy\">Can Buy</option>\r\n                <option class=\"button-80\" value=\"Can-make\">Can Make</option>\r\n            </select>\r\n            <button class=\"button-80\" id=\"temp-reset\">Reset</button><br/><br/>\r\n        </div>\r\n        <form action=\"/action_page.php\"><br/>\r\n            <div class=\"date-row\">\r\n                <div class =\"date-col\">\r\n                    <label class=\"date-font\"for=\"start-date\">Start Date: </label>\r\n                    <input class=\"date-format\" type=\"date\" id=\"start-date\" name=\"start-date\">\r\n                </div>\r\n                <div class =\"date-col\">\r\n                    <label class=\"date-font\"for=\"start-date\">Through Date: </label>\r\n                    <input class=\"date-format\" type=\"date\" id=\"end-date\" name=\"end-date\">\r\n                </div>\r\n            <label id=\"user-name\"></label><br/><br/>\r\n        </form>\r\n    </main>\r\n    <" + "script src=\"" + ___HTML_LOADER_IMPORT_3___ + "\"><" + "/script>\r\n</body>\r\n\r\n</html>\r\n";
-// Exports
-/* harmony default export */ __webpack_exports__["default"] = (code);
-}();
-/******/ })()
-;
-//# sourceMappingURL=taskpane.js.map

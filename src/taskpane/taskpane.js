@@ -350,7 +350,7 @@ async function importColumnData() {
     });
 }
 
-async function importOtherColumnData() {
+async function importOtherColumnData(event) {
     await Excel.run(async (context) => {
         const inventoryReportWorksheet = context.workbook.worksheets.getItem("Inventory");
         const inventoryUsedRange = inventoryReportWorksheet.getUsedRange().load("values");
@@ -416,7 +416,6 @@ async function importOtherColumnData() {
 
         //Sum Map Building
         const initialEntry = buildSumMap(invFilterICR, invFilterQR);
-        const locationMap = buildSumMap(inventoryICR.values, inventoryLOC.values);
 
         const result = [["Case #","Demand"]];
         for (const code of initialEntry.keys()) {
@@ -425,24 +424,107 @@ async function importOtherColumnData() {
                 result.push([code, demandQty]);
             }
         }
+        await context.sync();
 
-        const caseNumbers = result.map(row => [row[0]]);
-        inventoryWorksheet.getRange(`A1:A${caseNumbers.length}`).values = caseNumbers;
+        const caseNumbers = result.map(row => row[0]);
+        inventoryWorksheet.getRange(`A1:A${caseNumbers.length}`).values = caseNumbers.map(val => [val]);
 
         const requiredAmounts = result.map(row => [row[1]]);
+        console.log("Required Amounts", requiredAmounts);
         inventoryWorksheet.getRange(`B1:B${requiredAmounts.length}`).values = requiredAmounts;
-
-        // Importing MEB Qty
-        const inventoryValues = inventoryUsedRange.values;
-
-        const MEBInv = [["Qty MEB"]];
-        for (let i = 1; i < inventoryValues.length; i++) {
-            const itemCode = String(inventoryValues[i][0]).trim();
-            const inv = String(locationMap.get(itemCode)) || " - ";
-            MEBInv.push([inv]);
-        }
         
-        inventoryWorksheet.getRange(`C1:C${MEBInv.length}`).values = MEBInv;
+        //Mebane/EFW Inventory Map
+        const mebArray = [];
+        const efwArray = [];
+        for (let i = 0; i < caseNumbers.length; i++) {
+            const code = String(caseNumbers[i]).trim();
+            let found = false;
+
+            for (let j = 0; j < inventoryICR.values.length; j++) {
+                const invCode = String(inventoryICR.values[j][0]).trim();
+                const location = String(inventoryLOC.values[j][0]).trim();
+                const qty = Number(inventoryQR.values[j][0]);
+
+                if (code === invCode) {
+                    const isMeb = location.includes("MEB");
+                    const isEFW = location.includes("EFW");
+                    mebArray.push([code, isMeb ? qty : 0]);
+                    efwArray.push([code, isEFW ? qty : 0]);
+                    found = true;
+                }
+            }
+
+            if (!found) {
+                mebArray.push([code, 0]);
+                efwArray.push([code, 0]);
+            }
+        }
+        await context.sync();
+
+        const mebSumMap = buildSumMap(mebArray.map(item => [item[0]]), mebArray.map(item => [item[1]]));
+        const mebAmounts = Array.from(mebSumMap.entries()).map(row => [row[1]]);
+        inventoryWorksheet.getRange(`C2:C${mebAmounts.length + 1}`).values = mebAmounts;
+
+        const efwSumMap = buildSumMap(efwArray.map(item => [item[0]]), efwArray.map(item => [item[1]]));
+        const efwAmounts = Array.from(efwSumMap.entries()).map(row => [row[1]]);
+        inventoryWorksheet.getRange(`D2:D${efwAmounts.length + 1}`).values = efwAmounts;
+
+        const total = mebAmounts.map((value, index) => Number(value) + efwAmounts[index][0]);
+        inventoryWorksheet.getRange(`E2:E${total.length + 1}`).values = total.map(val => [val]);
+        
+        //Inventory formatting
+        inventoryWorksheet.getRange("A:J").format.autofitColumns();
+        inventoryWorksheet.getRange("A:J").format.horizontalAlignment = "Center";
+        inventoryWorksheet.getRange("A:J").format.verticalAlignment = "Center";
+        inventoryWorksheet.getRange("C:C").numberFormat = [['General']];
+
+        inventoryWorksheet.getRange("A:A").format.columnWidth = 120;
+        inventoryWorksheet.getRange("B:B").format.columnWidth = 70;
+        inventoryWorksheet.getRange("C:C").format.columnWidth = 70;
+        inventoryWorksheet.getRange("D:D").format.columnWidth = 70;
+        inventoryWorksheet.getRange("E:E").format.columnWidth = 100;
+        inventoryWorksheet.getRange("F:F").format.columnWidth = 70;
+        inventoryWorksheet.getRange("G:G").format.columnWidth = 90;
+        inventoryWorksheet.getRange("H:H").format.columnWidth = 90;
+        inventoryWorksheet.getRange("I:I").format.columnWidth = 100;
+        inventoryWorksheet.getRange("J:J").format.columnWidth = 150
+        inventoryWorksheet.getUsedRange().format.rowHeight = 20;
+
+        inventoryWorksheet.freezePanes.freezeRows(1); 
+        
+        inventoryWorksheet.getRange("I1:I1").format.fill.color = "#BE5014";
+        inventoryWorksheet.getRange("I1:I1").format.font.color = "yellow";     
+
+        //All border lines
+        const usedRange = inventoryWorksheet.getUsedRange();   
+        const borders = usedRange.format.borders;
+        [
+            "EdgeTop",
+            "EdgeBottom",
+            "EdgeLeft",
+            "EdgeRight",
+            "InsideVertical",
+            "InsideHorizontal"
+        ].forEach(edge => {
+            borders.getItem(edge).style = "Continuous";
+            borders.getItem(edge).weight = "Thin";
+            borders.getItem(edge).color = "#000000"; 
+        });
+        //Bold Outline Lines
+        const lastRow = mebAmounts.length;
+        const highlight = inventoryWorksheet.getRange(`I1:I${lastRow + 1}`).format.borders;
+         [
+            "EdgeTop",
+            "EdgeBottom",
+            "EdgeLeft",
+            "EdgeRight",
+        ].forEach(side => {
+            highlight.getItem(side).style = "Continuous";
+            highlight.getItem(side).weight = "Thick";
+            highlight.getItem(side).color = "#BE5014"; 
+        });
+
+        await context.sync();
     });
 }
 

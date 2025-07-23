@@ -382,3 +382,30 @@ option {
   box-shadow: 0 4px 12px rgba(0,0,0,0.25);
   outline: none;
 }
+
+select.button-80 {
+  appearance: none;           
+  -webkit-appearance: none;   
+  -moz-appearance: none;      
+
+  background: #fff;
+  border-radius: .375rem;
+  border-style: solid;
+  border-width: .125rem;
+  border-color: #ccc;       
+  padding: .625rem;
+  font-family: Circular, Helvetica, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #212121;
+  cursor: pointer;
+  line-height: 1;
+  box-sizing: border-box;
+  min-width: 150px;
+
+  padding-right: .5rem;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg fill='black' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0 center;
+  background-size: 1rem;
+}

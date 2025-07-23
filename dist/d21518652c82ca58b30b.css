@@ -30,7 +30,7 @@ td {
   padding: 0.65em 1em;
 }
 .disabled td {
-  color: #4F5F64;
+  color: #ffffff;
 }
 tbody tr {
   transition: background 0.25s ease;
