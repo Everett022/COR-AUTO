@@ -19,6 +19,7 @@ Office.onReady((info) => {
     let filter = [];
     let invFilter = [];
     let earlyDateMap = new Map(); 
+    let startDateMap = new Map();
     let orderingWorksheet;
     let orderingTable;
     let outputJobs = new Set();
@@ -77,6 +78,7 @@ async function generateInventoryReport() {
 
         const startDateValue = document.getElementById('start-date').value;
         const endDateValue = document.getElementById('end-date').value;
+        
 
         if(!startDateValue || !endDateValue){
             document.getElementById('message-area').textContent = "Please enter the dates";
@@ -393,14 +395,9 @@ async function importOtherColumnData(event) {
         const invRepItemCodeColumn = `${colIdxToLetter(invItemCodeIdx)}:${colIdxToLetter(invItemCodeIdx)}`;
         const invRepItemQtyColumn = `${colIdxToLetter(invItemQtyIdx)}:${colIdxToLetter(invItemQtyIdx)}`;
         const invRepLocationColumn = `${colIdxToLetter(invLocationIdx)}:${colIdxToLetter(invLocationIdx)}`;
-
-
-        //Quanity and Item Code from Dynamic, Inventory Report, and Open PO's sheets
-        const dynamic = context.workbook.worksheets.getItem("Dynamic");
-        const dynamicQR = dynamic.getRange(dynItemQtyColumn).getUsedRange().load("values");
-        const dynamicICR = dynamic.getRange(dynItemCodeColumn).getUsedRange().load("values");
         await context.sync();
 
+        //Quanity and Item Code from Dynamic, Inventory Report, and Open PO's sheets
         const inventoryICR = inventoryReportWorksheet.getRange(invRepItemCodeColumn).getUsedRange().load("values"); 
         const inventoryQR = inventoryReportWorksheet.getRange(invRepItemQtyColumn).getUsedRange().load("values"); 
         const inventoryLOC = inventoryReportWorksheet.getRange(invRepLocationColumn).getUsedRange().load("values");
@@ -433,7 +430,7 @@ async function importOtherColumnData(event) {
         console.log("Required Amounts", requiredAmounts);
         inventoryWorksheet.getRange(`B1:B${requiredAmounts.length}`).values = requiredAmounts;
         
-        //Mebane/EFW Inventory Map
+        //Mebane-EFW Inventory Map
         const mebArray = [];
         const efwArray = [];
         for (let i = 0; i < caseNumbers.length; i++) {
@@ -472,6 +469,48 @@ async function importOtherColumnData(event) {
         const total = mebAmounts.map((value, index) => Number(value) + efwAmounts[index][0]);
         inventoryWorksheet.getRange(`E2:E${total.length + 1}`).values = total.map(val => [val]);
         
+        //Inventory On Order 
+        const openPOsMap = buildSumMap(openPOsICR.values, openPOsQR.values);
+        const onOrder = [["On Order"]]; 
+        for (const code of caseNumbers.slice(1)) {
+            const onOrderQty = openPOsMap.get(code) || 0;
+            onOrder.push([onOrderQty]);           
+        }
+        
+        const onOrderOutput = onOrder.map(row => [row[0]]);
+        inventoryWorksheet.getRange(`F1:F${onOrderOutput.length}`).values = onOrderOutput;
+        
+        // Importing the Start and Release Date
+        const startArray = [["Earliest Start Date"]];
+        const releaseArray = [["Release Date"]];
+
+        for (let i = 1; i < caseNumbers.length; i++) {
+            const itemCode = String(caseNumbers[i]).trim();
+            const start = String(startDateMap.get(itemCode)) || "No Start Date Established";
+            const dateOnly = start.split(' ').slice(0, 4).join(' ');
+            startArray.push([dateOnly]);
+
+            let releaseDate = new Date(start);
+            if (!isNaN(releaseDate)) {
+                releaseDate.setDate(releaseDate.getDate() - 10);
+                const adjustedRelease = releaseDate.toDateString(); 
+                releaseArray.push([adjustedRelease]);
+            } else {
+                releaseArray.push(["Invalid Release Date"]);
+            }
+        }
+
+        inventoryWorksheet.getRange(`G1:G${startArray.length}`).values = startArray;
+        inventoryWorksheet.getRange(`H1:H${releaseArray.length}`).values = releaseArray;
+
+        //Qty Needed (MEB)
+        const qtyNeeded = requiredAmounts.slice(1).map((value, index) => 
+            Number(value) - mebAmounts[index]
+        );
+        inventoryWorksheet.getRange(`I2:I${qtyNeeded.length + 1}`).values = qtyNeeded.map(val => [val]);
+        await context.sync();
+
+
         //Inventory formatting
         inventoryWorksheet.getRange("A:J").format.autofitColumns();
         inventoryWorksheet.getRange("A:J").format.horizontalAlignment = "Center";
@@ -483,10 +522,10 @@ async function importOtherColumnData(event) {
         inventoryWorksheet.getRange("C:C").format.columnWidth = 70;
         inventoryWorksheet.getRange("D:D").format.columnWidth = 70;
         inventoryWorksheet.getRange("E:E").format.columnWidth = 100;
-        inventoryWorksheet.getRange("F:F").format.columnWidth = 70;
+        inventoryWorksheet.getRange("F:F").format.columnWidth = 75;
         inventoryWorksheet.getRange("G:G").format.columnWidth = 90;
         inventoryWorksheet.getRange("H:H").format.columnWidth = 90;
-        inventoryWorksheet.getRange("I:I").format.columnWidth = 100;
+        inventoryWorksheet.getRange("I:I").format.columnWidth = 130;
         inventoryWorksheet.getRange("J:J").format.columnWidth = 150
         inventoryWorksheet.getUsedRange().format.rowHeight = 20;
 
@@ -510,6 +549,7 @@ async function importOtherColumnData(event) {
             borders.getItem(edge).weight = "Thin";
             borders.getItem(edge).color = "#000000"; 
         });
+        
         //Bold Outline Lines
         const lastRow = mebAmounts.length;
         const highlight = inventoryWorksheet.getRange(`I1:I${lastRow + 1}`).format.borders;
@@ -701,11 +741,11 @@ async function otherDateFilter() {
         }
         invFilter = Array.from(jobLatestMap.values());
 
-        earlyDateMap.clear();
+        startDateMap.clear();
         for (const entry of invFilter) {
             const { itemCode, date } = entry;
-            if (!earlyDateMap.has(itemCode) || date < earlyDateMap.get(itemCode)) {
-                earlyDateMap.set(itemCode, date);
+            if (!startDateMap.has(itemCode) || date < startDateMap.get(itemCode)) {
+                startDateMap.set(itemCode, date);
             }
         }
 
