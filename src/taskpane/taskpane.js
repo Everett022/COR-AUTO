@@ -7,10 +7,10 @@ Office.onReady((info) => {
     document.getElementById("app-body").style.display = "flex";
     document.getElementById("generate-ordering-report").onclick = () => tryCatch(generateOrderingReport);
     document.getElementById("generate-inventory-report").onclick = () => tryCatch(generateInventoryReport);
-    document.getElementById("temp-reset").onclick = () => tryCatch(resetAll);
     document.getElementById('start-date').addEventListener('input', checkDatesAndClearMessage);
     document.getElementById('end-date').addEventListener('input', checkDatesAndClearMessage);
     document.getElementById("order-filtering").addEventListener('change', filteringDropdown);
+    document.getElementById("inventory-filtering").addEventListener('change', invFilteringDropdown);
     document.getElementById("settings-button").onclick = () => tryCatch(openSettings);
   }
 });
@@ -23,7 +23,6 @@ Office.onReady((info) => {
     let orderingWorksheet;
     let orderingTable;
     let outputJobs = new Set();
-
     let allData = [];
     export let matchingData = [];
 
@@ -54,6 +53,8 @@ async function generateOrderingReport() {
             dateFilter();
             await context.sync();
             importColumnData();
+            await context.sync();
+
         }
         
         orderingWorksheet.onSelectionChanged.add(displayData);
@@ -68,8 +69,17 @@ async function generateInventoryReport() {
 
         const inventoryWorksheet = context.workbook.worksheets.add("Inventory At");
         const inventoryTable = inventoryWorksheet.tables.add("A1:J1", true);
-        
+
+        const inventoryReadout = context.workbook.worksheets.add("Inventory Request");
+        const inventoryReadoutTable = inventoryReadout.tables.add("A1:D1", true);
+
         inventoryTable.name = "InventoryAtTable";
+        inventoryTable.style = "TableStyleMedium10";
+
+        inventoryReadoutTable.name = "InventoryReadoutTable";
+        inventoryReadoutTable.style = "TableStyleMedium10";
+        
+        inventoryReadoutTable.getHeaderRowRange().values = [["Item Code", "Inventory Date", "Inventory Ref", "Inventory Qty"]];
         inventoryTable.getHeaderRowRange().values = [["Case #", "Demand", "Qty MEB", "Qty EFW", "Total MEB + EFW", "On Order", "Start Date", "Release Date", "Qty Needed (MEB)", "Notes"]];
 
         inventoryTable.columns.getItemAt(2).getRange().numberFormat = [['\u20AC#,##0.00']];
@@ -88,6 +98,9 @@ async function generateInventoryReport() {
             otherDateFilter();
             await context.sync();
             importOtherColumnData();
+            await context.sync();
+            await importColumnData();
+            readoutData();
         }
         await context.sync();
     });
@@ -97,7 +110,15 @@ async function tryCatch(callback) {
     try {
         await callback();
     } catch (error) {
-        alert(error);
+        const messageArea = document.getElementById('message-area');
+        if (messageArea) {
+            messageArea.textContent = `Error: ${error.message || error}`;
+            messageArea.style.color = 'red';
+            setTimeout(() => {
+                messageArea.textContent = '';
+                messageArea.style.color = '';
+            }, 5000);
+        }
         console.error(error);
     }
 }
@@ -424,11 +445,8 @@ async function importOtherColumnData(event) {
         await context.sync();
 
         const caseNumbers = result.map(row => row[0]);
-        inventoryWorksheet.getRange(`A1:A${caseNumbers.length}`).values = caseNumbers.map(val => [val]);
-
         const requiredAmounts = result.map(row => [row[1]]);
         console.log("Required Amounts", requiredAmounts);
-        inventoryWorksheet.getRange(`B1:B${requiredAmounts.length}`).values = requiredAmounts;
         
         //Mebane-EFW Inventory Map
         const mebArray = [];
@@ -460,14 +478,11 @@ async function importOtherColumnData(event) {
 
         const mebSumMap = buildSumMap(mebArray.map(item => [item[0]]), mebArray.map(item => [item[1]]));
         const mebAmounts = Array.from(mebSumMap.entries()).map(row => [row[1]]);
-        inventoryWorksheet.getRange(`C2:C${mebAmounts.length + 1}`).values = mebAmounts;
 
         const efwSumMap = buildSumMap(efwArray.map(item => [item[0]]), efwArray.map(item => [item[1]]));
         const efwAmounts = Array.from(efwSumMap.entries()).map(row => [row[1]]);
-        inventoryWorksheet.getRange(`D2:D${efwAmounts.length + 1}`).values = efwAmounts;
 
         const total = mebAmounts.map((value, index) => Number(value) + efwAmounts[index][0]);
-        inventoryWorksheet.getRange(`E2:E${total.length + 1}`).values = total.map(val => [val]);
         
         //Inventory On Order 
         const openPOsMap = buildSumMap(openPOsICR.values, openPOsQR.values);
@@ -476,9 +491,6 @@ async function importOtherColumnData(event) {
             const onOrderQty = openPOsMap.get(code) || 0;
             onOrder.push([onOrderQty]);           
         }
-        
-        const onOrderOutput = onOrder.map(row => [row[0]]);
-        inventoryWorksheet.getRange(`F1:F${onOrderOutput.length}`).values = onOrderOutput;
         
         // Importing the Start and Release Date
         const startArray = [["Earliest Start Date"]];
@@ -500,16 +512,65 @@ async function importOtherColumnData(event) {
             }
         }
 
-        inventoryWorksheet.getRange(`G1:G${startArray.length}`).values = startArray;
-        inventoryWorksheet.getRange(`H1:H${releaseArray.length}`).values = releaseArray;
-
-        //Qty Needed (MEB)
         const qtyNeeded = requiredAmounts.slice(1).map((value, index) => 
             Number(value) - mebAmounts[index]
         );
-        inventoryWorksheet.getRange(`I2:I${qtyNeeded.length + 1}`).values = qtyNeeded.map(val => [val]);
-        await context.sync();
 
+        const filteredData = [];
+        filteredData.push({
+            caseNumber: "Case #",
+            demand: "Demand", 
+            mebQty: "Qty MEB",
+            efwQty: "Qty EFW",
+            totalQty: "Total MEB + EFW",
+            onOrder: "On Order",
+            startDate: "Start Date",
+            releaseDate: "Release Date",
+            qtyNeeded: "Qty Needed (MEB)",
+            notes: "Notes"
+        });
+
+        for (let i = 0; i < caseNumbers.slice(1).length; i++) {
+            if (qtyNeeded[i] > 0) { 
+                filteredData.push({
+                    caseNumber: caseNumbers[i + 1],
+                    demand: requiredAmounts[i + 1][0],
+                    mebQty: mebAmounts[i][0],
+                    efwQty: efwAmounts[i][0],
+                    totalQty: total[i],
+                    onOrder: onOrder[i + 1][0],
+                    startDate: startArray[i + 1][0],
+                    releaseDate: releaseArray[i + 1][0],
+                    qtyNeeded: qtyNeeded[i],
+                    notes: ""
+                });
+            }
+        }
+
+        if (filteredData.length > 1) { 
+            const caseNumbersFiltered = filteredData.map(row => [row.caseNumber]);
+            const demandFiltered = filteredData.map(row => [row.demand]);
+            const mebQtyFiltered = filteredData.map(row => [row.mebQty]);
+            const efwQtyFiltered = filteredData.map(row => [row.efwQty]);
+            const totalQtyFiltered = filteredData.map(row => [row.totalQty]);
+            const onOrderFiltered = filteredData.map(row => [row.onOrder]);
+            const startDateFiltered = filteredData.map(row => [row.startDate]);
+            const releaseDateFiltered = filteredData.map(row => [row.releaseDate]);
+            const qtyNeededFiltered = filteredData.map(row => [row.qtyNeeded]);
+            const notesFiltered = filteredData.map(row => [row.notes]);
+
+            inventoryWorksheet.getRange(`A1:A${caseNumbersFiltered.length}`).values = caseNumbersFiltered;
+            inventoryWorksheet.getRange(`B1:B${demandFiltered.length}`).values = demandFiltered;
+            inventoryWorksheet.getRange(`C1:C${mebQtyFiltered.length}`).values = mebQtyFiltered;
+            inventoryWorksheet.getRange(`D1:D${efwQtyFiltered.length}`).values = efwQtyFiltered;
+            inventoryWorksheet.getRange(`E1:E${totalQtyFiltered.length}`).values = totalQtyFiltered;
+            inventoryWorksheet.getRange(`F1:F${onOrderFiltered.length}`).values = onOrderFiltered;
+            inventoryWorksheet.getRange(`G1:G${startDateFiltered.length}`).values = startDateFiltered;
+            inventoryWorksheet.getRange(`H1:H${releaseDateFiltered.length}`).values = releaseDateFiltered;
+            inventoryWorksheet.getRange(`I1:I${qtyNeededFiltered.length}`).values = qtyNeededFiltered;
+            inventoryWorksheet.getRange(`J1:J${notesFiltered.length}`).values = notesFiltered;
+        }
+        await context.sync();
 
         //Inventory formatting
         inventoryWorksheet.getRange("A:J").format.autofitColumns();
@@ -531,7 +592,7 @@ async function importOtherColumnData(event) {
 
         inventoryWorksheet.freezePanes.freezeRows(1); 
         
-        inventoryWorksheet.getRange("I1:I1").format.fill.color = "#BE5014";
+        inventoryWorksheet.getRange("I1:I1").format.fill.color = "#00008B";
         inventoryWorksheet.getRange("I1:I1").format.font.color = "yellow";     
 
         //All border lines
@@ -551,8 +612,8 @@ async function importOtherColumnData(event) {
         });
         
         //Bold Outline Lines
-        const lastRow = mebAmounts.length;
-        const highlight = inventoryWorksheet.getRange(`I1:I${lastRow + 1}`).format.borders;
+        const lastRow = filteredData.length;
+        const highlight = inventoryWorksheet.getRange(`I1:I${lastRow}`).format.borders;
          [
             "EdgeTop",
             "EdgeBottom",
@@ -561,21 +622,180 @@ async function importOtherColumnData(event) {
         ].forEach(side => {
             highlight.getItem(side).style = "Continuous";
             highlight.getItem(side).weight = "Thick";
-            highlight.getItem(side).color = "#BE5014"; 
+            highlight.getItem(side).color = "#00008B"; 
         });
 
         await context.sync();
     });
 }
 
-async function resetAll() {
-        await Excel.run(async (context) => {
-            const sheets = context.workbook.worksheets;
-            sheets.getItemOrNullObject("Ordering").delete();
-            sheets.getItemOrNullObject("Inventory At").delete();
-            sheets.getItemOrNullObject("Test").delete();
-            document.getElementById('start-date').value = "";
-            document.getElementById('end-date').value = "";
+async function readoutData(){
+    await Excel.run(async (context) => {
+        const inventoryAtWorksheet = context.workbook.worksheets.getItem("Inventory At");
+        const inventoryAtUsedRange = inventoryAtWorksheet.getUsedRange().load("values");
+
+        const inventoryWorksheet = context.workbook.worksheets.getItem("Inventory");
+        const inventoryUsedRange = inventoryWorksheet.getUsedRange().load("values");
+
+        const inventoryRequestWorksheet = context.workbook.worksheets.getItem("Inventory Request");
+        const inventoryRequestTable = inventoryRequestWorksheet.tables.getItem("InventoryReadoutTable");
+
+        await context.sync();
+
+        //Inventory At fluid Placement
+        const inventoryAtHeaders = inventoryAtUsedRange.values[0];
+        
+        const invAtItemCodeIdx = inventoryAtHeaders.indexOf("Case #");
+        const invAtQtyNeededIdx = inventoryAtHeaders.indexOf("Qty Needed (MEB)");
+        const invAtQtyEFWIdx = inventoryAtHeaders.indexOf("Qty EFW");
+        
+        const invAtItemCodeColumn = `${colIdxToLetter(invAtItemCodeIdx)}:${colIdxToLetter(invAtItemCodeIdx)}`;
+        const invAtQtyNeededColumn = `${colIdxToLetter(invAtQtyNeededIdx)}:${colIdxToLetter(invAtQtyNeededIdx)}`;
+        const invAtQtyEFWColumn = `${colIdxToLetter(invAtQtyEFWIdx)}:${colIdxToLetter(invAtQtyEFWIdx)}`;
+
+        //Inventory Report fluid Placement
+        const inventoryHeaders = inventoryUsedRange.values[0];
+
+        const invItemCodeIdx = inventoryHeaders.indexOf("Item Code");
+        const invDateIdx = inventoryHeaders.indexOf("Inventory Date");
+        const invRefIdx = inventoryHeaders.indexOf("Inventory Ref");
+        const invQtyIdx = inventoryHeaders.indexOf("Inventory Qty");
+        
+        const invRepItemCodeColumn = `${colIdxToLetter(invItemCodeIdx)}:${colIdxToLetter(invItemCodeIdx)}`;
+        const invRepDateColumn = `${colIdxToLetter(invDateIdx)}:${colIdxToLetter(invDateIdx)}`;
+        const invRepRefColumn = `${colIdxToLetter(invRefIdx)}:${colIdxToLetter(invRefIdx)}`;
+        const invRepQtyColumn = `${colIdxToLetter(invQtyIdx)}:${colIdxToLetter(invQtyIdx)}`;
+        await context.sync();
+
+        //Get data from Inventory At sheet
+        const invAtItemCodes = inventoryAtWorksheet.getRange(invAtItemCodeColumn).getUsedRange().load("values");
+        const invAtQtyNeeded = inventoryAtWorksheet.getRange(invAtQtyNeededColumn).getUsedRange().load("values");
+        const invAtQtyEFW = inventoryAtWorksheet.getRange(invAtQtyEFWColumn).getUsedRange().load("values");
+
+        //Get data from Inventory sheet
+        const invItemCodes = inventoryWorksheet.getRange(invRepItemCodeColumn).getUsedRange().load("values");
+        const invDates = inventoryWorksheet.getRange(invRepDateColumn).getUsedRange().load("values");
+        const invRefs = inventoryWorksheet.getRange(invRepRefColumn).getUsedRange().load("values");
+        const invQtys = inventoryWorksheet.getRange(invRepQtyColumn).getUsedRange().load("values");
+        await context.sync();
+
+        //Filter Inventory At data for Qty Needed > 300 and Qty EFW > 0
+        const filteredData = [];
+        for (let i = 1; i < invAtItemCodes.values.length; i++) {
+            const qtyNeeded = Number(invAtQtyNeeded.values[i][0]);
+            const qtyEFW = Number(invAtQtyEFW.values[i][0]);
+            
+            if (qtyNeeded > 300 && qtyEFW > 0) {
+                filteredData.push({
+                    itemCode: String(invAtItemCodes.values[i][0]).trim(),
+                    qtyNeeded: qtyNeeded
+                });
+            }
+        }
+
+        //Build inventory data map for each item code
+        const inventoryDataMap = new Map();
+        for (let i = 1; i < invItemCodes.values.length; i++) {
+            const itemCode = String(invItemCodes.values[i][0]).trim();
+            const date = invDates.values[i] ? String(invDates.values[i][0]).trim() : "";
+            const ref = invRefs.values[i] ? String(invRefs.values[i][0]).trim() : "";
+            const qty = Number(invQtys.values[i][0]);
+
+            if (itemCode && !isNaN(qty) && qty > 0) {
+                if (!inventoryDataMap.has(itemCode)) {
+                    inventoryDataMap.set(itemCode, []);
+                }
+                inventoryDataMap.get(itemCode).push({
+                    date: date,
+                    ref: ref,
+                    qty: qty
+                });
+            }
+        }
+
+        //Sort inventory data by date (oldest first) for each item code
+        for (const [itemCode, data] of inventoryDataMap) {
+            data.sort((a, b) => {
+                const dateA = new Date(a.date);
+                const dateB = new Date(b.date);
+                return dateA - dateB;
+            });
+        }
+
+        //Generate readout data
+        const readoutResult = [["Item Code", "Inventory Date", "Inventory Ref", "Inventory Qty"]];
+        
+        for (const filteredItem of filteredData) {
+            const itemCode = filteredItem.itemCode;
+            const qtyNeeded = filteredItem.qtyNeeded;
+            
+            if (inventoryDataMap.has(itemCode)) {
+                const inventoryItems = inventoryDataMap.get(itemCode);
+                let totalPulled = 0;
+                let palletsPulled = 0;
+                
+                for (const invItem of inventoryItems) {
+                    if (totalPulled >= qtyNeeded) {
+                        break; // We have enough, stop pulling
+                    }
+                    
+                    // Add this pallet
+                    readoutResult.push([
+                        itemCode,
+                        invItem.date,
+                        invItem.ref,
+                        invItem.qty
+                    ]);
+                    
+                    totalPulled += invItem.qty;
+                    palletsPulled++;
+                }
+            }
+        }
+
+        //Write data to Inventory Request table
+        if (readoutResult.length > 1) {
+            const itemCodes = readoutResult.map(row => [row[0]]);
+            const dates = readoutResult.map(row => [row[1]]);
+            const refs = readoutResult.map(row => [row[2]]);
+            const qtys = readoutResult.map(row => [row[3]]);
+
+            inventoryRequestWorksheet.getRange(`A1:A${itemCodes.length}`).values = itemCodes;
+            inventoryRequestWorksheet.getRange(`B1:B${dates.length}`).values = dates;
+            inventoryRequestWorksheet.getRange(`C1:C${refs.length}`).values = refs;
+            inventoryRequestWorksheet.getRange(`D1:D${qtys.length}`).values = qtys;
+        }
+        await context.sync();
+
+        //Formatting
+        inventoryRequestWorksheet.getRange("A:D").format.autofitColumns();
+        inventoryRequestWorksheet.getRange("A:D").format.horizontalAlignment = "Center";
+        inventoryRequestWorksheet.getRange("A:D").format.verticalAlignment = "Center";
+
+        inventoryRequestWorksheet.getRange("A:A").format.columnWidth = 120;
+        inventoryRequestWorksheet.getRange("B:B").format.columnWidth = 100;
+        inventoryRequestWorksheet.getRange("C:C").format.columnWidth = 100;
+        inventoryRequestWorksheet.getRange("D:D").format.columnWidth = 100;
+        inventoryRequestWorksheet.getUsedRange().format.rowHeight = 20;
+
+        inventoryRequestWorksheet.freezePanes.freezeRows(1);
+
+        //All border lines
+        const usedRange = inventoryRequestWorksheet.getUsedRange();   
+        const borders = usedRange.format.borders;
+        [
+            "EdgeTop",
+            "EdgeBottom",
+            "EdgeLeft",
+            "EdgeRight",
+            "InsideVertical",
+            "InsideHorizontal"
+        ].forEach(edge => {
+            borders.getItem(edge).style = "Continuous";
+            borders.getItem(edge).weight = "Thin";
+            borders.getItem(edge).color = "#000000"; 
+        });
+
         await context.sync();
     });
 }
@@ -594,6 +814,7 @@ async function resetGenerateInventory() {
         await Excel.run(async (context) => {
             const sheets = context.workbook.worksheets;
             sheets.getItemOrNullObject("Inventory At").delete();
+            sheets.getItemOrNullObject("Inventory Readout").delete();
         await context.sync();
     });
 }
@@ -854,6 +1075,29 @@ async function filteringDropdown() {
                 amountFilter.clear();
                 buyOrMakeFilter.clear();
                 buyOrMakeFilter.applyValuesFilter(["Can Make"]);
+                break;
+            default:
+                console.log("No valid filter selected");
+                break;
+        }
+        await context.sync();
+    });
+}
+
+async function invFilteringDropdown() {
+    await Excel.run(async (context) => {
+        const inventoryWorksheet = context.workbook.worksheets.getItem("Inventory At");
+        const inventoryTable = inventoryWorksheet.tables.getItem("InventoryAtTable");
+        const qtyNeededFilter = inventoryTable.columns.getItem("Qty Needed (MEB)").filter;
+
+        switch(document.getElementById('inventory-filtering').value) {
+            case "Intial case":
+                console.log("no changes made");
+                qtyNeededFilter.clear();
+                break;
+            case "over-300":
+                qtyNeededFilter.clear();
+                qtyNeededFilter.applyCustomFilter(">=300");
                 break;
             default:
                 console.log("No valid filter selected");
