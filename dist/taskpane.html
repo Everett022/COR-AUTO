@@ -25,12 +25,12 @@
         <button class="setttings" id="settings-button" title="Settings" aria-label="Settings">
             <img width="30" height="30" src="assets/settings.jpeg" alt="Settings">
         </button>
-        <img width="90" height="90" src="assets/SW.png" alt="Contoso" title="Contoso" />
+        <img width="90" height="90" src="assets/SW.png" alt="Smurfit-Westrock" title="Smurfit-Westrock" />
         <h1 class="header_font">COR-AUTO</h1>
         <h5 class="subheader_font">Corrugated Supply Made Easy</h5>
     </header>
     <section id="sideload-msg" class="ms-welcome__main">
-        <h2 class="ms-font-xl">Please <a target="_blank" href="https://learn.microsoft.com/office/dev/add-ins/testing/test-debug-office-add-ins#sideload-an-office-add-in-for-testing">sideload</a> your add-in to see app body.</h2>
+        <h2 class="ms-font-xl">element <a target="_blank" href="https://learn.microsoft.com/office/dev/add-ins/testing/test-debug-office-add-ins#sideload-an-office-add-in-for-testing">sideload</a> your add-in to see app body.</h2>
     </section>
     <main id="app-body" class="ms-welcome__main" style="display: none;">
         <div class="report-row">
@@ -47,7 +47,11 @@
                 <option class="button-80" value="Can-buy">Can Buy</option>
                 <option class="button-80" value="Can-make">Can Make</option>
             </select>
-            <button class="button-80" id="temp-reset">Reset</button><br/><br/>
+            <label for="inventory-filtering"></label>
+            <select class="button-80" name="inventory-filtering" id="inventory-filtering">
+                <option class="button-80" value="Intial case">Inv Filtering</option>
+                <option class="button-80" value="over-300">Over 300</option>
+            </select>
         </div>
         <form action="/action_page.php"><br/>
             <div class="date-row">
@@ -62,7 +66,7 @@
             <label id="user-name"></label><br/><br/>
         </form>
     </main>
-    <script src="eebc9704a4aec65de8c7.js"></script>
+    <script src="3d2138026ab048847bdb.js"></script>
 </body>
 
 </html>

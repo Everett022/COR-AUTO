@@ -184,7 +184,7 @@ module.exports = __webpack_require__.p + "f12a41c31f591815d881.css";
   \**********************************/
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "eebc9704a4aec65de8c7.js";
+module.exports = __webpack_require__.p + "3d2138026ab048847bdb.js";
 
 /***/ })
 
@@ -328,14 +328,14 @@ function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArra
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i.return) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { if (r) i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n;else { var o = function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); }; o("next", 0), o("throw", 1), o("return", 2); } }, _regeneratorDefine2(e, r, n, t); }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i.return) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
-function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { if (r) i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n;else { var o = function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); }; o("next", 0), o("throw", 1), o("return", 2); } }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 
@@ -350,46 +350,13 @@ Office.onReady(function (info) {
     document.getElementById("generate-inventory-report").onclick = function () {
       return tryCatch(generateInventoryReport);
     };
-    document.getElementById("temp-reset").onclick = function () {
-      return tryCatch(resetAll);
-    };
     document.getElementById('start-date').addEventListener('input', checkDatesAndClearMessage);
     document.getElementById('end-date').addEventListener('input', checkDatesAndClearMessage);
     document.getElementById("order-filtering").addEventListener('change', filteringDropdown);
+    document.getElementById("inventory-filtering").addEventListener('change', invFilteringDropdown);
     document.getElementById("settings-button").onclick = function () {
       return tryCatch(_settings_settings_js__WEBPACK_IMPORTED_MODULE_1__.openSettings);
     };
-
-    // Register worksheet event listeners for continuous monitoring
-    Excel.run(/*#__PURE__*/function () {
-      var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(context) {
-        var sheets;
-        return _regenerator().w(function (_context) {
-          while (1) switch (_context.n) {
-            case 0:
-              sheets = context.workbook.worksheets;
-              sheets.load("items/name");
-              _context.n = 1;
-              return context.sync();
-            case 1:
-              // Register onChanged for all existing sheets
-              sheets.items.forEach(function (sheet) {
-                sheet.onChanged.add(handleSheetChanged);
-              });
-
-              // Register onAdded for new sheets
-              sheets.onAdded.add(handleSheetAdded);
-              _context.n = 2;
-              return context.sync();
-            case 2:
-              return _context.a(2);
-          }
-        }, _callee);
-      }));
-      return function (_x) {
-        return _ref.apply(this, arguments);
-      };
-    }());
   }
 });
 
@@ -407,19 +374,19 @@ function generateOrderingReport() {
   return _generateOrderingReport.apply(this, arguments);
 }
 function _generateOrderingReport() {
-  _generateOrderingReport = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3() {
-    return _regenerator().w(function (_context3) {
-      while (1) switch (_context3.n) {
+  _generateOrderingReport = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
+    return _regenerator().w(function (_context2) {
+      while (1) switch (_context2.n) {
         case 0:
-          _context3.n = 1;
+          _context2.n = 1;
           return Excel.run(/*#__PURE__*/function () {
-            var _ref2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(context) {
+            var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(context) {
               var startDateValue, endDateValue;
-              return _regenerator().w(function (_context2) {
-                while (1) switch (_context2.n) {
+              return _regenerator().w(function (_context) {
+                while (1) switch (_context.n) {
                   case 0:
                     resetGenerateOrdering();
-                    _context2.n = 1;
+                    _context.n = 1;
                     return context.sync();
                   case 1:
                     orderingWorksheet = context.workbook.worksheets.add("Ordering");
@@ -432,35 +399,37 @@ function _generateOrderingReport() {
                     startDateValue = document.getElementById('start-date').value;
                     endDateValue = document.getElementById('end-date').value;
                     if (!(!startDateValue || !endDateValue)) {
-                      _context2.n = 2;
+                      _context.n = 2;
                       break;
                     }
                     document.getElementById('message-area').textContent = "Please enter the dates";
-                    return _context2.a(2);
+                    return _context.a(2);
                   case 2:
                     document.getElementById('message-area').textContent = " ";
                     dateFilter();
-                    _context2.n = 3;
+                    _context.n = 3;
                     return context.sync();
                   case 3:
                     importColumnData();
+                    _context.n = 4;
+                    return context.sync();
                   case 4:
                     orderingWorksheet.onSelectionChanged.add(displayData);
-                    _context2.n = 5;
+                    _context.n = 5;
                     return context.sync();
                   case 5:
-                    return _context2.a(2);
+                    return _context.a(2);
                 }
-              }, _callee2);
+              }, _callee);
             }));
-            return function (_x7) {
-              return _ref2.apply(this, arguments);
+            return function (_x4) {
+              return _ref.apply(this, arguments);
             };
           }());
         case 1:
-          return _context3.a(2);
+          return _context2.a(2);
       }
-    }, _callee3);
+    }, _callee2);
   }));
   return _generateOrderingReport.apply(this, arguments);
 }
@@ -468,24 +437,30 @@ function generateInventoryReport() {
   return _generateInventoryReport.apply(this, arguments);
 }
 function _generateInventoryReport() {
-  _generateInventoryReport = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5() {
-    return _regenerator().w(function (_context5) {
-      while (1) switch (_context5.n) {
+  _generateInventoryReport = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4() {
+    return _regenerator().w(function (_context4) {
+      while (1) switch (_context4.n) {
         case 0:
-          _context5.n = 1;
+          _context4.n = 1;
           return Excel.run(/*#__PURE__*/function () {
-            var _ref3 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4(context) {
-              var inventoryWorksheet, inventoryTable, startDateValue, endDateValue;
-              return _regenerator().w(function (_context4) {
-                while (1) switch (_context4.n) {
+            var _ref2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(context) {
+              var inventoryWorksheet, inventoryTable, inventoryReadout, inventoryReadoutTable, startDateValue, endDateValue;
+              return _regenerator().w(function (_context3) {
+                while (1) switch (_context3.n) {
                   case 0:
                     resetGenerateInventory();
-                    _context4.n = 1;
+                    _context3.n = 1;
                     return context.sync();
                   case 1:
                     inventoryWorksheet = context.workbook.worksheets.add("Inventory At");
                     inventoryTable = inventoryWorksheet.tables.add("A1:J1", true);
+                    inventoryReadout = context.workbook.worksheets.add("Inventory Request");
+                    inventoryReadoutTable = inventoryReadout.tables.add("A1:D1", true);
                     inventoryTable.name = "InventoryAtTable";
+                    inventoryTable.style = "TableStyleMedium10";
+                    inventoryReadoutTable.name = "InventoryReadoutTable";
+                    inventoryReadoutTable.style = "TableStyleMedium10";
+                    inventoryReadoutTable.getHeaderRowRange().values = [["Item Code", "Inventory Date", "Inventory Ref", "Inventory Qty"]];
                     inventoryTable.getHeaderRowRange().values = [["Case #", "Demand", "Qty MEB", "Qty EFW", "Total MEB + EFW", "On Order", "Start Date", "Release Date", "Qty Needed (MEB)", "Notes"]];
                     inventoryTable.columns.getItemAt(2).getRange().numberFormat = [["\u20AC#,##0.00"]];
                     inventoryTable.getRange().format.autofitColumns();
@@ -493,61 +468,76 @@ function _generateInventoryReport() {
                     startDateValue = document.getElementById('start-date').value;
                     endDateValue = document.getElementById('end-date').value;
                     if (!(!startDateValue || !endDateValue)) {
-                      _context4.n = 2;
+                      _context3.n = 2;
                       break;
                     }
                     document.getElementById('message-area').textContent = "Please enter the dates";
-                    return _context4.a(2);
+                    return _context3.a(2);
                   case 2:
                     document.getElementById('message-area').textContent = " ";
                     otherDateFilter();
-                    _context4.n = 3;
+                    _context3.n = 3;
                     return context.sync();
                   case 3:
                     importOtherColumnData();
-                  case 4:
-                    _context4.n = 5;
+                    _context3.n = 4;
                     return context.sync();
+                  case 4:
+                    _context3.n = 5;
+                    return importColumnData();
                   case 5:
-                    return _context4.a(2);
+                    readoutData();
+                  case 6:
+                    _context3.n = 7;
+                    return context.sync();
+                  case 7:
+                    return _context3.a(2);
                 }
-              }, _callee4);
+              }, _callee3);
             }));
-            return function (_x8) {
-              return _ref3.apply(this, arguments);
+            return function (_x5) {
+              return _ref2.apply(this, arguments);
             };
           }());
         case 1:
-          return _context5.a(2);
+          return _context4.a(2);
       }
-    }, _callee5);
+    }, _callee4);
   }));
   return _generateInventoryReport.apply(this, arguments);
 }
-function tryCatch(_x2) {
+function tryCatch(_x) {
   return _tryCatch.apply(this, arguments);
 }
 function _tryCatch() {
-  _tryCatch = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee6(callback) {
-    var _t;
-    return _regenerator().w(function (_context6) {
-      while (1) switch (_context6.n) {
+  _tryCatch = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5(callback) {
+    var messageArea, _t;
+    return _regenerator().w(function (_context5) {
+      while (1) switch (_context5.n) {
         case 0:
-          _context6.p = 0;
-          _context6.n = 1;
+          _context5.p = 0;
+          _context5.n = 1;
           return callback();
         case 1:
-          _context6.n = 3;
+          _context5.n = 3;
           break;
         case 2:
-          _context6.p = 2;
-          _t = _context6.v;
-          alert(_t);
+          _context5.p = 2;
+          _t = _context5.v;
+          messageArea = document.getElementById('message-area');
+          if (messageArea) {
+            messageArea.textContent = "Error: ".concat(_t.message || _t);
+            messageArea.style.color = 'red';
+            setTimeout(function () {
+              messageArea.textContent = '';
+              messageArea.style.color = '';
+            }, 5000);
+          }
           console.error(_t);
         case 3:
-          return _context6.a(2);
+          return _context5.a(2);
       }
-    }, _callee6, null, [[0, 2]]);
+    }, _callee5, null, [[0, 2]]);
   }));
   return _tryCatch.apply(this, arguments);
 }
@@ -555,16 +545,16 @@ function importColumnData() {
   return _importColumnData.apply(this, arguments);
 }
 function _importColumnData() {
-  _importColumnData = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee8() {
-    return _regenerator().w(function (_context8) {
-      while (1) switch (_context8.n) {
+  _importColumnData = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee7() {
+    return _regenerator().w(function (_context7) {
+      while (1) switch (_context7.n) {
         case 0:
-          _context8.n = 1;
+          _context7.n = 1;
           return Excel.run(/*#__PURE__*/function () {
-            var _ref4 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee7(context) {
+            var _ref3 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee6(context) {
               var inventoryReportWorksheet, inventoryUsedRange, dynamicWorksheet, dynamicUsedRange, openPOsWorksheet, openPOsUsedRange, orderingWorksheet, dynamicHeaders, dynItemCodeIdx, dynItemQtyIdx, dynWorkIdx, dynItemCodeColumn, dynItemQtyColumn, dynWorkColumn, openPOsHeaders, openPOItemCodeIdx, openPOItemQtyIdx, openPOItemCodeColumn, openPOItemQtyColumn, inventoryHeaders, invItemCodeIdx, invItemQtyIdx, invRepItemCodeColumn, invRepItemQtyColumn, dynamic, dynamicQR, dynamicICR, dynamicWork, inventoryICR, inventoryQR, openPOs, openPOsICR, openPOsQR, filteredICR, filteredQR, fullDynamicMap, dynamicMap, inventoryMap, openPOsMap, allItemCodes, result, _iterator, _step, _code, dynamicQty, inventoryQty, openPOsQty, toOrder, caseNumbers, requiredAmounts, sell, _iterator2, _step2, _code2, _dynamicQty, _openPOsQty, overBuy, orderingUsedRange, orderingValues, startArray, i, itemCode, start, dateOnly, caseOrder, demand, _iterator3, _step3, _code3, demandQty, demandOutput, currentInventory, _iterator4, _step4, _code4, currentInvQty, currentInventoryOutput, onOrder, _iterator5, _step5, _code5, onOrderQty, onOrderOutput, orderOrMakeMap, _i, code, work, orderOrMake, _iterator6, _step6, _code6, workCentersSet, _workCenters, orderOrMakeOutput, orderOrMakeCategory, _i2, workCenters, usedRange, borders, lastRow, highlight;
-              return _regenerator().w(function (_context7) {
-                while (1) switch (_context7.n) {
+              return _regenerator().w(function (_context6) {
+                while (1) switch (_context6.n) {
                   case 0:
                     inventoryReportWorksheet = context.workbook.worksheets.getItem("Inventory");
                     inventoryUsedRange = inventoryReportWorksheet.getUsedRange().load("values");
@@ -573,7 +563,7 @@ function _importColumnData() {
                     openPOsWorksheet = context.workbook.worksheets.getItem("Open PO's");
                     openPOsUsedRange = openPOsWorksheet.getUsedRange().load("values");
                     orderingWorksheet = context.workbook.worksheets.getItem("Ordering");
-                    _context7.n = 1;
+                    _context6.n = 1;
                     return context.sync();
                   case 1:
                     //Dynamic fluid Placement
@@ -598,7 +588,7 @@ function _importColumnData() {
                     dynamicQR = dynamic.getRange(dynItemQtyColumn).getUsedRange().load("values");
                     dynamicICR = dynamic.getRange(dynItemCodeColumn).getUsedRange().load("values");
                     dynamicWork = dynamic.getRange(dynWorkColumn).getUsedRange().load("values");
-                    _context7.n = 2;
+                    _context6.n = 2;
                     return context.sync();
                   case 2:
                     inventoryICR = inventoryReportWorksheet.getRange(invRepItemCodeColumn).getUsedRange().load("values");
@@ -606,7 +596,7 @@ function _importColumnData() {
                     openPOs = context.workbook.worksheets.getItem("Open PO's");
                     openPOsICR = openPOs.getRange(openPOItemCodeColumn).getUsedRange().load("values");
                     openPOsQR = openPOs.getRange(openPOItemQtyColumn).getUsedRange().load("values");
-                    _context7.n = 3;
+                    _context6.n = 3;
                     return context.sync();
                   case 3:
                     //Date Filtering
@@ -647,7 +637,7 @@ function _importColumnData() {
                       return [row[1]];
                     });
                     orderingWorksheet.getRange("E1:E".concat(requiredAmounts.length)).values = requiredAmounts;
-                    _context7.n = 4;
+                    _context6.n = 4;
                     return context.sync();
                   case 4:
                     // Remove From Order
@@ -674,7 +664,7 @@ function _importColumnData() {
 
                     //Importing the Planned Start Date
                     orderingUsedRange = orderingWorksheet.getUsedRange().load("values");
-                    _context7.n = 5;
+                    _context6.n = 5;
                     return context.sync();
                   case 5:
                     orderingValues = orderingUsedRange.values;
@@ -757,7 +747,7 @@ function _importColumnData() {
                         orderOrMakeMap.get(code).add(work);
                       }
                     }
-                    _context7.n = 6;
+                    _context6.n = 6;
                     return context.sync();
                   case 6:
                     orderOrMake = [["Buy or Make"]];
@@ -781,7 +771,7 @@ function _importColumnData() {
                     _i2 = 1;
                   case 7:
                     if (!(_i2 < orderOrMakeOutput.length)) {
-                      _context7.n = 9;
+                      _context6.n = 9;
                       break;
                     }
                     workCenters = orderOrMakeOutput[_i2][0];
@@ -792,11 +782,11 @@ function _importColumnData() {
                     } else {
                       orderOrMakeCategory.push(["Can Make"]);
                     }
-                    _context7.n = 8;
+                    _context6.n = 8;
                     return context.sync();
                   case 8:
                     _i2++;
-                    _context7.n = 7;
+                    _context6.n = 7;
                     break;
                   case 9:
                     orderingWorksheet.getRange("F1:F".concat(orderOrMakeCategory.length)).values = orderOrMakeCategory;
@@ -834,38 +824,38 @@ function _importColumnData() {
                       highlight.getItem(side).weight = "Thick";
                       highlight.getItem(side).color = "#BE5014";
                     });
-                    _context7.n = 10;
+                    _context6.n = 10;
                     return context.sync();
                   case 10:
-                    return _context7.a(2);
+                    return _context6.a(2);
                 }
-              }, _callee7);
+              }, _callee6);
             }));
-            return function (_x9) {
-              return _ref4.apply(this, arguments);
+            return function (_x6) {
+              return _ref3.apply(this, arguments);
             };
           }());
         case 1:
-          return _context8.a(2);
+          return _context7.a(2);
       }
-    }, _callee8);
+    }, _callee7);
   }));
   return _importColumnData.apply(this, arguments);
 }
-function importOtherColumnData(_x3) {
+function importOtherColumnData(_x2) {
   return _importOtherColumnData.apply(this, arguments);
 }
 function _importOtherColumnData() {
-  _importOtherColumnData = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee0(event) {
-    return _regenerator().w(function (_context0) {
-      while (1) switch (_context0.n) {
+  _importOtherColumnData = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee9(event) {
+    return _regenerator().w(function (_context9) {
+      while (1) switch (_context9.n) {
         case 0:
-          _context0.n = 1;
+          _context9.n = 1;
           return Excel.run(/*#__PURE__*/function () {
-            var _ref5 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee9(context) {
-              var inventoryReportWorksheet, inventoryUsedRange, dynamicWorksheet, dynamicUsedRange, openPOsWorksheet, openPOsUsedRange, inventoryWorksheet, dynamicHeaders, dynItemCodeIdx, dynItemQtyIdx, dynItemCodeColumn, dynItemQtyColumn, openPOsHeaders, openPOItemCodeIdx, openPOItemQtyIdx, openPOItemCodeColumn, openPOItemQtyColumn, inventoryHeaders, invItemCodeIdx, invItemQtyIdx, invLocationIdx, invRepItemCodeColumn, invRepItemQtyColumn, invRepLocationColumn, inventoryICR, inventoryQR, inventoryLOC, openPOs, openPOsICR, openPOsQR, invFilterICR, invFilterQR, initialEntry, result, _iterator7, _step7, _code7, demandQty, caseNumbers, requiredAmounts, mebArray, efwArray, i, code, found, j, invCode, location, qty, isMeb, isEFW, mebSumMap, mebAmounts, efwSumMap, efwAmounts, total, openPOsMap, onOrder, _iterator8, _step8, _code8, onOrderQty, onOrderOutput, startArray, releaseArray, _i3, itemCode, start, dateOnly, releaseDate, adjustedRelease, qtyNeeded, usedRange, borders, lastRow, highlight;
-              return _regenerator().w(function (_context9) {
-                while (1) switch (_context9.n) {
+            var _ref4 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee8(context) {
+              var inventoryReportWorksheet, inventoryUsedRange, dynamicWorksheet, dynamicUsedRange, openPOsWorksheet, openPOsUsedRange, inventoryWorksheet, dynamicHeaders, dynItemCodeIdx, dynItemQtyIdx, dynItemCodeColumn, dynItemQtyColumn, openPOsHeaders, openPOItemCodeIdx, openPOItemQtyIdx, openPOItemCodeColumn, openPOItemQtyColumn, inventoryHeaders, invItemCodeIdx, invItemQtyIdx, invLocationIdx, invRepItemCodeColumn, invRepItemQtyColumn, invRepLocationColumn, inventoryICR, inventoryQR, inventoryLOC, openPOs, openPOsICR, openPOsQR, invFilterICR, invFilterQR, initialEntry, result, _iterator7, _step7, _code7, demandQty, caseNumbers, requiredAmounts, mebArray, efwArray, i, code, found, j, invCode, location, qty, isMeb, isEFW, mebSumMap, mebAmounts, efwSumMap, efwAmounts, total, openPOsMap, onOrder, _iterator8, _step8, _code8, onOrderQty, startArray, releaseArray, _i3, itemCode, start, dateOnly, releaseDate, adjustedRelease, qtyNeeded, filteredData, _i4, caseNumbersFiltered, demandFiltered, mebQtyFiltered, efwQtyFiltered, totalQtyFiltered, onOrderFiltered, startDateFiltered, releaseDateFiltered, qtyNeededFiltered, notesFiltered, usedRange, borders, lastRow, highlight;
+              return _regenerator().w(function (_context8) {
+                while (1) switch (_context8.n) {
                   case 0:
                     inventoryReportWorksheet = context.workbook.worksheets.getItem("Inventory");
                     inventoryUsedRange = inventoryReportWorksheet.getUsedRange().load("values");
@@ -874,7 +864,7 @@ function _importOtherColumnData() {
                     openPOsWorksheet = context.workbook.worksheets.getItem("Open PO's");
                     openPOsUsedRange = openPOsWorksheet.getUsedRange().load("values");
                     inventoryWorksheet = context.workbook.worksheets.getItem("Inventory At");
-                    _context9.n = 1;
+                    _context8.n = 1;
                     return context.sync();
                   case 1:
                     //Dynamic fluid Placement
@@ -895,7 +885,7 @@ function _importOtherColumnData() {
                     invRepItemCodeColumn = "".concat(colIdxToLetter(invItemCodeIdx), ":").concat(colIdxToLetter(invItemCodeIdx));
                     invRepItemQtyColumn = "".concat(colIdxToLetter(invItemQtyIdx), ":").concat(colIdxToLetter(invItemQtyIdx));
                     invRepLocationColumn = "".concat(colIdxToLetter(invLocationIdx), ":").concat(colIdxToLetter(invLocationIdx));
-                    _context9.n = 2;
+                    _context8.n = 2;
                     return context.sync();
                   case 2:
                     //Quanity and Item Code from Dynamic, Inventory Report, and Open PO's sheets
@@ -905,7 +895,7 @@ function _importOtherColumnData() {
                     openPOs = context.workbook.worksheets.getItem("Open PO's");
                     openPOsICR = openPOs.getRange(openPOItemCodeColumn).getUsedRange().load("values");
                     openPOsQR = openPOs.getRange(openPOItemQtyColumn).getUsedRange().load("values");
-                    _context9.n = 3;
+                    _context8.n = 3;
                     return context.sync();
                   case 3:
                     //Date Filtering
@@ -931,20 +921,16 @@ function _importOtherColumnData() {
                     } finally {
                       _iterator7.f();
                     }
-                    _context9.n = 4;
+                    _context8.n = 4;
                     return context.sync();
                   case 4:
                     caseNumbers = result.map(function (row) {
                       return row[0];
                     });
-                    inventoryWorksheet.getRange("A1:A".concat(caseNumbers.length)).values = caseNumbers.map(function (val) {
-                      return [val];
-                    });
                     requiredAmounts = result.map(function (row) {
                       return [row[1]];
                     });
                     console.log("Required Amounts", requiredAmounts);
-                    inventoryWorksheet.getRange("B1:B".concat(requiredAmounts.length)).values = requiredAmounts;
 
                     //Mebane-EFW Inventory Map
                     mebArray = [];
@@ -969,7 +955,7 @@ function _importOtherColumnData() {
                         efwArray.push([code, 0]);
                       }
                     }
-                    _context9.n = 5;
+                    _context8.n = 5;
                     return context.sync();
                   case 5:
                     mebSumMap = buildSumMap(mebArray.map(function (item) {
@@ -980,7 +966,6 @@ function _importOtherColumnData() {
                     mebAmounts = Array.from(mebSumMap.entries()).map(function (row) {
                       return [row[1]];
                     });
-                    inventoryWorksheet.getRange("C2:C".concat(mebAmounts.length + 1)).values = mebAmounts;
                     efwSumMap = buildSumMap(efwArray.map(function (item) {
                       return [item[0]];
                     }), efwArray.map(function (item) {
@@ -989,15 +974,9 @@ function _importOtherColumnData() {
                     efwAmounts = Array.from(efwSumMap.entries()).map(function (row) {
                       return [row[1]];
                     });
-                    inventoryWorksheet.getRange("D2:D".concat(efwAmounts.length + 1)).values = efwAmounts;
                     total = mebAmounts.map(function (value, index) {
                       return Number(value) + efwAmounts[index][0];
-                    });
-                    inventoryWorksheet.getRange("E2:E".concat(total.length + 1)).values = total.map(function (val) {
-                      return [val];
-                    });
-
-                    //Inventory On Order 
+                    }); //Inventory On Order 
                     openPOsMap = buildSumMap(openPOsICR.values, openPOsQR.values);
                     onOrder = [["On Order"]];
                     _iterator8 = _createForOfIteratorHelper(caseNumbers.slice(1));
@@ -1007,17 +986,13 @@ function _importOtherColumnData() {
                         onOrderQty = openPOsMap.get(_code8) || 0;
                         onOrder.push([onOrderQty]);
                       }
+
+                      // Importing the Start and Release Date
                     } catch (err) {
                       _iterator8.e(err);
                     } finally {
                       _iterator8.f();
                     }
-                    onOrderOutput = onOrder.map(function (row) {
-                      return [row[0]];
-                    });
-                    inventoryWorksheet.getRange("F1:F".concat(onOrderOutput.length)).values = onOrderOutput;
-
-                    // Importing the Start and Release Date
                     startArray = [["Earliest Start Date"]];
                     releaseArray = [["Release Date"]];
                     for (_i3 = 1; _i3 < caseNumbers.length; _i3++) {
@@ -1034,17 +1009,81 @@ function _importOtherColumnData() {
                         releaseArray.push(["Invalid Release Date"]);
                       }
                     }
-                    inventoryWorksheet.getRange("G1:G".concat(startArray.length)).values = startArray;
-                    inventoryWorksheet.getRange("H1:H".concat(releaseArray.length)).values = releaseArray;
-
-                    //Qty Needed (MEB)
                     qtyNeeded = requiredAmounts.slice(1).map(function (value, index) {
                       return Number(value) - mebAmounts[index];
                     });
-                    inventoryWorksheet.getRange("I2:I".concat(qtyNeeded.length + 1)).values = qtyNeeded.map(function (val) {
-                      return [val];
+                    filteredData = [];
+                    filteredData.push({
+                      caseNumber: "Case #",
+                      demand: "Demand",
+                      mebQty: "Qty MEB",
+                      efwQty: "Qty EFW",
+                      totalQty: "Total MEB + EFW",
+                      onOrder: "On Order",
+                      startDate: "Start Date",
+                      releaseDate: "Release Date",
+                      qtyNeeded: "Qty Needed (MEB)",
+                      notes: "Notes"
                     });
-                    _context9.n = 6;
+                    for (_i4 = 0; _i4 < caseNumbers.slice(1).length; _i4++) {
+                      if (qtyNeeded[_i4] > 0) {
+                        filteredData.push({
+                          caseNumber: caseNumbers[_i4 + 1],
+                          demand: requiredAmounts[_i4 + 1][0],
+                          mebQty: mebAmounts[_i4][0],
+                          efwQty: efwAmounts[_i4][0],
+                          totalQty: total[_i4],
+                          onOrder: onOrder[_i4 + 1][0],
+                          startDate: startArray[_i4 + 1][0],
+                          releaseDate: releaseArray[_i4 + 1][0],
+                          qtyNeeded: qtyNeeded[_i4],
+                          notes: ""
+                        });
+                      }
+                    }
+                    if (filteredData.length > 1) {
+                      caseNumbersFiltered = filteredData.map(function (row) {
+                        return [row.caseNumber];
+                      });
+                      demandFiltered = filteredData.map(function (row) {
+                        return [row.demand];
+                      });
+                      mebQtyFiltered = filteredData.map(function (row) {
+                        return [row.mebQty];
+                      });
+                      efwQtyFiltered = filteredData.map(function (row) {
+                        return [row.efwQty];
+                      });
+                      totalQtyFiltered = filteredData.map(function (row) {
+                        return [row.totalQty];
+                      });
+                      onOrderFiltered = filteredData.map(function (row) {
+                        return [row.onOrder];
+                      });
+                      startDateFiltered = filteredData.map(function (row) {
+                        return [row.startDate];
+                      });
+                      releaseDateFiltered = filteredData.map(function (row) {
+                        return [row.releaseDate];
+                      });
+                      qtyNeededFiltered = filteredData.map(function (row) {
+                        return [row.qtyNeeded];
+                      });
+                      notesFiltered = filteredData.map(function (row) {
+                        return [row.notes];
+                      });
+                      inventoryWorksheet.getRange("A1:A".concat(caseNumbersFiltered.length)).values = caseNumbersFiltered;
+                      inventoryWorksheet.getRange("B1:B".concat(demandFiltered.length)).values = demandFiltered;
+                      inventoryWorksheet.getRange("C1:C".concat(mebQtyFiltered.length)).values = mebQtyFiltered;
+                      inventoryWorksheet.getRange("D1:D".concat(efwQtyFiltered.length)).values = efwQtyFiltered;
+                      inventoryWorksheet.getRange("E1:E".concat(totalQtyFiltered.length)).values = totalQtyFiltered;
+                      inventoryWorksheet.getRange("F1:F".concat(onOrderFiltered.length)).values = onOrderFiltered;
+                      inventoryWorksheet.getRange("G1:G".concat(startDateFiltered.length)).values = startDateFiltered;
+                      inventoryWorksheet.getRange("H1:H".concat(releaseDateFiltered.length)).values = releaseDateFiltered;
+                      inventoryWorksheet.getRange("I1:I".concat(qtyNeededFiltered.length)).values = qtyNeededFiltered;
+                      inventoryWorksheet.getRange("J1:J".concat(notesFiltered.length)).values = notesFiltered;
+                    }
+                    _context8.n = 6;
                     return context.sync();
                   case 6:
                     //Inventory formatting
@@ -1064,7 +1103,7 @@ function _importOtherColumnData() {
                     inventoryWorksheet.getRange("J:J").format.columnWidth = 150;
                     inventoryWorksheet.getUsedRange().format.rowHeight = 20;
                     inventoryWorksheet.freezePanes.freezeRows(1);
-                    inventoryWorksheet.getRange("I1:I1").format.fill.color = "#BE5014";
+                    inventoryWorksheet.getRange("I1:I1").format.fill.color = "#00008B";
                     inventoryWorksheet.getRange("I1:I1").format.font.color = "yellow";
 
                     //All border lines
@@ -1077,104 +1116,285 @@ function _importOtherColumnData() {
                     });
 
                     //Bold Outline Lines
-                    lastRow = mebAmounts.length;
-                    highlight = inventoryWorksheet.getRange("I1:I".concat(lastRow + 1)).format.borders;
+                    lastRow = filteredData.length;
+                    highlight = inventoryWorksheet.getRange("I1:I".concat(lastRow)).format.borders;
                     ["EdgeTop", "EdgeBottom", "EdgeLeft", "EdgeRight"].forEach(function (side) {
                       highlight.getItem(side).style = "Continuous";
                       highlight.getItem(side).weight = "Thick";
-                      highlight.getItem(side).color = "#BE5014";
+                      highlight.getItem(side).color = "#00008B";
                     });
-                    _context9.n = 7;
+                    _context8.n = 7;
                     return context.sync();
                   case 7:
-                    return _context9.a(2);
+                    return _context8.a(2);
                 }
-              }, _callee9);
+              }, _callee8);
             }));
-            return function (_x0) {
+            return function (_x7) {
+              return _ref4.apply(this, arguments);
+            };
+          }());
+        case 1:
+          return _context9.a(2);
+      }
+    }, _callee9);
+  }));
+  return _importOtherColumnData.apply(this, arguments);
+}
+function readoutData() {
+  return _readoutData.apply(this, arguments);
+}
+function _readoutData() {
+  _readoutData = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee1() {
+    return _regenerator().w(function (_context1) {
+      while (1) switch (_context1.n) {
+        case 0:
+          _context1.n = 1;
+          return Excel.run(/*#__PURE__*/function () {
+            var _ref5 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee0(context) {
+              var inventoryAtWorksheet, inventoryAtUsedRange, inventoryWorksheet, inventoryUsedRange, inventoryRequestWorksheet, inventoryAtHeaders, invAtItemCodeIdx, invAtQtyNeededIdx, invAtQtyEFWIdx, invAtItemCodeColumn, invAtQtyNeededColumn, invAtQtyEFWColumn, inventoryHeaders, invItemCodeIdx, invDateIdx, invRefIdx, invQtyIdx, invRepItemCodeColumn, invRepDateColumn, invRepRefColumn, invRepQtyColumn, invAtItemCodes, invAtQtyNeeded, invAtQtyEFW, invItemCodes, invDates, invRefs, invQtys, filteredData, i, qtyNeeded, qtyEFW, inventoryDataMap, _i5, itemCode, dateStr, start, date, ref, qty, _iterator9, _step9, _step9$value, _itemCode2, data, readoutResult, _i6, _filteredData, filteredItem, _itemCode, _qtyNeeded, inventoryItems, totalPulled, palletsPulled, _iterator0, _step0, invItem, itemCodes, dates, refs, qtys, usedRange, borders, _t2;
+              return _regenerator().w(function (_context0) {
+                while (1) switch (_context0.n) {
+                  case 0:
+                    inventoryAtWorksheet = context.workbook.worksheets.getItem("Inventory At");
+                    inventoryAtUsedRange = inventoryAtWorksheet.getUsedRange().load("values");
+                    inventoryWorksheet = context.workbook.worksheets.getItem("Inventory");
+                    inventoryUsedRange = inventoryWorksheet.getUsedRange().load("values");
+                    inventoryRequestWorksheet = context.workbook.worksheets.getItem("Inventory Request");
+                    _context0.n = 1;
+                    return context.sync();
+                  case 1:
+                    //Inventory At fluid Placement
+                    inventoryAtHeaders = inventoryAtUsedRange.values[0];
+                    invAtItemCodeIdx = inventoryAtHeaders.indexOf("Case #");
+                    invAtQtyNeededIdx = inventoryAtHeaders.indexOf("Qty Needed (MEB)");
+                    invAtQtyEFWIdx = inventoryAtHeaders.indexOf("Qty EFW");
+                    invAtItemCodeColumn = "".concat(colIdxToLetter(invAtItemCodeIdx), ":").concat(colIdxToLetter(invAtItemCodeIdx));
+                    invAtQtyNeededColumn = "".concat(colIdxToLetter(invAtQtyNeededIdx), ":").concat(colIdxToLetter(invAtQtyNeededIdx));
+                    invAtQtyEFWColumn = "".concat(colIdxToLetter(invAtQtyEFWIdx), ":").concat(colIdxToLetter(invAtQtyEFWIdx)); //Inventory Report fluid Placement
+                    inventoryHeaders = inventoryUsedRange.values[0];
+                    invItemCodeIdx = inventoryHeaders.indexOf("Item Code");
+                    invDateIdx = inventoryHeaders.indexOf("Inventory Date");
+                    invRefIdx = inventoryHeaders.indexOf("Inventory Ref");
+                    invQtyIdx = inventoryHeaders.indexOf("Inventory Qty");
+                    invRepItemCodeColumn = "".concat(colIdxToLetter(invItemCodeIdx), ":").concat(colIdxToLetter(invItemCodeIdx));
+                    invRepDateColumn = "".concat(colIdxToLetter(invDateIdx), ":").concat(colIdxToLetter(invDateIdx));
+                    invRepRefColumn = "".concat(colIdxToLetter(invRefIdx), ":").concat(colIdxToLetter(invRefIdx));
+                    invRepQtyColumn = "".concat(colIdxToLetter(invQtyIdx), ":").concat(colIdxToLetter(invQtyIdx));
+                    _context0.n = 2;
+                    return context.sync();
+                  case 2:
+                    //Get data from Inventory At sheet
+                    invAtItemCodes = inventoryAtWorksheet.getRange(invAtItemCodeColumn).getUsedRange().load("values");
+                    invAtQtyNeeded = inventoryAtWorksheet.getRange(invAtQtyNeededColumn).getUsedRange().load("values");
+                    invAtQtyEFW = inventoryAtWorksheet.getRange(invAtQtyEFWColumn).getUsedRange().load("values"); //Get data from Inventory sheet
+                    invItemCodes = inventoryWorksheet.getRange(invRepItemCodeColumn).getUsedRange().load("values");
+                    invDates = inventoryWorksheet.getRange(invRepDateColumn).getUsedRange().load("values");
+                    invRefs = inventoryWorksheet.getRange(invRepRefColumn).getUsedRange().load("values");
+                    invQtys = inventoryWorksheet.getRange(invRepQtyColumn).getUsedRange().load("values");
+                    _context0.n = 3;
+                    return context.sync();
+                  case 3:
+                    //Filter Inventory At data for Qty Needed > 300 and Qty EFW > 0
+                    filteredData = [];
+                    for (i = 1; i < invAtItemCodes.values.length; i++) {
+                      qtyNeeded = Number(invAtQtyNeeded.values[i][0]);
+                      qtyEFW = Number(invAtQtyEFW.values[i][0]);
+                      if (qtyNeeded > 300 && qtyEFW > 0) {
+                        filteredData.push({
+                          itemCode: String(invAtItemCodes.values[i][0]).trim(),
+                          qtyNeeded: qtyNeeded
+                        });
+                      }
+                    }
+
+                    //Build inventory data map for each item code
+                    inventoryDataMap = new Map();
+                    for (_i5 = 1; _i5 < invItemCodes.values.length; _i5++) {
+                      itemCode = String(invItemCodes.values[_i5][0]).trim();
+                      dateStr = invDates.values[_i5] ? String(invDates.values[_i5][0]).trim() : "";
+                      start = ExcelDateToJSDate(dateStr);
+                      start.setHours(0, 0, 0, 0);
+                      date = formatDate(start);
+                      ref = invRefs.values[_i5] ? String(invRefs.values[_i5][0]).trim() : "";
+                      qty = Number(invQtys.values[_i5][0]);
+                      if (itemCode && !isNaN(qty) && qty > 0) {
+                        if (!inventoryDataMap.has(itemCode)) {
+                          inventoryDataMap.set(itemCode, []);
+                        }
+                        inventoryDataMap.get(itemCode).push({
+                          date: date,
+                          ref: ref,
+                          qty: qty
+                        });
+                      }
+                    }
+
+                    //Sort inventory data by date (oldest first) for each item code
+                    _iterator9 = _createForOfIteratorHelper(inventoryDataMap);
+                    try {
+                      for (_iterator9.s(); !(_step9 = _iterator9.n()).done;) {
+                        _step9$value = _slicedToArray(_step9.value, 2), _itemCode2 = _step9$value[0], data = _step9$value[1];
+                        data.sort(function (a, b) {
+                          var dateA = new Date(a.date);
+                          var dateB = new Date(b.date);
+                          return dateA - dateB;
+                        });
+                      }
+
+                      //Generate readout data
+                    } catch (err) {
+                      _iterator9.e(err);
+                    } finally {
+                      _iterator9.f();
+                    }
+                    readoutResult = [["Item Code", "Inventory Date", "Inventory Ref", "Inventory Qty"]];
+                    _i6 = 0, _filteredData = filteredData;
+                  case 4:
+                    if (!(_i6 < _filteredData.length)) {
+                      _context0.n = 13;
+                      break;
+                    }
+                    filteredItem = _filteredData[_i6];
+                    _itemCode = filteredItem.itemCode;
+                    _qtyNeeded = filteredItem.qtyNeeded;
+                    if (!inventoryDataMap.has(_itemCode)) {
+                      _context0.n = 12;
+                      break;
+                    }
+                    inventoryItems = inventoryDataMap.get(_itemCode);
+                    totalPulled = 0;
+                    palletsPulled = 0;
+                    _iterator0 = _createForOfIteratorHelper(inventoryItems);
+                    _context0.p = 5;
+                    _iterator0.s();
+                  case 6:
+                    if ((_step0 = _iterator0.n()).done) {
+                      _context0.n = 9;
+                      break;
+                    }
+                    invItem = _step0.value;
+                    if (!(totalPulled >= _qtyNeeded)) {
+                      _context0.n = 7;
+                      break;
+                    }
+                    return _context0.a(3, 9);
+                  case 7:
+                    readoutResult.push([_itemCode, invItem.date, invItem.ref, invItem.qty]);
+                    totalPulled += invItem.qty;
+                    palletsPulled++;
+                  case 8:
+                    _context0.n = 6;
+                    break;
+                  case 9:
+                    _context0.n = 11;
+                    break;
+                  case 10:
+                    _context0.p = 10;
+                    _t2 = _context0.v;
+                    _iterator0.e(_t2);
+                  case 11:
+                    _context0.p = 11;
+                    _iterator0.f();
+                    return _context0.f(11);
+                  case 12:
+                    _i6++;
+                    _context0.n = 4;
+                    break;
+                  case 13:
+                    //Write data to Inventory Request table
+                    if (readoutResult.length > 1) {
+                      itemCodes = readoutResult.map(function (row) {
+                        return [row[0]];
+                      });
+                      dates = readoutResult.map(function (row) {
+                        return [row[1]];
+                      });
+                      refs = readoutResult.map(function (row) {
+                        return [row[2]];
+                      });
+                      qtys = readoutResult.map(function (row) {
+                        return [row[3]];
+                      });
+                      inventoryRequestWorksheet.getRange("A1:A".concat(itemCodes.length)).values = itemCodes;
+                      inventoryRequestWorksheet.getRange("B1:B".concat(dates.length)).values = dates;
+                      inventoryRequestWorksheet.getRange("C1:C".concat(refs.length)).values = refs;
+                      inventoryRequestWorksheet.getRange("D1:D".concat(qtys.length)).values = qtys;
+                    }
+                    _context0.n = 14;
+                    return context.sync();
+                  case 14:
+                    //Formatting
+                    inventoryRequestWorksheet.getRange("A:D").format.autofitColumns();
+                    inventoryRequestWorksheet.getRange("A:D").format.horizontalAlignment = "Center";
+                    inventoryRequestWorksheet.getRange("A:D").format.verticalAlignment = "Center";
+                    inventoryRequestWorksheet.getRange("A:A").format.columnWidth = 120;
+                    inventoryRequestWorksheet.getRange("B:B").format.columnWidth = 100;
+                    inventoryRequestWorksheet.getRange("C:C").format.columnWidth = 100;
+                    inventoryRequestWorksheet.getRange("D:D").format.columnWidth = 100;
+                    inventoryRequestWorksheet.getUsedRange().format.rowHeight = 20;
+                    inventoryRequestWorksheet.freezePanes.freezeRows(1);
+
+                    //All border lines
+                    usedRange = inventoryRequestWorksheet.getUsedRange();
+                    borders = usedRange.format.borders;
+                    ["EdgeTop", "EdgeBottom", "EdgeLeft", "EdgeRight", "InsideVertical", "InsideHorizontal"].forEach(function (edge) {
+                      borders.getItem(edge).style = "Continuous";
+                      borders.getItem(edge).weight = "Thin";
+                      borders.getItem(edge).color = "#000000";
+                    });
+                    _context0.n = 15;
+                    return context.sync();
+                  case 15:
+                    return _context0.a(2);
+                }
+              }, _callee0, null, [[5, 10, 11, 12]]);
+            }));
+            return function (_x8) {
               return _ref5.apply(this, arguments);
             };
           }());
         case 1:
-          return _context0.a(2);
+          return _context1.a(2);
       }
-    }, _callee0);
+    }, _callee1);
   }));
-  return _importOtherColumnData.apply(this, arguments);
-}
-function resetAll() {
-  return _resetAll.apply(this, arguments);
-}
-function _resetAll() {
-  _resetAll = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee10() {
-    return _regenerator().w(function (_context10) {
-      while (1) switch (_context10.n) {
-        case 0:
-          _context10.n = 1;
-          return Excel.run(/*#__PURE__*/function () {
-            var _ref6 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee1(context) {
-              var sheets;
-              return _regenerator().w(function (_context1) {
-                while (1) switch (_context1.n) {
-                  case 0:
-                    sheets = context.workbook.worksheets;
-                    sheets.getItemOrNullObject("Ordering").delete();
-                    sheets.getItemOrNullObject("Inventory At").delete();
-                    sheets.getItemOrNullObject("Test").delete();
-                    document.getElementById('start-date').value = "";
-                    document.getElementById('end-date').value = "";
-                    _context1.n = 1;
-                    return context.sync();
-                  case 1:
-                    return _context1.a(2);
-                }
-              }, _callee1);
-            }));
-            return function (_x1) {
-              return _ref6.apply(this, arguments);
-            };
-          }());
-        case 1:
-          return _context10.a(2);
-      }
-    }, _callee10);
-  }));
-  return _resetAll.apply(this, arguments);
+  return _readoutData.apply(this, arguments);
 }
 function resetGenerateOrdering() {
   return _resetGenerateOrdering.apply(this, arguments);
 }
 function _resetGenerateOrdering() {
-  _resetGenerateOrdering = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee12() {
-    return _regenerator().w(function (_context12) {
-      while (1) switch (_context12.n) {
+  _resetGenerateOrdering = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee11() {
+    return _regenerator().w(function (_context11) {
+      while (1) switch (_context11.n) {
         case 0:
-          _context12.n = 1;
+          _context11.n = 1;
           return Excel.run(/*#__PURE__*/function () {
-            var _ref7 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee11(context) {
+            var _ref6 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee10(context) {
               var sheets;
-              return _regenerator().w(function (_context11) {
-                while (1) switch (_context11.n) {
+              return _regenerator().w(function (_context10) {
+                while (1) switch (_context10.n) {
                   case 0:
                     sheets = context.workbook.worksheets;
                     sheets.getItemOrNullObject("Ordering").delete();
                     filter = [];
                     earlyDateMap.clear();
-                    _context11.n = 1;
+                    _context10.n = 1;
                     return context.sync();
                   case 1:
-                    return _context11.a(2);
+                    return _context10.a(2);
                 }
-              }, _callee11);
+              }, _callee10);
             }));
-            return function (_x10) {
-              return _ref7.apply(this, arguments);
+            return function (_x9) {
+              return _ref6.apply(this, arguments);
             };
           }());
         case 1:
-          return _context12.a(2);
+          return _context11.a(2);
       }
-    }, _callee12);
+    }, _callee11);
   }));
   return _resetGenerateOrdering.apply(this, arguments);
 }
@@ -1182,34 +1402,35 @@ function resetGenerateInventory() {
   return _resetGenerateInventory.apply(this, arguments);
 }
 function _resetGenerateInventory() {
-  _resetGenerateInventory = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee14() {
-    return _regenerator().w(function (_context14) {
-      while (1) switch (_context14.n) {
+  _resetGenerateInventory = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee13() {
+    return _regenerator().w(function (_context13) {
+      while (1) switch (_context13.n) {
         case 0:
-          _context14.n = 1;
+          _context13.n = 1;
           return Excel.run(/*#__PURE__*/function () {
-            var _ref8 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee13(context) {
+            var _ref7 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee12(context) {
               var sheets;
-              return _regenerator().w(function (_context13) {
-                while (1) switch (_context13.n) {
+              return _regenerator().w(function (_context12) {
+                while (1) switch (_context12.n) {
                   case 0:
                     sheets = context.workbook.worksheets;
                     sheets.getItemOrNullObject("Inventory At").delete();
-                    _context13.n = 1;
+                    sheets.getItemOrNullObject("Inventory Request").delete();
+                    _context12.n = 1;
                     return context.sync();
                   case 1:
-                    return _context13.a(2);
+                    return _context12.a(2);
                 }
-              }, _callee13);
+              }, _callee12);
             }));
-            return function (_x11) {
-              return _ref8.apply(this, arguments);
+            return function (_x0) {
+              return _ref7.apply(this, arguments);
             };
           }());
         case 1:
-          return _context14.a(2);
+          return _context13.a(2);
       }
-    }, _callee14);
+    }, _callee13);
   }));
   return _resetGenerateInventory.apply(this, arguments);
 }
@@ -1236,16 +1457,16 @@ function dateFilter() {
   return _dateFilter.apply(this, arguments);
 }
 function _dateFilter() {
-  _dateFilter = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee16() {
-    return _regenerator().w(function (_context16) {
-      while (1) switch (_context16.n) {
+  _dateFilter = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee15() {
+    return _regenerator().w(function (_context15) {
+      while (1) switch (_context15.n) {
         case 0:
-          _context16.n = 1;
+          _context15.n = 1;
           return Excel.run(/*#__PURE__*/function () {
-            var _ref9 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee15(context) {
-              var startDateInput, endDateInput, startDate, endDate, dynamicWorksheet, dynamicUsedRange, dynamicHeaders, dynItemCodeIdx, dynStartIdx, dynItemQtyIdx, dynJobIdx, dynStartColumn, dynItemQtyColumn, dynItemCodeColumn, dynJobColumn, dynamic, dynamicICR, dynamicQR, plannedStart, jobNumber, jobLatestMap, i, itemCode, dateStr, date, job, qty, _iterator9, _step9, entry, _itemCode2, _date2, _i4, _itemCode, _dateStr, _date, _job, _qty;
-              return _regenerator().w(function (_context15) {
-                while (1) switch (_context15.n) {
+            var _ref8 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee14(context) {
+              var startDateInput, endDateInput, startDate, endDate, dynamicWorksheet, dynamicUsedRange, dynamicHeaders, dynItemCodeIdx, dynStartIdx, dynItemQtyIdx, dynJobIdx, dynStartColumn, dynItemQtyColumn, dynItemCodeColumn, dynJobColumn, dynamic, dynamicICR, dynamicQR, plannedStart, jobNumber, jobLatestMap, i, itemCode, dateStr, date, job, qty, _iterator1, _step1, entry, _itemCode4, _date2, _i7, _itemCode3, _dateStr, _date, _job, _qty;
+              return _regenerator().w(function (_context14) {
+                while (1) switch (_context14.n) {
                   case 0:
                     startDateInput = document.getElementById('start-date').value;
                     endDateInput = document.getElementById('end-date').value;
@@ -1253,7 +1474,7 @@ function _dateFilter() {
                     endDate = inputDateParse(endDateInput);
                     dynamicWorksheet = context.workbook.worksheets.getItem("Dynamic");
                     dynamicUsedRange = dynamicWorksheet.getUsedRange().load("values");
-                    _context15.n = 1;
+                    _context14.n = 1;
                     return context.sync();
                   case 1:
                     dynamicHeaders = dynamicUsedRange.values[0];
@@ -1270,7 +1491,7 @@ function _dateFilter() {
                     dynamicQR = dynamic.getRange(dynItemQtyColumn).getUsedRange().load("values");
                     plannedStart = dynamicWorksheet.getRange(dynStartColumn).getUsedRange().load("values");
                     jobNumber = dynamicWorksheet.getRange(dynJobColumn).getUsedRange().load("values");
-                    _context15.n = 2;
+                    _context14.n = 2;
                     return context.sync();
                   case 2:
                     jobLatestMap = new Map();
@@ -1294,36 +1515,36 @@ function _dateFilter() {
                     }
                     filter = Array.from(jobLatestMap.values());
                     earlyDateMap.clear();
-                    _iterator9 = _createForOfIteratorHelper(filter);
+                    _iterator1 = _createForOfIteratorHelper(filter);
                     try {
-                      for (_iterator9.s(); !(_step9 = _iterator9.n()).done;) {
-                        entry = _step9.value;
-                        _itemCode2 = entry.itemCode, _date2 = entry.date;
-                        if (!earlyDateMap.has(_itemCode2) || _date2 < earlyDateMap.get(_itemCode2)) {
-                          earlyDateMap.set(_itemCode2, _date2);
+                      for (_iterator1.s(); !(_step1 = _iterator1.n()).done;) {
+                        entry = _step1.value;
+                        _itemCode4 = entry.itemCode, _date2 = entry.date;
+                        if (!earlyDateMap.has(_itemCode4) || _date2 < earlyDateMap.get(_itemCode4)) {
+                          earlyDateMap.set(_itemCode4, _date2);
                         }
                       }
                     } catch (err) {
-                      _iterator9.e(err);
+                      _iterator1.e(err);
                     } finally {
-                      _iterator9.f();
+                      _iterator1.f();
                     }
                     filter.sort(function (a, b) {
                       return a.date - b.date;
                     });
-                    _context15.n = 3;
+                    _context14.n = 3;
                     return context.sync();
                   case 3:
-                    for (_i4 = 1; _i4 < dynamicICR.values.length; _i4++) {
-                      _itemCode = String(dynamicICR.values[_i4][0]).trim();
-                      _dateStr = plannedStart.values[_i4] ? String(plannedStart.values[_i4][0]).trim() : "";
+                    for (_i7 = 1; _i7 < dynamicICR.values.length; _i7++) {
+                      _itemCode3 = String(dynamicICR.values[_i7][0]).trim();
+                      _dateStr = plannedStart.values[_i7] ? String(plannedStart.values[_i7][0]).trim() : "";
                       _date = ExcelDateToJSDate(_dateStr);
                       _date.setHours(0, 0, 0, 0);
-                      _job = String(jobNumber.values[_i4][0]).trim();
-                      _qty = Number(dynamicQR.values[_i4][0]);
-                      if (_itemCode) {
+                      _job = String(jobNumber.values[_i7][0]).trim();
+                      _qty = Number(dynamicQR.values[_i7][0]);
+                      if (_itemCode3) {
                         allData.push({
-                          itemCode: _itemCode,
+                          itemCode: _itemCode3,
                           qty: _qty,
                           job: _job,
                           date: _date
@@ -1331,18 +1552,18 @@ function _dateFilter() {
                       }
                     }
                   case 4:
-                    return _context15.a(2);
+                    return _context14.a(2);
                 }
-              }, _callee15);
+              }, _callee14);
             }));
-            return function (_x12) {
-              return _ref9.apply(this, arguments);
+            return function (_x1) {
+              return _ref8.apply(this, arguments);
             };
           }());
         case 1:
-          return _context16.a(2);
+          return _context15.a(2);
       }
-    }, _callee16);
+    }, _callee15);
   }));
   return _dateFilter.apply(this, arguments);
 }
@@ -1350,16 +1571,16 @@ function otherDateFilter() {
   return _otherDateFilter.apply(this, arguments);
 }
 function _otherDateFilter() {
-  _otherDateFilter = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee18() {
-    return _regenerator().w(function (_context18) {
-      while (1) switch (_context18.n) {
+  _otherDateFilter = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee17() {
+    return _regenerator().w(function (_context17) {
+      while (1) switch (_context17.n) {
         case 0:
-          _context18.n = 1;
+          _context17.n = 1;
           return Excel.run(/*#__PURE__*/function () {
-            var _ref0 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee17(context) {
-              var startDateInput, endDateInput, startDate, endDate, dynamicWorksheet, dynamicUsedRange, dynamicHeaders, dynItemCodeIdx, dynStartIdx, dynItemQtyIdx, dynJobIdx, dynStartColumn, dynItemQtyColumn, dynItemCodeColumn, dynJobColumn, dynamic, dynamicICR, dynamicQR, plannedStart, jobNumber, jobLatestMap, i, itemCode, dateStr, date, job, qty, _iterator0, _step0, entry, _itemCode3, _date3;
-              return _regenerator().w(function (_context17) {
-                while (1) switch (_context17.n) {
+            var _ref9 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee16(context) {
+              var startDateInput, endDateInput, startDate, endDate, dynamicWorksheet, dynamicUsedRange, dynamicHeaders, dynItemCodeIdx, dynStartIdx, dynItemQtyIdx, dynJobIdx, dynStartColumn, dynItemQtyColumn, dynItemCodeColumn, dynJobColumn, dynamic, dynamicICR, dynamicQR, plannedStart, jobNumber, jobLatestMap, i, itemCode, dateStr, date, job, qty, _iterator10, _step10, entry, _itemCode5, _date3;
+              return _regenerator().w(function (_context16) {
+                while (1) switch (_context16.n) {
                   case 0:
                     startDateInput = document.getElementById('start-date').value;
                     endDateInput = document.getElementById('end-date').value;
@@ -1367,7 +1588,7 @@ function _otherDateFilter() {
                     endDate = inputDateParse(endDateInput);
                     dynamicWorksheet = context.workbook.worksheets.getItem("Dynamic");
                     dynamicUsedRange = dynamicWorksheet.getUsedRange().load("values");
-                    _context17.n = 1;
+                    _context16.n = 1;
                     return context.sync();
                   case 1:
                     dynamicHeaders = dynamicUsedRange.values[0];
@@ -1384,7 +1605,7 @@ function _otherDateFilter() {
                     dynamicQR = dynamic.getRange(dynItemQtyColumn).getUsedRange().load("values");
                     plannedStart = dynamicWorksheet.getRange(dynStartColumn).getUsedRange().load("values");
                     jobNumber = dynamicWorksheet.getRange(dynJobColumn).getUsedRange().load("values");
-                    _context17.n = 2;
+                    _context16.n = 2;
                     return context.sync();
                   case 2:
                     jobLatestMap = new Map();
@@ -1408,38 +1629,38 @@ function _otherDateFilter() {
                     }
                     invFilter = Array.from(jobLatestMap.values());
                     startDateMap.clear();
-                    _iterator0 = _createForOfIteratorHelper(invFilter);
+                    _iterator10 = _createForOfIteratorHelper(invFilter);
                     try {
-                      for (_iterator0.s(); !(_step0 = _iterator0.n()).done;) {
-                        entry = _step0.value;
-                        _itemCode3 = entry.itemCode, _date3 = entry.date;
-                        if (!startDateMap.has(_itemCode3) || _date3 < startDateMap.get(_itemCode3)) {
-                          startDateMap.set(_itemCode3, _date3);
+                      for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
+                        entry = _step10.value;
+                        _itemCode5 = entry.itemCode, _date3 = entry.date;
+                        if (!startDateMap.has(_itemCode5) || _date3 < startDateMap.get(_itemCode5)) {
+                          startDateMap.set(_itemCode5, _date3);
                         }
                       }
                     } catch (err) {
-                      _iterator0.e(err);
+                      _iterator10.e(err);
                     } finally {
-                      _iterator0.f();
+                      _iterator10.f();
                     }
                     invFilter.sort(function (a, b) {
                       return a.date - b.date;
                     });
-                    _context17.n = 3;
+                    _context16.n = 3;
                     return context.sync();
                   case 3:
-                    return _context17.a(2);
+                    return _context16.a(2);
                 }
-              }, _callee17);
+              }, _callee16);
             }));
-            return function (_x13) {
-              return _ref0.apply(this, arguments);
+            return function (_x10) {
+              return _ref9.apply(this, arguments);
             };
           }());
         case 1:
-          return _context18.a(2);
+          return _context17.a(2);
       }
-    }, _callee18);
+    }, _callee17);
   }));
   return _otherDateFilter.apply(this, arguments);
 }
@@ -1462,31 +1683,31 @@ function checkDatesAndClearMessage() {
     document.getElementById('message-area').textContent = "";
   }
 }
-function displayData(_x4) {
+function displayData(_x3) {
   return _displayData.apply(this, arguments);
 }
 function _displayData() {
-  _displayData = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee20(event) {
-    return _regenerator().w(function (_context21) {
-      while (1) switch (_context21.n) {
+  _displayData = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee19(event) {
+    return _regenerator().w(function (_context20) {
+      while (1) switch (_context20.n) {
         case 0:
-          _context21.n = 1;
+          _context20.n = 1;
           return Excel.run(/*#__PURE__*/function () {
-            var _ref1 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee19(context) {
+            var _ref0 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee18(context) {
               var sheet, range, match, allDataICR, allDatajob, allDataQR, allDatadate, _loop, i;
-              return _regenerator().w(function (_context20) {
-                while (1) switch (_context20.n) {
+              return _regenerator().w(function (_context19) {
+                while (1) switch (_context19.n) {
                   case 0:
                     sheet = context.workbook.worksheets.getItem("Ordering");
                     range = sheet.getRange(event.address);
                     range.load(["columnIndex", "values", "address"]);
-                    _context20.n = 1;
+                    _context19.n = 1;
                     return context.sync();
                   case 1:
                     console.log("Index Number", range.columnIndex);
                     outputJobs.clear();
                     if (!(range.columnIndex == 0)) {
-                      _context20.n = 5;
+                      _context19.n = 5;
                       break;
                     }
                     matchingData.length = 0;
@@ -1505,8 +1726,8 @@ function _displayData() {
                     });
                     _loop = /*#__PURE__*/_regenerator().m(function _loop() {
                       var code, job, qty, date, fDate, duplicateDate, idx;
-                      return _regenerator().w(function (_context19) {
-                        while (1) switch (_context19.n) {
+                      return _regenerator().w(function (_context18) {
+                        while (1) switch (_context18.n) {
                           case 0:
                             code = allDataICR[i][0];
                             job = allDatajob[i][0];
@@ -1533,20 +1754,20 @@ function _displayData() {
                               }
                             }
                           case 1:
-                            return _context19.a(2);
+                            return _context18.a(2);
                         }
                       }, _loop);
                     });
                     i = 0;
                   case 2:
                     if (!(i < allDataICR.length)) {
-                      _context20.n = 4;
+                      _context19.n = 4;
                       break;
                     }
-                    return _context20.d(_regeneratorValues(_loop()), 3);
+                    return _context19.d(_regeneratorValues(_loop()), 3);
                   case 3:
                     i++;
-                    _context20.n = 2;
+                    _context19.n = 2;
                     break;
                   case 4:
                     console.log("intial finding of Matching Data", matchingData);
@@ -1555,23 +1776,23 @@ function _displayData() {
                       return a.date - b.date;
                     });
                     localStorage.setItem("matchingData", JSON.stringify(matchingData));
-                    _context20.n = 6;
+                    _context19.n = 6;
                     break;
                   case 5:
                     console.log("Not in range");
                   case 6:
-                    return _context20.a(2);
+                    return _context19.a(2);
                 }
-              }, _callee19);
+              }, _callee18);
             }));
-            return function (_x14) {
-              return _ref1.apply(this, arguments);
+            return function (_x11) {
+              return _ref0.apply(this, arguments);
             };
           }());
         case 1:
-          return _context21.a(2);
+          return _context20.a(2);
       }
-    }, _callee20);
+    }, _callee19);
   }));
   return _displayData.apply(this, arguments);
 }
@@ -1579,70 +1800,121 @@ function filteringDropdown() {
   return _filteringDropdown.apply(this, arguments);
 }
 function _filteringDropdown() {
-  _filteringDropdown = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee22() {
-    return _regenerator().w(function (_context23) {
-      while (1) switch (_context23.n) {
+  _filteringDropdown = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee21() {
+    return _regenerator().w(function (_context22) {
+      while (1) switch (_context22.n) {
         case 0:
-          _context23.n = 1;
+          _context22.n = 1;
           return Excel.run(/*#__PURE__*/function () {
-            var _ref10 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee21(context) {
-              var orderingWorksheet, orderingTable, amountFilter, buyOrMakeFilter, _t2;
-              return _regenerator().w(function (_context22) {
-                while (1) switch (_context22.n) {
+            var _ref1 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee20(context) {
+              var orderingWorksheet, orderingTable, amountFilter, buyOrMakeFilter, _t3;
+              return _regenerator().w(function (_context21) {
+                while (1) switch (_context21.n) {
                   case 0:
                     orderingWorksheet = context.workbook.worksheets.getItem("Ordering");
                     orderingTable = orderingWorksheet.tables.getItem("OrderingTable");
                     amountFilter = orderingTable.columns.getItem("Required Amount").filter;
                     buyOrMakeFilter = orderingTable.columns.getItem("Buy or Make").filter;
-                    _t2 = document.getElementById('order-filtering').value;
-                    _context22.n = _t2 === "Intial" ? 1 : _t2 === "over-300" ? 2 : _t2 === "Must-buy" ? 3 : _t2 === "Can-buy" ? 4 : _t2 === "Can-make" ? 5 : 6;
+                    _t3 = document.getElementById('order-filtering').value;
+                    _context21.n = _t3 === "Intial" ? 1 : _t3 === "over-300" ? 2 : _t3 === "Must-buy" ? 3 : _t3 === "Can-buy" ? 4 : _t3 === "Can-make" ? 5 : 6;
                     break;
                   case 1:
                     console.log("no changes made");
                     amountFilter.clear();
                     buyOrMakeFilter.clear();
-                    return _context22.a(3, 7);
+                    return _context21.a(3, 7);
                   case 2:
                     amountFilter.clear();
                     buyOrMakeFilter.clear();
                     amountFilter.applyCustomFilter(">=300");
-                    return _context22.a(3, 7);
+                    return _context21.a(3, 7);
                   case 3:
                     amountFilter.clear();
                     buyOrMakeFilter.clear();
                     buyOrMakeFilter.applyValuesFilter(["Must Buy"]);
-                    return _context22.a(3, 7);
+                    return _context21.a(3, 7);
                   case 4:
                     amountFilter.clear();
                     buyOrMakeFilter.clear();
                     buyOrMakeFilter.applyValuesFilter(["Can Buy"]);
-                    return _context22.a(3, 7);
+                    return _context21.a(3, 7);
                   case 5:
                     amountFilter.clear();
                     buyOrMakeFilter.clear();
                     buyOrMakeFilter.applyValuesFilter(["Can Make"]);
-                    return _context22.a(3, 7);
+                    return _context21.a(3, 7);
                   case 6:
                     console.log("No valid filter selected");
-                    return _context22.a(3, 7);
+                    return _context21.a(3, 7);
                   case 7:
-                    _context22.n = 8;
+                    _context21.n = 8;
                     return context.sync();
                   case 8:
-                    return _context22.a(2);
+                    return _context21.a(2);
                 }
-              }, _callee21);
+              }, _callee20);
             }));
-            return function (_x15) {
+            return function (_x12) {
+              return _ref1.apply(this, arguments);
+            };
+          }());
+        case 1:
+          return _context22.a(2);
+      }
+    }, _callee21);
+  }));
+  return _filteringDropdown.apply(this, arguments);
+}
+function invFilteringDropdown() {
+  return _invFilteringDropdown.apply(this, arguments);
+}
+function _invFilteringDropdown() {
+  _invFilteringDropdown = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee23() {
+    return _regenerator().w(function (_context24) {
+      while (1) switch (_context24.n) {
+        case 0:
+          _context24.n = 1;
+          return Excel.run(/*#__PURE__*/function () {
+            var _ref10 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee22(context) {
+              var inventoryWorksheet, inventoryTable, qtyNeededFilter, _t4;
+              return _regenerator().w(function (_context23) {
+                while (1) switch (_context23.n) {
+                  case 0:
+                    inventoryWorksheet = context.workbook.worksheets.getItem("Inventory At");
+                    inventoryTable = inventoryWorksheet.tables.getItem("InventoryAtTable");
+                    qtyNeededFilter = inventoryTable.columns.getItem("Qty Needed (MEB)").filter;
+                    _t4 = document.getElementById('inventory-filtering').value;
+                    _context23.n = _t4 === "Intial case" ? 1 : _t4 === "over-300" ? 2 : 3;
+                    break;
+                  case 1:
+                    console.log("no changes made");
+                    qtyNeededFilter.clear();
+                    return _context23.a(3, 4);
+                  case 2:
+                    qtyNeededFilter.clear();
+                    qtyNeededFilter.applyCustomFilter(">=300");
+                    return _context23.a(3, 4);
+                  case 3:
+                    console.log("No valid filter selected");
+                    return _context23.a(3, 4);
+                  case 4:
+                    _context23.n = 5;
+                    return context.sync();
+                  case 5:
+                    return _context23.a(2);
+                }
+              }, _callee22);
+            }));
+            return function (_x13) {
               return _ref10.apply(this, arguments);
             };
           }());
         case 1:
-          return _context23.a(2);
+          return _context24.a(2);
       }
-    }, _callee22);
+    }, _callee23);
   }));
-  return _filteringDropdown.apply(this, arguments);
+  return _invFilteringDropdown.apply(this, arguments);
 }
 function formatDate(dateString) {
   var date = new Date(dateString);
@@ -1651,160 +1923,6 @@ function formatDate(dateString) {
     month: '2-digit',
     day: '2-digit'
   }).replace(/\//g, '-');
-}
-
-/**
- * Handler for worksheet data changes. Checks headers and renames sheet if needed.
- * @param {Excel.WorksheetChangedEventArgs} event
- */
-function handleSheetChanged(_x5) {
-  return _handleSheetChanged.apply(this, arguments);
-}
-/**
- * Handler for new worksheet creation. Registers onChanged for the new sheet.
- * @param {Excel.WorksheetAddedEventArgs} event
- */
-function _handleSheetChanged() {
-  _handleSheetChanged = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee24(event) {
-    return _regenerator().w(function (_context25) {
-      while (1) switch (_context25.n) {
-        case 0:
-          _context25.n = 1;
-          return Excel.run(/*#__PURE__*/function () {
-            var _ref11 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee23(context) {
-              var worksheet, headerRange, headers;
-              return _regenerator().w(function (_context24) {
-                while (1) switch (_context24.n) {
-                  case 0:
-                    // Get the worksheet by ID
-                    worksheet = context.workbook.worksheets.getItem(event.worksheetId); // Load the first row (headers)
-                    headerRange = worksheet.getRange("1:1").load("values");
-                    _context24.n = 1;
-                    return context.sync();
-                  case 1:
-                    headers = headerRange.values[0].map(function (h) {
-                      return String(h);
-                    }); // Case-sensitive
-                    // --- HEADER CHECKING LOGIC (case-sensitive) ---
-                    // DYNAMIC: Corrugate, Number of Corrugate, Work Center
-                    if (!(headers.includes("Corrugate") && headers.includes("Number of Corrugate") && headers.includes("Work Center"))) {
-                      _context24.n = 3;
-                      break;
-                    }
-                    worksheet.name = "DYNAMIC";
-                    _context24.n = 2;
-                    return context.sync();
-                  case 2:
-                    return _context24.a(2);
-                  case 3:
-                    if (!(headers.includes("Item Code") && headers.includes("Inventory Qty") && headers.includes("Location") && headers.includes("Inventory Date"))) {
-                      _context24.n = 5;
-                      break;
-                    }
-                    worksheet.name = "INVENTORY";
-                    _context24.n = 4;
-                    return context.sync();
-                  case 4:
-                    return _context24.a(2);
-                  case 5:
-                    if (!(headers.includes("Item Code") && headers.includes("Outstanding Qty"))) {
-                      _context24.n = 7;
-                      break;
-                    }
-                    worksheet.name = "OPEN PO'S";
-                    _context24.n = 6;
-                    return context.sync();
-                  case 6:
-                    return _context24.a(2);
-                  case 7:
-                    return _context24.a(2);
-                }
-              }, _callee23);
-            }));
-            return function (_x16) {
-              return _ref11.apply(this, arguments);
-            };
-          }());
-        case 1:
-          return _context25.a(2);
-      }
-    }, _callee24);
-  }));
-  return _handleSheetChanged.apply(this, arguments);
-}
-function handleSheetAdded(_x6) {
-  return _handleSheetAdded.apply(this, arguments);
-}
-function _handleSheetAdded() {
-  _handleSheetAdded = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee26(event) {
-    return _regenerator().w(function (_context27) {
-      while (1) switch (_context27.n) {
-        case 0:
-          _context27.n = 1;
-          return Excel.run(/*#__PURE__*/function () {
-            var _ref12 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee25(context) {
-              var worksheet, headerRange, headers;
-              return _regenerator().w(function (_context26) {
-                while (1) switch (_context26.n) {
-                  case 0:
-                    worksheet = context.workbook.worksheets.getItem(event.worksheetName);
-                    worksheet.onChanged.add(handleSheetChanged);
-                    _context26.n = 1;
-                    return context.sync();
-                  case 1:
-                    // Optionally, immediately check headers on creation
-                    headerRange = worksheet.getRange("1:1").load("values");
-                    _context26.n = 2;
-                    return context.sync();
-                  case 2:
-                    headers = headerRange.values[0].map(function (h) {
-                      return String(h);
-                    }); // Case-sensitive
-                    // --- HEADER CHECKING LOGIC (reuse from handleSheetChanged) ---
-                    if (!(headers.includes("Corrugate") && headers.includes("Number of Corrugate") && headers.includes("Work Center"))) {
-                      _context26.n = 4;
-                      break;
-                    }
-                    worksheet.name = "DYNAMIC";
-                    _context26.n = 3;
-                    return context.sync();
-                  case 3:
-                    return _context26.a(2);
-                  case 4:
-                    if (!(headers.includes("Item Code") && headers.includes("Inventory Qty") && headers.includes("Location") && headers.includes("Inventory Date"))) {
-                      _context26.n = 6;
-                      break;
-                    }
-                    worksheet.name = "INVENTORY";
-                    _context26.n = 5;
-                    return context.sync();
-                  case 5:
-                    return _context26.a(2);
-                  case 6:
-                    if (!(headers.includes("Item Code") && headers.includes("Outstanding Qty"))) {
-                      _context26.n = 8;
-                      break;
-                    }
-                    worksheet.name = "OPEN PO'S";
-                    _context26.n = 7;
-                    return context.sync();
-                  case 7:
-                    return _context26.a(2);
-                  case 8:
-                    return _context26.a(2);
-                }
-              }, _callee25);
-            }));
-            return function (_x17) {
-              return _ref12.apply(this, arguments);
-            };
-          }());
-        case 1:
-          return _context27.a(2);
-      }
-    }, _callee26);
-  }));
-  return _handleSheetAdded.apply(this, arguments);
 }
 }();
 // This entry needs to be wrapped in an IIFE because it needs to be isolated against other entry modules.
@@ -1819,7 +1937,7 @@ var ___HTML_LOADER_IMPORT_1___ = new URL(/* asset import */ __webpack_require__(
 var ___HTML_LOADER_IMPORT_2___ = new URL(/* asset import */ __webpack_require__(/*! ../../assets/SW.png */ "./assets/SW.png"), __webpack_require__.b);
 var ___HTML_LOADER_IMPORT_3___ = new URL(/* asset import */ __webpack_require__(/*! ./taskpane.js */ "./src/taskpane/taskpane.js?4727"), __webpack_require__.b);
 // Module
-var code = "<!-- Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT License. -->\n<!-- This file shows how to design a first-run page that provides a welcome screen to the user about the features of the add-in. -->\n\n<!DOCTYPE html>\n<html>\n\n<head>\n    <meta charset=\"UTF-8\" />\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <title>COR-AUTO Task Pane</title>\n\n    <!-- Office JavaScript API -->\n    <" + "script type=\"text/javascript\" src=\"https://appsforoffice.microsoft.com/lib/1/hosted/office.js\"><" + "/script>\n\n    <!-- For more information on Fluent UI, visit https://developer.microsoft.com/fluentui#/. -->\n    <link rel=\"stylesheet\" href=\"https://res-1.cdn.office.net/files/fabric-cdn-prod_20230815.002/office-ui-fabric-core/11.1.0/css/fabric.min.css\"/>\n\n    <!-- Template styles -->\n    <link href=\"" + ___HTML_LOADER_IMPORT_0___ + "\" rel=\"stylesheet\" type=\"text/css\" />\n</head>\n\n<body class=\"ms-font-m ms-welcome ms-Fabric\">\n    <header class=\"ms-welcome__header ms-bgColor-neutralLighter\">\n        <button class=\"setttings\" id=\"settings-button\" title=\"Settings\" aria-label=\"Settings\">\n            <img width=\"30\" height=\"30\" src=\"" + ___HTML_LOADER_IMPORT_1___ + "\" alt=\"Settings\">\n        </button>\n        <img width=\"90\" height=\"90\" src=\"" + ___HTML_LOADER_IMPORT_2___ + "\" alt=\"Contoso\" title=\"Contoso\" />\n        <h1 class=\"header_font\">COR-AUTO</h1>\n        <h5 class=\"subheader_font\">Corrugated Supply Made Easy</h5>\n    </header>\n    <section id=\"sideload-msg\" class=\"ms-welcome__main\">\n        <h2 class=\"ms-font-xl\">Please <a target=\"_blank\" href=\"https://learn.microsoft.com/office/dev/add-ins/testing/test-debug-office-add-ins#sideload-an-office-add-in-for-testing\">sideload</a> your add-in to see app body.</h2>\n    </section>\n    <main id=\"app-body\" class=\"ms-welcome__main\" style=\"display: none;\">\n        <div class=\"report-row\">\n            <button class=\"button-80\" id=\"generate-ordering-report\">Ordering Report</button><br/><br/>\n            <button class=\"button-80\" id=\"generate-inventory-report\">Inventory Report</button><br/><br/>\n        </div>\n        <div id=\"message-area\" class=\"msg-format\"></div>\n        <div class = \"filter-row\">\n            <label for=\"order-filtering\"></label>\n            <select class=\"button-80\" name=\"order-filtering\" id=\"order-filtering\">\n                <option class=\"button-80\" value=\"Intial\">Order Filtering</option>\n                <option class=\"button-80\" value=\"over-300\">Over 300</option>\n                <option class=\"button-80\" value=\"Must-buy\">Must Buy</option>\n                <option class=\"button-80\" value=\"Can-buy\">Can Buy</option>\n                <option class=\"button-80\" value=\"Can-make\">Can Make</option>\n            </select>\n            <button class=\"button-80\" id=\"temp-reset\">Reset</button><br/><br/>\n        </div>\n        <form action=\"/action_page.php\"><br/>\n            <div class=\"date-row\">\n                <div class =\"date-col\">\n                    <label class=\"date-font\"for=\"start-date\">Start Date: </label>\n                    <input class=\"date-format\" type=\"date\" id=\"start-date\" name=\"start-date\">\n                </div>\n                <div class =\"date-col\">\n                    <label class=\"date-font\"for=\"start-date\">Through Date: </label>\n                    <input class=\"date-format\" type=\"date\" id=\"end-date\" name=\"end-date\">\n                </div>\n            <label id=\"user-name\"></label><br/><br/>\n        </form>\n    </main>\n    <" + "script src=\"" + ___HTML_LOADER_IMPORT_3___ + "\"><" + "/script>\n</body>\n\n</html>\n";
+var code = "<!-- Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT License. -->\n<!-- This file shows how to design a first-run page that provides a welcome screen to the user about the features of the add-in. -->\n\n<!DOCTYPE html>\n<html>\n\n<head>\n    <meta charset=\"UTF-8\" />\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <title>COR-AUTO Task Pane</title>\n\n    <!-- Office JavaScript API -->\n    <" + "script type=\"text/javascript\" src=\"https://appsforoffice.microsoft.com/lib/1/hosted/office.js\"><" + "/script>\n\n    <!-- For more information on Fluent UI, visit https://developer.microsoft.com/fluentui#/. -->\n    <link rel=\"stylesheet\" href=\"https://res-1.cdn.office.net/files/fabric-cdn-prod_20230815.002/office-ui-fabric-core/11.1.0/css/fabric.min.css\"/>\n\n    <!-- Template styles -->\n    <link href=\"" + ___HTML_LOADER_IMPORT_0___ + "\" rel=\"stylesheet\" type=\"text/css\" />\n</head>\n\n<body class=\"ms-font-m ms-welcome ms-Fabric\">\n    <header class=\"ms-welcome__header ms-bgColor-neutralLighter\">\n        <button class=\"setttings\" id=\"settings-button\" title=\"Settings\" aria-label=\"Settings\">\n            <img width=\"30\" height=\"30\" src=\"" + ___HTML_LOADER_IMPORT_1___ + "\" alt=\"Settings\">\n        </button>\n        <img width=\"90\" height=\"90\" src=\"" + ___HTML_LOADER_IMPORT_2___ + "\" alt=\"Smurfit-Westrock\" title=\"Smurfit-Westrock\" />\n        <h1 class=\"header_font\">COR-AUTO</h1>\n        <h5 class=\"subheader_font\">Corrugated Supply Made Easy</h5>\n    </header>\n    <section id=\"sideload-msg\" class=\"ms-welcome__main\">\n        <h2 class=\"ms-font-xl\">element <a target=\"_blank\" href=\"https://learn.microsoft.com/office/dev/add-ins/testing/test-debug-office-add-ins#sideload-an-office-add-in-for-testing\">sideload</a> your add-in to see app body.</h2>\n    </section>\n    <main id=\"app-body\" class=\"ms-welcome__main\" style=\"display: none;\">\n        <div class=\"report-row\">\n            <button class=\"button-80\" id=\"generate-ordering-report\">Ordering Report</button><br/><br/>\n            <button class=\"button-80\" id=\"generate-inventory-report\">Inventory Report</button><br/><br/>\n        </div>\n        <div id=\"message-area\" class=\"msg-format\"></div>\n        <div class = \"filter-row\">\n            <label for=\"order-filtering\"></label>\n            <select class=\"button-80\" name=\"order-filtering\" id=\"order-filtering\">\n                <option class=\"button-80\" value=\"Intial\">Order Filtering</option>\n                <option class=\"button-80\" value=\"over-300\">Over 300</option>\n                <option class=\"button-80\" value=\"Must-buy\">Must Buy</option>\n                <option class=\"button-80\" value=\"Can-buy\">Can Buy</option>\n                <option class=\"button-80\" value=\"Can-make\">Can Make</option>\n            </select>\n            <label for=\"inventory-filtering\"></label>\n            <select class=\"button-80\" name=\"inventory-filtering\" id=\"inventory-filtering\">\n                <option class=\"button-80\" value=\"Intial case\">Inv Filtering</option>\n                <option class=\"button-80\" value=\"over-300\">Over 300</option>\n            </select>\n        </div>\n        <form action=\"/action_page.php\"><br/>\n            <div class=\"date-row\">\n                <div class =\"date-col\">\n                    <label class=\"date-font\"for=\"start-date\">Start Date: </label>\n                    <input class=\"date-format\" type=\"date\" id=\"start-date\" name=\"start-date\">\n                </div>\n                <div class =\"date-col\">\n                    <label class=\"date-font\"for=\"start-date\">Through Date: </label>\n                    <input class=\"date-format\" type=\"date\" id=\"end-date\" name=\"end-date\">\n                </div>\n            <label id=\"user-name\"></label><br/><br/>\n        </form>\n    </main>\n    <" + "script src=\"" + ___HTML_LOADER_IMPORT_3___ + "\"><" + "/script>\n</body>\n\n</html>\n";
 // Exports
 /* harmony default export */ __webpack_exports__["default"] = (code);
 }();

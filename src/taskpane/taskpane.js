@@ -638,7 +638,6 @@ async function readoutData(){
         const inventoryUsedRange = inventoryWorksheet.getUsedRange().load("values");
 
         const inventoryRequestWorksheet = context.workbook.worksheets.getItem("Inventory Request");
-        const inventoryRequestTable = inventoryRequestWorksheet.tables.getItem("InventoryReadoutTable");
 
         await context.sync();
 
@@ -697,7 +696,10 @@ async function readoutData(){
         const inventoryDataMap = new Map();
         for (let i = 1; i < invItemCodes.values.length; i++) {
             const itemCode = String(invItemCodes.values[i][0]).trim();
-            const date = invDates.values[i] ? String(invDates.values[i][0]).trim() : "";
+            const dateStr = invDates.values[i] ? String(invDates.values[i][0]).trim() : "";
+            const start = ExcelDateToJSDate(dateStr);
+            start.setHours(0,0,0,0);
+            const date = formatDate(start);
             const ref = invRefs.values[i] ? String(invRefs.values[i][0]).trim() : "";
             const qty = Number(invQtys.values[i][0]);
 
@@ -736,10 +738,9 @@ async function readoutData(){
                 
                 for (const invItem of inventoryItems) {
                     if (totalPulled >= qtyNeeded) {
-                        break; // We have enough, stop pulling
+                        break; 
                     }
                     
-                    // Add this pallet
                     readoutResult.push([
                         itemCode,
                         invItem.date,
@@ -814,7 +815,7 @@ async function resetGenerateInventory() {
         await Excel.run(async (context) => {
             const sheets = context.workbook.worksheets;
             sheets.getItemOrNullObject("Inventory At").delete();
-            sheets.getItemOrNullObject("Inventory Readout").delete();
+            sheets.getItemOrNullObject("Inventory Request").delete();
         await context.sync();
     });
 }
