@@ -659,11 +659,14 @@ async function readoutData(){
         const invDateIdx = inventoryHeaders.indexOf("Inventory Date");
         const invRefIdx = inventoryHeaders.indexOf("Inventory Ref");
         const invQtyIdx = inventoryHeaders.indexOf("Inventory Qty");
+        const invLocIdx = inventoryHeaders.indexOf("Location");
         
         const invRepItemCodeColumn = `${colIdxToLetter(invItemCodeIdx)}:${colIdxToLetter(invItemCodeIdx)}`;
         const invRepDateColumn = `${colIdxToLetter(invDateIdx)}:${colIdxToLetter(invDateIdx)}`;
         const invRepRefColumn = `${colIdxToLetter(invRefIdx)}:${colIdxToLetter(invRefIdx)}`;
         const invRepQtyColumn = `${colIdxToLetter(invQtyIdx)}:${colIdxToLetter(invQtyIdx)}`;
+        const invLocColumn = `${colIdxToLetter(invLocIdx)}:${colIdxToLetter(invLocIdx)}`;
+
         await context.sync();
 
         //Get data from Inventory At sheet
@@ -676,9 +679,9 @@ async function readoutData(){
         const invDates = inventoryWorksheet.getRange(invRepDateColumn).getUsedRange().load("values");
         const invRefs = inventoryWorksheet.getRange(invRepRefColumn).getUsedRange().load("values");
         const invQtys = inventoryWorksheet.getRange(invRepQtyColumn).getUsedRange().load("values");
+        const invLoc = inventoryWorksheet.getRange(invLocColumn).getUsedRange().load("values");
         await context.sync();
 
-        //Filter Inventory At data for Qty Needed > 300 and Qty EFW > 0
         const filteredData = [];
         for (let i = 1; i < invAtItemCodes.values.length; i++) {
             const qtyNeeded = Number(invAtQtyNeeded.values[i][0]);
@@ -700,18 +703,21 @@ async function readoutData(){
             const start = ExcelDateToJSDate(dateStr);
             start.setHours(0,0,0,0);
             const date = formatDate(start);
+            const loc = invLoc.values[i] ? String(invLoc.values[i][0]).trim() : "";
             const ref = invRefs.values[i] ? String(invRefs.values[i][0]).trim() : "";
             const qty = Number(invQtys.values[i][0]);
 
-            if (itemCode && !isNaN(qty) && qty > 0) {
-                if (!inventoryDataMap.has(itemCode)) {
-                    inventoryDataMap.set(itemCode, []);
+            if (loc.includes("EFW")){
+                if (itemCode && !isNaN(qty) && qty > 0) {
+                    if (!inventoryDataMap.has(itemCode)) {
+                        inventoryDataMap.set(itemCode, []);
+                    }
+                    inventoryDataMap.get(itemCode).push({
+                        date: date,
+                        ref: ref,
+                        qty: qty
+                    });
                 }
-                inventoryDataMap.get(itemCode).push({
-                    date: date,
-                    ref: ref,
-                    qty: qty
-                });
             }
         }
 

@@ -184,7 +184,7 @@ module.exports = __webpack_require__.p + "f12a41c31f591815d881.css";
   \**********************************/
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "3d2138026ab048847bdb.js";
+module.exports = __webpack_require__.p + "4754c0a32c4ae911d13e.js";
 
 /***/ })
 
@@ -1152,7 +1152,7 @@ function _readoutData() {
           _context1.n = 1;
           return Excel.run(/*#__PURE__*/function () {
             var _ref5 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee0(context) {
-              var inventoryAtWorksheet, inventoryAtUsedRange, inventoryWorksheet, inventoryUsedRange, inventoryRequestWorksheet, inventoryAtHeaders, invAtItemCodeIdx, invAtQtyNeededIdx, invAtQtyEFWIdx, invAtItemCodeColumn, invAtQtyNeededColumn, invAtQtyEFWColumn, inventoryHeaders, invItemCodeIdx, invDateIdx, invRefIdx, invQtyIdx, invRepItemCodeColumn, invRepDateColumn, invRepRefColumn, invRepQtyColumn, invAtItemCodes, invAtQtyNeeded, invAtQtyEFW, invItemCodes, invDates, invRefs, invQtys, filteredData, i, qtyNeeded, qtyEFW, inventoryDataMap, _i5, itemCode, dateStr, start, date, ref, qty, _iterator9, _step9, _step9$value, _itemCode2, data, readoutResult, _i6, _filteredData, filteredItem, _itemCode, _qtyNeeded, inventoryItems, totalPulled, palletsPulled, _iterator0, _step0, invItem, itemCodes, dates, refs, qtys, usedRange, borders, _t2;
+              var inventoryAtWorksheet, inventoryAtUsedRange, inventoryWorksheet, inventoryUsedRange, inventoryRequestWorksheet, inventoryAtHeaders, invAtItemCodeIdx, invAtQtyNeededIdx, invAtQtyEFWIdx, invAtItemCodeColumn, invAtQtyNeededColumn, invAtQtyEFWColumn, inventoryHeaders, invItemCodeIdx, invDateIdx, invRefIdx, invQtyIdx, invLocIdx, invRepItemCodeColumn, invRepDateColumn, invRepRefColumn, invRepQtyColumn, invLocColumn, invAtItemCodes, invAtQtyNeeded, invAtQtyEFW, invItemCodes, invDates, invRefs, invQtys, invLoc, filteredData, i, qtyNeeded, qtyEFW, inventoryDataMap, _i5, itemCode, dateStr, start, date, loc, ref, qty, _iterator9, _step9, _step9$value, _itemCode2, data, readoutResult, _i6, _filteredData, filteredItem, _itemCode, _qtyNeeded, inventoryItems, totalPulled, palletsPulled, _iterator0, _step0, invItem, itemCodes, dates, refs, qtys, usedRange, borders, _t2;
               return _regenerator().w(function (_context0) {
                 while (1) switch (_context0.n) {
                   case 0:
@@ -1177,10 +1177,12 @@ function _readoutData() {
                     invDateIdx = inventoryHeaders.indexOf("Inventory Date");
                     invRefIdx = inventoryHeaders.indexOf("Inventory Ref");
                     invQtyIdx = inventoryHeaders.indexOf("Inventory Qty");
+                    invLocIdx = inventoryHeaders.indexOf("Location");
                     invRepItemCodeColumn = "".concat(colIdxToLetter(invItemCodeIdx), ":").concat(colIdxToLetter(invItemCodeIdx));
                     invRepDateColumn = "".concat(colIdxToLetter(invDateIdx), ":").concat(colIdxToLetter(invDateIdx));
                     invRepRefColumn = "".concat(colIdxToLetter(invRefIdx), ":").concat(colIdxToLetter(invRefIdx));
                     invRepQtyColumn = "".concat(colIdxToLetter(invQtyIdx), ":").concat(colIdxToLetter(invQtyIdx));
+                    invLocColumn = "".concat(colIdxToLetter(invLocIdx), ":").concat(colIdxToLetter(invLocIdx));
                     _context0.n = 2;
                     return context.sync();
                   case 2:
@@ -1192,10 +1194,10 @@ function _readoutData() {
                     invDates = inventoryWorksheet.getRange(invRepDateColumn).getUsedRange().load("values");
                     invRefs = inventoryWorksheet.getRange(invRepRefColumn).getUsedRange().load("values");
                     invQtys = inventoryWorksheet.getRange(invRepQtyColumn).getUsedRange().load("values");
+                    invLoc = inventoryWorksheet.getRange(invLocColumn).getUsedRange().load("values");
                     _context0.n = 3;
                     return context.sync();
                   case 3:
-                    //Filter Inventory At data for Qty Needed > 300 and Qty EFW > 0
                     filteredData = [];
                     for (i = 1; i < invAtItemCodes.values.length; i++) {
                       qtyNeeded = Number(invAtQtyNeeded.values[i][0]);
@@ -1216,17 +1218,20 @@ function _readoutData() {
                       start = ExcelDateToJSDate(dateStr);
                       start.setHours(0, 0, 0, 0);
                       date = formatDate(start);
+                      loc = invLoc.values[_i5] ? String(invLoc.values[_i5][0]).trim() : "";
                       ref = invRefs.values[_i5] ? String(invRefs.values[_i5][0]).trim() : "";
                       qty = Number(invQtys.values[_i5][0]);
-                      if (itemCode && !isNaN(qty) && qty > 0) {
-                        if (!inventoryDataMap.has(itemCode)) {
-                          inventoryDataMap.set(itemCode, []);
+                      if (loc.includes("EFW")) {
+                        if (itemCode && !isNaN(qty) && qty > 0) {
+                          if (!inventoryDataMap.has(itemCode)) {
+                            inventoryDataMap.set(itemCode, []);
+                          }
+                          inventoryDataMap.get(itemCode).push({
+                            date: date,
+                            ref: ref,
+                            qty: qty
+                          });
                         }
-                        inventoryDataMap.get(itemCode).push({
-                          date: date,
-                          ref: ref,
-                          qty: qty
-                        });
                       }
                     }
 
