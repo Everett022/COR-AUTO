@@ -174,7 +174,7 @@ function _openSettings() {
   \***********************************/
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "f12a41c31f591815d881.css";
+module.exports = __webpack_require__.p + "0d4eb8db7fb5335a19cb.css";
 
 /***/ }),
 
@@ -184,7 +184,7 @@ module.exports = __webpack_require__.p + "f12a41c31f591815d881.css";
   \**********************************/
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "4754c0a32c4ae911d13e.js";
+module.exports = __webpack_require__.p + "b9948054491d0d4ee372.js";
 
 /***/ })
 
@@ -357,6 +357,9 @@ Office.onReady(function (info) {
     document.getElementById("settings-button").onclick = function () {
       return tryCatch(_settings_settings_js__WEBPACK_IMPORTED_MODULE_1__.openSettings);
     };
+    setInterval(function () {
+      autoRenameSheetsByHeaders().catch(console.error);
+    }, 5000);
   }
 });
 
@@ -1812,7 +1815,7 @@ function _filteringDropdown() {
           _context22.n = 1;
           return Excel.run(/*#__PURE__*/function () {
             var _ref1 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee20(context) {
-              var orderingWorksheet, orderingTable, amountFilter, buyOrMakeFilter, _t3;
+              var orderingWorksheet, orderingTable, amountFilter, buyOrMakeFilter, corMinimums, tableRange, headers, headerRow, codeIdx, reqAmtIdx, keepCodes, i, code, reqAmt, min, _t3;
               return _regenerator().w(function (_context21) {
                 while (1) switch (_context21.n) {
                   case 0:
@@ -1820,41 +1823,238 @@ function _filteringDropdown() {
                     orderingTable = orderingWorksheet.tables.getItem("OrderingTable");
                     amountFilter = orderingTable.columns.getItem("Required Amount").filter;
                     buyOrMakeFilter = orderingTable.columns.getItem("Buy or Make").filter;
-                    _t3 = document.getElementById('order-filtering').value;
-                    _context21.n = _t3 === "Intial" ? 1 : _t3 === "over-300" ? 2 : _t3 === "Must-buy" ? 3 : _t3 === "Can-buy" ? 4 : _t3 === "Can-make" ? 5 : 6;
-                    break;
+                    corMinimums = {
+                      "CORS522_DW": 180,
+                      "CORCTD0033A-R2": 300,
+                      "COR2503503R0 RDC": 250,
+                      "COR2320-4731": 350,
+                      "COR16M006405": 350,
+                      "COR6064-RDC": 445,
+                      "CORM30402_C": 310,
+                      "CORM37238 FLUTED DIV": 500,
+                      "CORM30403_C": 250,
+                      "CORM39142-R1": 250,
+                      "CORM37912": 300,
+                      "CORX14107": 300,
+                      "COR2320-4819-R1": 300,
+                      "COR2320-4658-R1": 250,
+                      "COR17M001501": 300,
+                      "COR2320_5453": 300,
+                      "COR2320-1840-R1": 300,
+                      "COR2320-5573": 400,
+                      "COR2320_5575_R1": 349,
+                      "COR2320_5455": 300,
+                      "COR2866 RDC": 250,
+                      "COR6062 RDC": 250,
+                      "COR2320_5635": 250,
+                      "COR6070 RDC": 250,
+                      "CORM33989_H_R2": 283,
+                      "CORMPS13185": 250,
+                      "COR18M020101": 400,
+                      "CORX14151_B": 250,
+                      "COR11707_R1": 250,
+                      "CORM38150_R1": 250,
+                      "COR2320_5906": 199,
+                      "COR17M013701_R1": 197,
+                      "COR5537 PAD": 273,
+                      "CORM36590_ERECTED_R2": 250,
+                      "CORF170286A9": 340,
+                      "CORF170287A7-R1": 307,
+                      "CORF170313A6": 274,
+                      "COR6052": 250,
+                      "COR2306R0": 285,
+                      "CORM37798_C_R1": 185,
+                      "COR2320_6830_R1": 325,
+                      "COR19M001713": 300,
+                      "CORERECTOR-DW": 207,
+                      "COR19M001712_R1": 192,
+                      "CORMPS13113C_R1": 200,
+                      "CORL9466A4_M": 258,
+                      "COR2349R2_R1": 300,
+                      "CORMPS13182A_R1": 300,
+                      "CORDRF_L8916A1": 210,
+                      "COR19M001702_R1": 404,
+                      "CORL10648A2": 300,
+                      "CORDRF_6171_A": 257,
+                      "COR132790_2i": 264,
+                      "CORDRF_2037": 271,
+                      "CORDRF_2232": 300,
+                      "COR2251R0_R1": 300,
+                      "CORM38149_R1": 375,
+                      "COR19M012303": 375,
+                      "COR19M012304": 305,
+                      "COR20M023301": 300,
+                      "COR20M007911": 186,
+                      "CORM34795_NO INSERT HSC LID": 975,
+                      "CORM34795_NO INSERT HSC": 975,
+                      "COR20M018813": 201,
+                      "COR20M018814": 278,
+                      "CORDRF_2884_B": 350,
+                      "CORDRF_L9681A2": 218,
+                      "COR20M018815_R1": 186,
+                      "COR15NF011001-R1": 277,
+                      "COR20M026410_R1": 332,
+                      "COR2320_5691": 305,
+                      "COR16NF0805.03": 305,
+                      "COR2533504A_R1": 320,
+                      "COR16M006404_R1": 269,
+                      "COR18M010901": 315,
+                      "COR20M018812": 257,
+                      "COR18M025708": 325,
+                      "CORM37238 GLORD SLEEVE_R1": 275,
+                      "CORABBOTT_CAP": 138,
+                      "CORABBOTT_SLV": 109,
+                      "COR19M010308": 325,
+                      "COR2320_7148_R2": 263,
+                      "COR16M006402": 288,
+                      "COR18M005551_R2": 367,
+                      "COR21M022706": 323,
+                      "COR17M017101_R1": 227,
+                      "CORM36342": 200,
+                      "COR19M019402_R1": 304,
+                      "COR16M006403": 244,
+                      "COR20M026401_R1": 350,
+                      "COR20M026402": 363,
+                      "COR20M026418": 237,
+                      "COR18M005551_R3 NR": 350,
+                      "COR20M016311_R3": 216,
+                      "CORM34795 RSC": 385,
+                      "CORM38164": 450,
+                      "COR19M019401_R1": 300,
+                      "COR19M019402_R2": 300,
+                      "CORM34084_A": 188,
+                      "COR2320_6257_R2": 303,
+                      "COR18M000117": 202,
+                      "CORM21854_A": 340,
+                      "COR2320_5582_R1": 375,
+                      "COR21M012001": 417,
+                      "COR16M002106": 330,
+                      "COR16M006401_R1": 282,
+                      "COR16M000901_R3": 238,
+                      "COR17M022101_R2": 223,
+                      "CORM41161_B": 297,
+                      "COR23M012203": 261,
+                      "CORL14795A1": 203,
+                      "CORL9486A1": 279,
+                      "COR18M025707_R2": 265,
+                      "CORF210335A4": 296,
+                      "COR23LG0002.01": 316,
+                      "COR23M016803": 300,
+                      "CORL11558A4_M": 272,
+                      "CORM33618_B": 241,
+                      "COR17CL0236.03": 350,
+                      "CORCSK11804A": 282,
+                      "TB008-01": 500,
+                      "T22925-5": 800,
+                      "CORM37238 CAP": 154,
+                      "CORCSK11317B": 221,
+                      "CORL12394A1": 266,
+                      "CORMPS13215C": 231,
+                      "COR13442M": 330,
+                      "COR21LG0020.01": 305,
+                      "CORMPS13117J": 200,
+                      "CORM38149_R2": 245,
+                      "CORM34795_INSERT_48": 768,
+                      "CORL14798A1": 191,
+                      "COR20PF0474.02": 315,
+                      "COR16M002105_R1": 350,
+                      "COR21LG0002.01": 200,
+                      "CORCSK12007.02_R1": 315,
+                      "COR22M023719": 283,
+                      "CORMPS13048": 340,
+                      "CORMPS13150": 405,
+                      "COR16M006405_R1": 256,
+                      "COR17M027920_R2": 340,
+                      "CORM34795_INSERT_48_R1": 625,
+                      "COR23M014207": 310,
+                      "CORM33393_E ERECTED": 187,
+                      "CORM26788_C_R2": 276,
+                      "COR20M017216": 195,
+                      "COR22PF0925.07": 347,
+                      "CORMPS13145B": 198,
+                      "COR22PF0834.01_R1": 264,
+                      "COR24LG0016.04": 313,
+                      "COR24LG0016.02_R1": 334,
+                      "COR24LG0007.01": 261,
+                      "CORL9184A1_R1": 349,
+                      "COR22M009502_R1": 295,
+                      "COR22PF0924.07": 301,
+                      "COR17M017101_R3": 349,
+                      "COR22M009501": 296,
+                      "COR22M009503": 186,
+                      "CORDRF_L9680A3": 209,
+                      "CORMPS13150_R1": 370,
+                      "CORMPS13004": 465,
+                      "COR22M009501_R1": 292
+                    };
+                    _context21.n = 1;
+                    return context.sync();
                   case 1:
+                    _t3 = document.getElementById('order-filtering').value;
+                    _context21.n = _t3 === "Intial" ? 2 : _t3 === "cor-minimum" ? 3 : _t3 === "over-300" ? 6 : _t3 === "Must-buy" ? 7 : _t3 === "Can-buy" ? 8 : _t3 === "Can-make" ? 9 : 10;
+                    break;
+                  case 2:
                     console.log("no changes made");
                     amountFilter.clear();
                     buyOrMakeFilter.clear();
-                    return _context21.a(3, 7);
-                  case 2:
-                    amountFilter.clear();
-                    buyOrMakeFilter.clear();
-                    amountFilter.applyCustomFilter(">=300");
-                    return _context21.a(3, 7);
+                    orderingTable.columns.getItem("Case #").filter.clear();
+                    return _context21.a(3, 11);
                   case 3:
                     amountFilter.clear();
                     buyOrMakeFilter.clear();
-                    buyOrMakeFilter.applyValuesFilter(["Must Buy"]);
-                    return _context21.a(3, 7);
-                  case 4:
-                    amountFilter.clear();
-                    buyOrMakeFilter.clear();
-                    buyOrMakeFilter.applyValuesFilter(["Can Buy"]);
-                    return _context21.a(3, 7);
-                  case 5:
-                    amountFilter.clear();
-                    buyOrMakeFilter.clear();
-                    buyOrMakeFilter.applyValuesFilter(["Can Make"]);
-                    return _context21.a(3, 7);
-                  case 6:
-                    console.log("No valid filter selected");
-                    return _context21.a(3, 7);
-                  case 7:
-                    _context21.n = 8;
+                    tableRange = orderingTable.getDataBodyRange().load("values");
+                    _context21.n = 4;
                     return context.sync();
+                  case 4:
+                    headers = orderingTable.getHeaderRowRange().load("values");
+                    _context21.n = 5;
+                    return context.sync();
+                  case 5:
+                    headerRow = headers.values[0];
+                    codeIdx = headerRow.indexOf("Case #");
+                    reqAmtIdx = headerRow.indexOf("Required Amount");
+                    keepCodes = [];
+                    for (i = 0; i < tableRange.values.length; i++) {
+                      code = String(tableRange.values[i][codeIdx]).trim();
+                      reqAmt = Number(tableRange.values[i][reqAmtIdx]);
+                      min = corMinimums[code];
+                      if (min !== undefined && reqAmt >= min) {
+                        keepCodes.push(code);
+                      }
+                    }
+                    orderingTable.columns.getItem("Case #").filter.applyValuesFilter(keepCodes);
+                    return _context21.a(3, 11);
+                  case 6:
+                    amountFilter.clear();
+                    buyOrMakeFilter.clear();
+                    orderingTable.columns.getItem("Case #").filter.clear();
+                    amountFilter.applyCustomFilter(">=300");
+                    return _context21.a(3, 11);
+                  case 7:
+                    amountFilter.clear();
+                    buyOrMakeFilter.clear();
+                    orderingTable.columns.getItem("Case #").filter.clear();
+                    buyOrMakeFilter.applyValuesFilter(["Must Buy"]);
+                    return _context21.a(3, 11);
                   case 8:
+                    amountFilter.clear();
+                    buyOrMakeFilter.clear();
+                    orderingTable.columns.getItem("Case #").filter.clear();
+                    buyOrMakeFilter.applyValuesFilter(["Can Buy"]);
+                    return _context21.a(3, 11);
+                  case 9:
+                    amountFilter.clear();
+                    buyOrMakeFilter.clear();
+                    orderingTable.columns.getItem("Case #").filter.clear();
+                    buyOrMakeFilter.applyValuesFilter(["Can Make"]);
+                    return _context21.a(3, 11);
+                  case 10:
+                    console.log("No valid filter selected");
+                    return _context21.a(3, 11);
+                  case 11:
+                    _context21.n = 12;
+                    return context.sync();
+                  case 12:
                     return _context21.a(2);
                 }
               }, _callee20);
@@ -1929,6 +2129,112 @@ function formatDate(dateString) {
     day: '2-digit'
   }).replace(/\//g, '-');
 }
+function autoRenameSheetsByHeaders() {
+  return _autoRenameSheetsByHeaders.apply(this, arguments);
+}
+function _autoRenameSheetsByHeaders() {
+  _autoRenameSheetsByHeaders = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee25() {
+    return _regenerator().w(function (_context26) {
+      while (1) switch (_context26.n) {
+        case 0:
+          _context26.n = 1;
+          return Excel.run(/*#__PURE__*/function () {
+            var _ref11 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee24(context) {
+              var sheets, currentNames, _iterator11, _step11, sheet, ws, usedRange, headers, targetName, finalName, counter, _t5;
+              return _regenerator().w(function (_context25) {
+                while (1) switch (_context25.n) {
+                  case 0:
+                    sheets = context.workbook.worksheets;
+                    sheets.load("items/name");
+                    _context25.n = 1;
+                    return context.sync();
+                  case 1:
+                    // Collect all current sheet names for quick lookup
+                    currentNames = new Set(sheets.items.map(function (s) {
+                      return s.name;
+                    }));
+                    _iterator11 = _createForOfIteratorHelper(sheets.items);
+                    _context25.p = 2;
+                    _iterator11.s();
+                  case 3:
+                    if ((_step11 = _iterator11.n()).done) {
+                      _context25.n = 7;
+                      break;
+                    }
+                    sheet = _step11.value;
+                    ws = sheets.getItem(sheet.name);
+                    usedRange = ws.getUsedRangeOrNullObject();
+                    usedRange.load("values");
+                    _context25.n = 4;
+                    return context.sync();
+                  case 4:
+                    if (!(!usedRange.values || usedRange.values.length === 0)) {
+                      _context25.n = 5;
+                      break;
+                    }
+                    return _context25.a(3, 6);
+                  case 5:
+                    headers = usedRange.values[0].map(function (h) {
+                      return String(h).trim().toLowerCase();
+                    });
+                    targetName = null; // INVENTORY: "Item Code", "Inventory Qty", "Location", "Inventory Date"
+                    if (headers.includes("item code") && headers.includes("inventory qty") && headers.includes("location") && headers.includes("inventory date")) {
+                      targetName = "INVENTORY";
+                    }
+                    // DYNAMIC: "Work center", "Planned Start", "Corrugate", "Number of Corrugate"
+                    else if (headers.includes("work center") && headers.includes("planned start") && headers.includes("corrugate") && headers.includes("number of corrugate")) {
+                      targetName = "DYNAMIC";
+                    }
+                    // OPEN PO'S: "Item Code", "Outstanding Qty"
+                    else if (headers.includes("item code") && headers.includes("outstanding qty")) {
+                      targetName = "OPEN PO'S";
+                    }
+                    if (targetName && ws.name !== targetName) {
+                      // If the target name is already taken by another sheet, append a number
+                      finalName = targetName;
+                      counter = 2;
+                      while (currentNames.has(finalName) && ws.name !== finalName) {
+                        finalName = "".concat(targetName, " (").concat(counter, ")");
+                        counter++;
+                      }
+                      if (ws.name !== finalName) {
+                        ws.name = finalName;
+                        currentNames.add(finalName);
+                      }
+                    }
+                  case 6:
+                    _context25.n = 3;
+                    break;
+                  case 7:
+                    _context25.n = 9;
+                    break;
+                  case 8:
+                    _context25.p = 8;
+                    _t5 = _context25.v;
+                    _iterator11.e(_t5);
+                  case 9:
+                    _context25.p = 9;
+                    _iterator11.f();
+                    return _context25.f(9);
+                  case 10:
+                    _context25.n = 11;
+                    return context.sync();
+                  case 11:
+                    return _context25.a(2);
+                }
+              }, _callee24, null, [[2, 8, 9, 10]]);
+            }));
+            return function (_x14) {
+              return _ref11.apply(this, arguments);
+            };
+          }());
+        case 1:
+          return _context26.a(2);
+      }
+    }, _callee25);
+  }));
+  return _autoRenameSheetsByHeaders.apply(this, arguments);
+}
 }();
 // This entry needs to be wrapped in an IIFE because it needs to be isolated against other entry modules.
 !function() {
@@ -1942,7 +2248,7 @@ var ___HTML_LOADER_IMPORT_1___ = new URL(/* asset import */ __webpack_require__(
 var ___HTML_LOADER_IMPORT_2___ = new URL(/* asset import */ __webpack_require__(/*! ../../assets/SW.png */ "./assets/SW.png"), __webpack_require__.b);
 var ___HTML_LOADER_IMPORT_3___ = new URL(/* asset import */ __webpack_require__(/*! ./taskpane.js */ "./src/taskpane/taskpane.js?4727"), __webpack_require__.b);
 // Module
-var code = "<!-- Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT License. -->\n<!-- This file shows how to design a first-run page that provides a welcome screen to the user about the features of the add-in. -->\n\n<!DOCTYPE html>\n<html>\n\n<head>\n    <meta charset=\"UTF-8\" />\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <title>COR-AUTO Task Pane</title>\n\n    <!-- Office JavaScript API -->\n    <" + "script type=\"text/javascript\" src=\"https://appsforoffice.microsoft.com/lib/1/hosted/office.js\"><" + "/script>\n\n    <!-- For more information on Fluent UI, visit https://developer.microsoft.com/fluentui#/. -->\n    <link rel=\"stylesheet\" href=\"https://res-1.cdn.office.net/files/fabric-cdn-prod_20230815.002/office-ui-fabric-core/11.1.0/css/fabric.min.css\"/>\n\n    <!-- Template styles -->\n    <link href=\"" + ___HTML_LOADER_IMPORT_0___ + "\" rel=\"stylesheet\" type=\"text/css\" />\n</head>\n\n<body class=\"ms-font-m ms-welcome ms-Fabric\">\n    <header class=\"ms-welcome__header ms-bgColor-neutralLighter\">\n        <button class=\"setttings\" id=\"settings-button\" title=\"Settings\" aria-label=\"Settings\">\n            <img width=\"30\" height=\"30\" src=\"" + ___HTML_LOADER_IMPORT_1___ + "\" alt=\"Settings\">\n        </button>\n        <img width=\"90\" height=\"90\" src=\"" + ___HTML_LOADER_IMPORT_2___ + "\" alt=\"Smurfit-Westrock\" title=\"Smurfit-Westrock\" />\n        <h1 class=\"header_font\">COR-AUTO</h1>\n        <h5 class=\"subheader_font\">Corrugated Supply Made Easy</h5>\n    </header>\n    <section id=\"sideload-msg\" class=\"ms-welcome__main\">\n        <h2 class=\"ms-font-xl\">element <a target=\"_blank\" href=\"https://learn.microsoft.com/office/dev/add-ins/testing/test-debug-office-add-ins#sideload-an-office-add-in-for-testing\">sideload</a> your add-in to see app body.</h2>\n    </section>\n    <main id=\"app-body\" class=\"ms-welcome__main\" style=\"display: none;\">\n        <div class=\"report-row\">\n            <button class=\"button-80\" id=\"generate-ordering-report\">Ordering Report</button><br/><br/>\n            <button class=\"button-80\" id=\"generate-inventory-report\">Inventory Report</button><br/><br/>\n        </div>\n        <div id=\"message-area\" class=\"msg-format\"></div>\n        <div class = \"filter-row\">\n            <label for=\"order-filtering\"></label>\n            <select class=\"button-80\" name=\"order-filtering\" id=\"order-filtering\">\n                <option class=\"button-80\" value=\"Intial\">Order Filtering</option>\n                <option class=\"button-80\" value=\"over-300\">Over 300</option>\n                <option class=\"button-80\" value=\"Must-buy\">Must Buy</option>\n                <option class=\"button-80\" value=\"Can-buy\">Can Buy</option>\n                <option class=\"button-80\" value=\"Can-make\">Can Make</option>\n            </select>\n            <label for=\"inventory-filtering\"></label>\n            <select class=\"button-80\" name=\"inventory-filtering\" id=\"inventory-filtering\">\n                <option class=\"button-80\" value=\"Intial case\">Inv Filtering</option>\n                <option class=\"button-80\" value=\"over-300\">Over 300</option>\n            </select>\n        </div>\n        <form action=\"/action_page.php\"><br/>\n            <div class=\"date-row\">\n                <div class =\"date-col\">\n                    <label class=\"date-font\"for=\"start-date\">Start Date: </label>\n                    <input class=\"date-format\" type=\"date\" id=\"start-date\" name=\"start-date\">\n                </div>\n                <div class =\"date-col\">\n                    <label class=\"date-font\"for=\"start-date\">Through Date: </label>\n                    <input class=\"date-format\" type=\"date\" id=\"end-date\" name=\"end-date\">\n                </div>\n            <label id=\"user-name\"></label><br/><br/>\n        </form>\n    </main>\n    <" + "script src=\"" + ___HTML_LOADER_IMPORT_3___ + "\"><" + "/script>\n</body>\n\n</html>\n";
+var code = "<!-- Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT License. -->\r\n<!-- This file shows how to design a first-run page that provides a welcome screen to the user about the features of the add-in. -->\r\n\r\n<!DOCTYPE html>\r\n<html>\r\n\r\n<head>\r\n    <meta charset=\"UTF-8\" />\r\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\" />\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\r\n    <title>COR-AUTO Task Pane</title>\r\n\r\n    <!-- Office JavaScript API -->\r\n    <" + "script type=\"text/javascript\" src=\"https://appsforoffice.microsoft.com/lib/1/hosted/office.js\"><" + "/script>\r\n\r\n    <!-- For more information on Fluent UI, visit https://developer.microsoft.com/fluentui#/. -->\r\n    <link rel=\"stylesheet\" href=\"https://res-1.cdn.office.net/files/fabric-cdn-prod_20230815.002/office-ui-fabric-core/11.1.0/css/fabric.min.css\"/>\r\n\r\n    <!-- Template styles -->\r\n    <link href=\"" + ___HTML_LOADER_IMPORT_0___ + "\" rel=\"stylesheet\" type=\"text/css\" />\r\n</head>\r\n\r\n<body class=\"ms-font-m ms-welcome ms-Fabric\">\r\n    <header class=\"ms-welcome__header ms-bgColor-neutralLighter\">\r\n        <button class=\"setttings\" id=\"settings-button\" title=\"Settings\" aria-label=\"Settings\">\r\n            <img width=\"30\" height=\"30\" src=\"" + ___HTML_LOADER_IMPORT_1___ + "\" alt=\"Settings\">\r\n        </button>\r\n        <img width=\"90\" height=\"90\" src=\"" + ___HTML_LOADER_IMPORT_2___ + "\" alt=\"Smurfit-Westrock\" title=\"Smurfit-Westrock\" />\r\n        <h1 class=\"header_font\">COR-AUTO</h1>\r\n        <h5 class=\"subheader_font\">Corrugated Supply Made Easy</h5>\r\n    </header>\r\n    <section id=\"sideload-msg\" class=\"ms-welcome__main\">\r\n        <h2 class=\"ms-font-xl\">element <a target=\"_blank\" href=\"https://learn.microsoft.com/office/dev/add-ins/testing/test-debug-office-add-ins#sideload-an-office-add-in-for-testing\">sideload</a> your add-in to see app body.</h2>\r\n    </section>\r\n    <main id=\"app-body\" class=\"ms-welcome__main\" style=\"display: none;\">\r\n        <div class=\"report-row\">\r\n            <button class=\"button-80\" id=\"generate-ordering-report\">Ordering Report</button><br/><br/>\r\n            <button class=\"button-80\" id=\"generate-inventory-report\">Inventory Report</button><br/><br/>\r\n        </div>\r\n        <div id=\"message-area\" class=\"msg-format\"></div>\r\n        <div class = \"filter-row\">\r\n            <label for=\"order-filtering\"></label>\r\n            <select class=\"button-80\" name=\"order-filtering\" id=\"order-filtering\">\r\n                <option class=\"button-80\" value=\"Intial\">Order Filtering</option>\r\n                <option class = \"button-80\" value=\"cor-minimum\">Ordering Min</option>\r\n                <option class=\"button-80\" value=\"over-300\">Over 300</option>\r\n                <option class=\"button-80\" value=\"Must-buy\">Must Buy</option>\r\n                <option class=\"button-80\" value=\"Can-buy\">Can Buy</option>\r\n                <option class=\"button-80\" value=\"Can-make\">Can Make</option>\r\n            </select>\r\n            <label for=\"inventory-filtering\"></label>\r\n            <select class=\"button-80\" name=\"inventory-filtering\" id=\"inventory-filtering\">\r\n                <option class=\"button-80\" value=\"Intial case\">Inv Filtering</option>\r\n                <option class=\"button-80\" value=\"over-300\">Over 300</option>\r\n            </select>\r\n        </div>\r\n        <form action=\"/action_page.php\"><br/>\r\n            <div class=\"date-row\">\r\n                <div class =\"date-col\">\r\n                    <label class=\"date-font\"for=\"start-date\">Start Date: </label>\r\n                    <input class=\"date-format\" type=\"date\" id=\"start-date\" name=\"start-date\">\r\n                </div>\r\n                <div class =\"date-col\">\r\n                    <label class=\"date-font\"for=\"start-date\">Through Date: </label>\r\n                    <input class=\"date-format\" type=\"date\" id=\"end-date\" name=\"end-date\">\r\n                </div>\r\n            <label id=\"user-name\"></label><br/><br/>\r\n        </form>\r\n    </main>\r\n    <" + "script src=\"" + ___HTML_LOADER_IMPORT_3___ + "\"><" + "/script>\r\n</body>\r\n\r\n</html>\r\n";
 // Exports
 /* harmony default export */ __webpack_exports__["default"] = (code);
 }();

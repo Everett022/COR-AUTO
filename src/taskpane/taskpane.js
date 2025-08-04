@@ -12,6 +12,9 @@ Office.onReady((info) => {
     document.getElementById("order-filtering").addEventListener('change', filteringDropdown);
     document.getElementById("inventory-filtering").addEventListener('change', invFilteringDropdown);
     document.getElementById("settings-button").onclick = () => tryCatch(openSettings);
+    setInterval(() => {
+        test().catch(console.error);
+    }, 5000);
   }
 });
 
@@ -1056,31 +1059,228 @@ async function filteringDropdown() {
         const orderingTable = orderingWorksheet.tables.getItem("OrderingTable");
         const amountFilter = orderingTable.columns.getItem("Required Amount").filter;
         const buyOrMakeFilter = orderingTable.columns.getItem("Buy or Make").filter;
+        const corMinimums = {
+            "CORS522_DW": 180,
+            "CORCTD0033A-R2": 300,
+            "COR2503503R0 RDC": 250,
+            "COR2320-4731": 350,
+            "COR16M006405": 350,
+            "COR6064-RDC": 445,
+            "CORM30402_C": 310,
+            "CORM37238 FLUTED DIV": 500,
+            "CORM30403_C": 250,
+            "CORM39142-R1": 250,
+            "CORM37912": 300,
+            "CORX14107": 300,
+            "COR2320-4819-R1": 300,
+            "COR2320-4658-R1": 250,
+            "COR17M001501": 300,
+            "COR2320_5453": 300,
+            "COR2320-1840-R1": 300,
+            "COR2320-5573": 400,
+            "COR2320_5575_R1": 349,
+            "COR2320_5455": 300,
+            "COR2866 RDC": 250,
+            "COR6062 RDC": 250,
+            "COR2320_5635": 250,
+            "COR6070 RDC": 250,
+            "CORM33989_H_R2": 283,
+            "CORMPS13185": 250,
+            "COR18M020101": 400,
+            "CORX14151_B": 250,
+            "COR11707_R1": 250,
+            "CORM38150_R1": 250,
+            "COR2320_5906": 199,
+            "COR17M013701_R1": 197,
+            "COR5537 PAD": 273,
+            "CORM36590_ERECTED_R2": 250,
+            "CORF170286A9": 340,
+            "CORF170287A7-R1": 307,
+            "CORF170313A6": 274,
+            "COR6052": 250,
+            "COR2306R0": 285,
+            "CORM37798_C_R1": 185,
+            "COR2320_6830_R1": 325,
+            "COR19M001713": 300,
+            "CORERECTOR-DW": 207,
+            "COR19M001712_R1": 192,
+            "CORMPS13113C_R1": 200,
+            "CORL9466A4_M": 258,
+            "COR2349R2_R1": 300,
+            "CORMPS13182A_R1": 300,
+            "CORDRF_L8916A1": 210,
+            "COR19M001702_R1": 404,
+            "CORL10648A2": 300,
+            "CORDRF_6171_A": 257,
+            "COR132790_2i": 264,
+            "CORDRF_2037": 271,
+            "CORDRF_2232": 300,
+            "COR2251R0_R1": 300,
+            "CORM38149_R1": 375,
+            "COR19M012303": 375,
+            "COR19M012304": 305,
+            "COR20M023301": 300,
+            "COR20M007911": 186,
+            "CORM34795_NO INSERT HSC LID": 975,
+            "CORM34795_NO INSERT HSC": 975,
+            "COR20M018813": 201,
+            "COR20M018814": 278,
+            "CORDRF_2884_B": 350,
+            "CORDRF_L9681A2": 218,
+            "COR20M018815_R1": 186,
+            "COR15NF011001-R1": 277,
+            "COR20M026410_R1": 332,
+            "COR2320_5691": 305,
+            "COR16NF0805.03": 305,
+            "COR2533504A_R1": 320,
+            "COR16M006404_R1": 269,
+            "COR18M010901": 315,
+            "COR20M018812": 257,
+            "COR18M025708": 325,
+            "CORM37238 GLORD SLEEVE_R1": 275,
+            "CORABBOTT_CAP": 138,
+            "CORABBOTT_SLV": 109,
+            "COR19M010308": 325,
+            "COR2320_7148_R2": 263,
+            "COR16M006402": 288,
+            "COR18M005551_R2": 367,
+            "COR21M022706": 323,
+            "COR17M017101_R1": 227,
+            "CORM36342": 200,
+            "COR19M019402_R1": 304,
+            "COR16M006403": 244,
+            "COR20M026401_R1": 350,
+            "COR20M026402": 363,
+            "COR20M026418": 237,
+            "COR18M005551_R3 NR": 350,
+            "COR20M016311_R3": 216,
+            "CORM34795 RSC": 385,
+            "CORM38164": 450,
+            "COR19M019401_R1": 300,
+            "COR19M019402_R2": 300,
+            "CORM34084_A": 188,
+            "COR2320_6257_R2": 303,
+            "COR18M000117": 202,
+            "CORM21854_A": 340,
+            "COR2320_5582_R1": 375,
+            "COR21M012001": 417,
+            "COR16M002106": 330,
+            "COR16M006401_R1": 282,
+            "COR16M000901_R3": 238,
+            "COR17M022101_R2": 223,
+            "CORM41161_B": 297,
+            "COR23M012203": 261,
+            "CORL14795A1": 203,
+            "CORL9486A1": 279,
+            "COR18M025707_R2": 265,
+            "CORF210335A4": 296,
+            "COR23LG0002.01": 316,
+            "COR23M016803": 300,
+            "CORL11558A4_M": 272,
+            "CORM33618_B": 241,
+            "COR17CL0236.03": 350,
+            "CORCSK11804A": 282,
+            "TB008-01": 500,
+            "T22925-5": 800,
+            "CORM37238 CAP": 154,
+            "CORCSK11317B": 221,
+            "CORL12394A1": 266,
+            "CORMPS13215C": 231,
+            "COR13442M": 330,
+            "COR21LG0020.01": 305,
+            "CORMPS13117J": 200,
+            "CORM38149_R2": 245,
+            "CORM34795_INSERT_48": 768,
+            "CORL14798A1": 191,
+            "COR20PF0474.02": 315,
+            "COR16M002105_R1": 350,
+            "COR21LG0002.01": 200,
+            "CORCSK12007.02_R1": 315,
+            "COR22M023719": 283,
+            "CORMPS13048": 340,
+            "CORMPS13150": 405,
+            "COR16M006405_R1": 256,
+            "COR17M027920_R2": 340,
+            "CORM34795_INSERT_48_R1": 625,
+            "COR23M014207": 310,
+            "CORM33393_E ERECTED": 187,
+            "CORM26788_C_R2": 276,
+            "COR20M017216": 195,
+            "COR22PF0925.07": 347,
+            "CORMPS13145B": 198,
+            "COR22PF0834.01_R1": 264,
+            "COR24LG0016.04": 313,
+            "COR24LG0016.02_R1": 334,
+            "COR24LG0007.01": 261,
+            "CORL9184A1_R1": 349,
+            "COR22M009502_R1": 295,
+            "COR22PF0924.07": 301,
+            "COR17M017101_R3": 349,
+            "COR22M009501": 296,
+            "COR22M009503": 186,
+            "CORDRF_L9680A3": 209,
+            "CORMPS13150_R1": 370,
+            "CORMPS13004": 465,
+            "COR22M009501_R1": 292
+        };
+
+        await context.sync();
 
         switch(document.getElementById('order-filtering').value) {
             case "Intial":
                 console.log("no changes made");
                 amountFilter.clear();
                 buyOrMakeFilter.clear();
+                orderingTable.columns.getItem("Case #").filter.clear();
+                break;
+            case "cor-minimum":
+                amountFilter.clear();
+                buyOrMakeFilter.clear();
+                const tableRange = orderingTable.getDataBodyRange().load("values");
+                await context.sync();
+
+                const headers = orderingTable.getHeaderRowRange().load("values");
+                await context.sync();
+
+                const headerRow = headers.values[0];
+                const codeIdx = headerRow.indexOf("Case #");
+                const reqAmtIdx = headerRow.indexOf("Required Amount");
+
+                const keepCodes = [];
+                for (let i = 0; i < tableRange.values.length; i++) {
+                    const code = String(tableRange.values[i][codeIdx]).trim();
+                    const reqAmt = Number(tableRange.values[i][reqAmtIdx]);
+                    const min = corMinimums[code];
+                    if (min !== undefined && reqAmt >= min) {
+                        keepCodes.push(code);
+                    }
+                }
+
+                orderingTable.columns.getItem("Case #").filter.applyValuesFilter(keepCodes);
+
                 break;
             case "over-300":
                 amountFilter.clear();
                 buyOrMakeFilter.clear();
+                orderingTable.columns.getItem("Case #").filter.clear();
                 amountFilter.applyCustomFilter(">=300");
                 break;
             case "Must-buy":
                 amountFilter.clear();
                 buyOrMakeFilter.clear();
+                orderingTable.columns.getItem("Case #").filter.clear();
                 buyOrMakeFilter.applyValuesFilter(["Must Buy"]);
                 break;
             case "Can-buy":
                 amountFilter.clear();
                 buyOrMakeFilter.clear();
+                orderingTable.columns.getItem("Case #").filter.clear();
                 buyOrMakeFilter.applyValuesFilter(["Can Buy"]);
                 break;
             case "Can-make":
                 amountFilter.clear();
                 buyOrMakeFilter.clear();
+                orderingTable.columns.getItem("Case #").filter.clear();
                 buyOrMakeFilter.applyValuesFilter(["Can Make"]);
                 break;
             default:
@@ -1121,4 +1321,68 @@ function formatDate(dateString) {
         month: '2-digit',
         day: '2-digit'
     }).replace(/\//g, '-');
+}
+
+async function test() {
+    await Excel.run(async (context) => {
+        const sheets = context.workbook.worksheets;
+        sheets.load("items/name");
+        await context.sync();
+
+        const targetSheets = sheets.items.filter(s =>
+            ["Sheet1", "Sheet2", "Sheet3"].includes(s.name)
+        );
+
+        for (const sheet of targetSheets) {
+            const ws = sheets.getItem(sheet.name);
+            ws.load("name");
+            await context.sync();
+
+            const usedRange = ws.getUsedRangeOrNullObject();
+            usedRange.load("values");
+            await context.sync();
+
+            if (!usedRange.values || usedRange.values.length === 0) continue;
+
+            const headers = usedRange.values[0].map(h => String(h).trim().toLowerCase());
+
+            let targetName = null;
+            if (
+                headers.includes("item code") &&
+                headers.includes("inventory qty") &&
+                headers.includes("location") &&
+                headers.includes("inventory date")
+            ) {
+                targetName = "INVENTORY";
+            } else if (
+                headers.includes("work center") &&
+                headers.includes("planned start") &&
+                headers.includes("corrugate") &&
+                headers.includes("number of corrugate")
+            ) {
+                targetName = "DYNAMIC";
+            } else if (
+                headers.includes("item code") &&
+                headers.includes("outstanding qty")
+            ) {
+                targetName = "OPEN PO'S";
+            }
+
+            if (targetName && ws.name !== targetName) {
+                const nameTaken = sheets.items.some(s => s.name === targetName);
+                if (!nameTaken) {
+                    ws.name = targetName;
+                } else {
+                    let counter = 2;
+                    let newName = `${targetName} (${counter})`;
+                    while (sheets.items.some(s => s.name === newName)) {
+                        counter++;
+                        newName = `${targetName} (${counter})`;
+                    }
+                    ws.name = newName;
+                }
+                await context.sync();
+            }
+        }
+    });
 }
