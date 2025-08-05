@@ -1020,6 +1020,23 @@ async function displayData (event){
             const allDataQR = allData.map(item => [item.qty]);
             const allDatadate = allData.map(item => [item.date]);
 
+            const orderingTable = sheet.tables.getItem("OrderingTable");
+            const tableRange = orderingTable.getDataBodyRange().load("values");
+            const headers = orderingTable.getHeaderRowRange().load("values");
+            await context.sync();
+            const headerRow = headers.values[0];
+            const codeIdx = headerRow.indexOf("Case #");
+            const invIdx = headerRow.indexOf("Current Inventory");
+            let currentInventory = 0;
+            for (let i = 0; i < tableRange.values.length; i++) {
+                const code = String(tableRange.values[i][codeIdx]).trim();
+                if (code === match[0]) {
+                    currentInventory = Number(tableRange.values[i][invIdx]) || 0;
+                    break;
+                }
+            }
+            localStorage.setItem('currentInventory', currentInventory);
+
             for (let i = 0; i < allDataICR.length; i++){
                 const code = allDataICR[i][0];
                 const job = allDatajob[i][0];
@@ -1029,8 +1046,8 @@ async function displayData (event){
 
                 if (match == code) {
                     if (!outputJobs.has(job)) {
-                    matchingData.push({ code, job, qty, fDate });
-                    outputJobs.add(job);
+                        matchingData.push({ code, job, qty, fDate, date });
+                        outputJobs.add(job);
                     }else {
                         const duplicateDate = earlyDateMap.get(code);
                         const idx = matchingData.findIndex(entry => entry.job === job && entry.code === code);
@@ -1042,7 +1059,7 @@ async function displayData (event){
             }
             console.log("intial finding of Matching Data", matchingData);
             handleCellChange([...matchingData]);
-            matchingData.sort((a,b) => a.date - b.date);
+            matchingData.sort((a, b) => a.date - b.date);
 
             localStorage.setItem("matchingData", JSON.stringify(matchingData));
         }
