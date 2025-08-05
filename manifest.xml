@@ -6,8 +6,8 @@
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="COR-AUTO"/>
   <Description DefaultValue="A template to get started."/>
-  <IconUrl DefaultValue="https://everett022.github.io/COR-AUTO/assets/SW.png"/>
-  <HighResolutionIconUrl DefaultValue="https://everett022.github.io/COR-AUTO/assets/SW.png"/>
+  <IconUrl DefaultValue="https://everett022.github.io/COR-AUTO/assets/SW_32x32.jpg"/>
+  <HighResolutionIconUrl DefaultValue="https://everett022.github.io/COR-AUTO/assets/SW_64x64.jpg"/>
   <SupportUrl DefaultValue="https://github.com/everett022/COR-AUTO"/>
   <AppDomains>
     <AppDomain>https://everett022.github.io</AppDomain>
@@ -62,9 +62,9 @@
     </Hosts>
     <Resources>
       <bt:Images>
-        <bt:Image id="Icon.16x16" DefaultValue="https://everett022.github.io/COR-AUTO/assets/SW.png"/>
-        <bt:Image id="Icon.32x32" DefaultValue="https://everett022.github.io/COR-AUTO/assets/SW.png"/>
-        <bt:Image id="Icon.80x80" DefaultValue="https://everett022.github.io/COR-AUTO/assets/SW.png"/>
+        <bt:Image id="Icon.16x16" DefaultValue="https://everett022.github.io/COR-AUTO/assets/SW_16x16.jpg"/>
+        <bt:Image id="Icon.32x32" DefaultValue="https://everett022.github.io/COR-AUTO/assets/SW_32x32.jpg"/>
+        <bt:Image id="Icon.80x80" DefaultValue="https://everett022.github.io/COR-AUTO/assets/SW_80x80.jpg"/>
       </bt:Images>
       <bt:Urls>
         <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812"/>
