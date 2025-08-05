@@ -1,0 +1,81 @@
+COR-AUTO Excel Add-in Support
+
+If you are experiencing issues or have questions about the COR-AUTO Excel Add-in, please review the following support information and troubleshooting steps. If your issue is not resolved, contact the developer directly.
+
+---
+
+**Required Sheet Structure and Headers**
+
+The add-in expects the following sheets and columns in your Excel workbook:
+
+1. **Ordering Sheet**
+   - Table name: `OrderingTable`
+   - Required columns (headers):
+     - Case #
+     - Demand
+     - Current Inventory
+     - On Order
+     - Required Amount
+     - Buy or Make
+     - Earliest Start Date
+   - The "Current Inventory" column is used to determine how many jobs can be covered/highlighted.
+
+2. **Dynamic Sheet**
+   - Required columns (headers):
+     - Corrugate (item code)
+     - Number of Corrugate (quantity)
+     - Work Center
+     - Planned Start (date)
+     - Order Number (job number)
+   - These columns are used for job and demand calculations.
+
+3. **Inventory Sheet**
+   - Required columns (headers):
+     - Item Code
+     - Inventory Date
+     - Inventory Ref
+     - Inventory Qty
+     - Location
+   - Used for inventory calculations and matching jobs to available stock.
+
+If any of these columns are missing or misnamed, the add-in may not function correctly.
+
+---
+
+**Frequently Asked Questions & Troubleshooting**
+
+1. **Installation Issues**
+   - Ensure you are using the latest version of Excel and have enabled Office Add-ins.
+   - The manifest must reference only HTTPS URLs (not localhost) and all icons must be the correct size (see manifest.xml for details).
+   - If you see a permissions error, check that your manifest's <Permissions> are set appropriately (usually ReadWriteDocument).
+
+2. **Display/Highlighting Not Working**
+   - Make sure you have selected a case in the Ordering sheet. The display will only highlight jobs that can be covered by the current inventory for the selected case.
+   - Inventory values must be set in the "Current Inventory" column of the Ordering sheet. The add-in uses this value to determine which jobs are covered.
+   - If you update inventory or job data, refresh the taskpane or reselect the case to update the display.
+
+3. **Manifest Validation Errors**
+   - All URLs in the manifest must be HTTPS and public (not localhost or contoso.com).
+   - Icon files must be exactly 32x32 and 64x64 pixels for IconUrl and HighResolutionIconUrl, respectively.
+   - The privacy policy and EULA must be linked to public URLs (e.g., https://everett022.github.io/COR-AUTO/PRIVACY.pdf).
+
+4. **General Usage**
+   - The add-in reads job and inventory data from the "Ordering" and "Dynamic" sheets. Ensure your data is up to date.
+   - If you encounter errors, check the browser console for details.
+
+---
+
+**Contact Information**
+
+If you need further assistance, please contact:
+
+Everett Brostedt
+Email: ecbrostedt@gmail.com
+GitHub: https://github.com/everett022/COR-AUTO
+
+---
+
+For the latest documentation, privacy policy, and EULA, visit:
+- Privacy Policy: https://everett022.github.io/COR-AUTO/PRIVACY.pdf
+- EULA: https://everett022.github.io/COR-AUTO/EULA.pdf
+- Project Home: https://everett022.github.io/COR-AUTO/
