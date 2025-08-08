@@ -8,7 +8,7 @@ export async function handleCellChange(matchingData) {
     await Excel.run(async (context) => {
         console.log("Matching data: ", matchingData);
         Office.context.ui.displayDialogAsync(
-            'https://localhost:3000/display.html',
+            'https://everett022.github.io/COR-AUTO/display.html',
             {height: 65, width: 55},
         );
         await context.sync();

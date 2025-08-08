@@ -7,7 +7,7 @@ export async function openSettings() {
     await Excel.run(async (context) => {
         console.log("Opening settings dialog");
         Office.context.ui.displayDialogAsync(
-            'https://localhost:3000/orderingSet.html',
+            'https://everett022.github.io/COR-AUTO/orderingSet.html',
             {height: 65, width: 85},
         );
         await context.sync();
