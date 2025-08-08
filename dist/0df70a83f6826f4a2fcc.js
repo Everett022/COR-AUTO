@@ -35,7 +35,7 @@ Office.onReady(function (info) {
       return tryCatch(openSettings);
     };
     setInterval(function () {
-      autoRenameSheetsByHeaders().catch(console.error);
+      test().catch(console.error);
     }, 5000);
   }
 });
@@ -1379,7 +1379,7 @@ function _displayData() {
           _context20.n = 1;
           return Excel.run(/*#__PURE__*/function () {
             var _ref0 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee18(context) {
-              var sheet, range, match, allDataICR, allDatajob, allDataQR, allDatadate, _loop, i;
+              var sheet, range, match, allDataICR, allDatajob, allDataQR, allDatadate, _orderingTable, tableRange, headers, headerRow, codeIdx, invIdx, currentInventory, i, code, _loop, _i8;
               return _regenerator().w(function (_context19) {
                 while (1) switch (_context19.n) {
                   case 0:
@@ -1392,7 +1392,7 @@ function _displayData() {
                     console.log("Index Number", range.columnIndex);
                     outputJobs.clear();
                     if (!(range.columnIndex == 0)) {
-                      _context19.n = 5;
+                      _context19.n = 9;
                       break;
                     }
                     matchingData.length = 0;
@@ -1409,15 +1409,44 @@ function _displayData() {
                     allDatadate = allData.map(function (item) {
                       return [item.date];
                     });
+                    _orderingTable = sheet.tables.getItem("OrderingTable");
+                    tableRange = _orderingTable.getDataBodyRange().load("values");
+                    headers = _orderingTable.getHeaderRowRange().load("values");
+                    _context19.n = 2;
+                    return context.sync();
+                  case 2:
+                    headerRow = headers.values[0];
+                    codeIdx = headerRow.indexOf("Case #");
+                    invIdx = headerRow.indexOf("Current Inventory");
+                    currentInventory = 0;
+                    i = 0;
+                  case 3:
+                    if (!(i < tableRange.values.length)) {
+                      _context19.n = 5;
+                      break;
+                    }
+                    code = String(tableRange.values[i][codeIdx]).trim();
+                    if (!(code === match[0])) {
+                      _context19.n = 4;
+                      break;
+                    }
+                    currentInventory = Number(tableRange.values[i][invIdx]) || 0;
+                    return _context19.a(3, 5);
+                  case 4:
+                    i++;
+                    _context19.n = 3;
+                    break;
+                  case 5:
+                    localStorage.setItem('currentInventory', currentInventory);
                     _loop = /*#__PURE__*/_regenerator().m(function _loop() {
                       var code, job, qty, date, fDate, duplicateDate, idx;
                       return _regenerator().w(function (_context18) {
                         while (1) switch (_context18.n) {
                           case 0:
-                            code = allDataICR[i][0];
-                            job = allDatajob[i][0];
-                            qty = allDataQR[i][0];
-                            date = allDatadate[i][0];
+                            code = allDataICR[_i8][0];
+                            job = allDatajob[_i8][0];
+                            qty = allDataQR[_i8][0];
+                            date = allDatadate[_i8][0];
                             fDate = formatDate(date);
                             if (match == code) {
                               if (!outputJobs.has(job)) {
@@ -1425,7 +1454,8 @@ function _displayData() {
                                   code: code,
                                   job: job,
                                   qty: qty,
-                                  fDate: fDate
+                                  fDate: fDate,
+                                  date: date
                                 });
                                 outputJobs.add(job);
                               } else {
@@ -1443,29 +1473,29 @@ function _displayData() {
                         }
                       }, _loop);
                     });
-                    i = 0;
-                  case 2:
-                    if (!(i < allDataICR.length)) {
-                      _context19.n = 4;
+                    _i8 = 0;
+                  case 6:
+                    if (!(_i8 < allDataICR.length)) {
+                      _context19.n = 8;
                       break;
                     }
-                    return _context19.d(_regeneratorValues(_loop()), 3);
-                  case 3:
-                    i++;
-                    _context19.n = 2;
+                    return _context19.d(_regeneratorValues(_loop()), 7);
+                  case 7:
+                    _i8++;
+                    _context19.n = 6;
                     break;
-                  case 4:
+                  case 8:
                     console.log("intial finding of Matching Data", matchingData);
                     handleCellChange([].concat(matchingData));
                     matchingData.sort(function (a, b) {
                       return a.date - b.date;
                     });
                     localStorage.setItem("matchingData", JSON.stringify(matchingData));
-                    _context19.n = 6;
+                    _context19.n = 10;
                     break;
-                  case 5:
+                  case 9:
                     console.log("Not in range");
-                  case 6:
+                  case 10:
                     return _context19.a(2);
                 }
               }, _callee18);
@@ -1806,109 +1836,131 @@ function formatDate(dateString) {
     day: '2-digit'
   }).replace(/\//g, '-');
 }
-function autoRenameSheetsByHeaders() {
-  return _autoRenameSheetsByHeaders.apply(this, arguments);
+function test() {
+  return _test.apply(this, arguments);
 }
-function _autoRenameSheetsByHeaders() {
-  _autoRenameSheetsByHeaders = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee25() {
-    return _regenerator().w(function (_context26) {
-      while (1) switch (_context26.n) {
+function _test() {
+  _test = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee25() {
+    return _regenerator().w(function (_context27) {
+      while (1) switch (_context27.n) {
         case 0:
-          _context26.n = 1;
+          _context27.n = 1;
           return Excel.run(/*#__PURE__*/function () {
             var _ref11 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee24(context) {
-              var sheets, currentNames, _iterator11, _step11, sheet, ws, usedRange, headers, targetName, finalName, counter, _t5;
-              return _regenerator().w(function (_context25) {
-                while (1) switch (_context25.n) {
+              var sheets, targetSheets, _iterator11, _step11, _loop2, _t5;
+              return _regenerator().w(function (_context26) {
+                while (1) switch (_context26.n) {
                   case 0:
                     sheets = context.workbook.worksheets;
                     sheets.load("items/name");
-                    _context25.n = 1;
+                    _context26.n = 1;
                     return context.sync();
                   case 1:
-                    // Collect all current sheet names for quick lookup
-                    currentNames = new Set(sheets.items.map(function (s) {
-                      return s.name;
-                    }));
-                    _iterator11 = _createForOfIteratorHelper(sheets.items);
-                    _context25.p = 2;
+                    targetSheets = sheets.items.filter(function (s) {
+                      return ["Sheet1", "Sheet2", "Sheet3"].includes(s.name);
+                    });
+                    _iterator11 = _createForOfIteratorHelper(targetSheets);
+                    _context26.p = 2;
+                    _loop2 = /*#__PURE__*/_regenerator().m(function _loop2() {
+                      var sheet, ws, usedRange, headers, targetName, nameTaken, counter, newName;
+                      return _regenerator().w(function (_context25) {
+                        while (1) switch (_context25.n) {
+                          case 0:
+                            sheet = _step11.value;
+                            ws = sheets.getItem(sheet.name);
+                            ws.load("name");
+                            _context25.n = 1;
+                            return context.sync();
+                          case 1:
+                            usedRange = ws.getUsedRangeOrNullObject();
+                            usedRange.load("values");
+                            _context25.n = 2;
+                            return context.sync();
+                          case 2:
+                            if (!(!usedRange.values || usedRange.values.length === 0)) {
+                              _context25.n = 3;
+                              break;
+                            }
+                            return _context25.a(2, 1);
+                          case 3:
+                            headers = usedRange.values[0].map(function (h) {
+                              return String(h).trim().toLowerCase();
+                            });
+                            targetName = null;
+                            if (headers.includes("item code") && headers.includes("inventory qty") && headers.includes("location") && headers.includes("inventory date")) {
+                              targetName = "INVENTORY";
+                            } else if (headers.includes("work center") && headers.includes("planned start") && headers.includes("corrugate") && headers.includes("number of corrugate")) {
+                              targetName = "DYNAMIC";
+                            } else if (headers.includes("item code") && headers.includes("outstanding qty")) {
+                              targetName = "OPEN PO'S";
+                            }
+                            if (!(targetName && ws.name !== targetName)) {
+                              _context25.n = 4;
+                              break;
+                            }
+                            nameTaken = sheets.items.some(function (s) {
+                              return s.name === targetName;
+                            });
+                            if (!nameTaken) {
+                              ws.name = targetName;
+                            } else {
+                              counter = 2;
+                              newName = "".concat(targetName, " (").concat(counter, ")");
+                              while (sheets.items.some(function (s) {
+                                return s.name === newName;
+                              })) {
+                                counter++;
+                                newName = "".concat(targetName, " (").concat(counter, ")");
+                              }
+                              ws.name = newName;
+                            }
+                            _context25.n = 4;
+                            return context.sync();
+                          case 4:
+                            return _context25.a(2);
+                        }
+                      }, _loop2);
+                    });
                     _iterator11.s();
                   case 3:
                     if ((_step11 = _iterator11.n()).done) {
-                      _context25.n = 7;
+                      _context26.n = 6;
                       break;
                     }
-                    sheet = _step11.value;
-                    ws = sheets.getItem(sheet.name);
-                    usedRange = ws.getUsedRangeOrNullObject();
-                    usedRange.load("values");
-                    _context25.n = 4;
-                    return context.sync();
+                    return _context26.d(_regeneratorValues(_loop2()), 4);
                   case 4:
-                    if (!(!usedRange.values || usedRange.values.length === 0)) {
-                      _context25.n = 5;
+                    if (!_context26.v) {
+                      _context26.n = 5;
                       break;
                     }
-                    return _context25.a(3, 6);
+                    return _context26.a(3, 5);
                   case 5:
-                    headers = usedRange.values[0].map(function (h) {
-                      return String(h).trim().toLowerCase();
-                    });
-                    targetName = null; // INVENTORY: "Item Code", "Inventory Qty", "Location", "Inventory Date"
-                    if (headers.includes("item code") && headers.includes("inventory qty") && headers.includes("location") && headers.includes("inventory date")) {
-                      targetName = "INVENTORY";
-                    }
-                    // DYNAMIC: "Work center", "Planned Start", "Corrugate", "Number of Corrugate"
-                    else if (headers.includes("work center") && headers.includes("planned start") && headers.includes("corrugate") && headers.includes("number of corrugate")) {
-                      targetName = "DYNAMIC";
-                    }
-                    // OPEN PO'S: "Item Code", "Outstanding Qty"
-                    else if (headers.includes("item code") && headers.includes("outstanding qty")) {
-                      targetName = "OPEN PO'S";
-                    }
-                    if (targetName && ws.name !== targetName) {
-                      // If the target name is already taken by another sheet, append a number
-                      finalName = targetName;
-                      counter = 2;
-                      while (currentNames.has(finalName) && ws.name !== finalName) {
-                        finalName = "".concat(targetName, " (").concat(counter, ")");
-                        counter++;
-                      }
-                      if (ws.name !== finalName) {
-                        ws.name = finalName;
-                        currentNames.add(finalName);
-                      }
-                    }
+                    _context26.n = 3;
+                    break;
                   case 6:
-                    _context25.n = 3;
+                    _context26.n = 8;
                     break;
                   case 7:
-                    _context25.n = 9;
-                    break;
-                  case 8:
-                    _context25.p = 8;
-                    _t5 = _context25.v;
+                    _context26.p = 7;
+                    _t5 = _context26.v;
                     _iterator11.e(_t5);
-                  case 9:
-                    _context25.p = 9;
+                  case 8:
+                    _context26.p = 8;
                     _iterator11.f();
-                    return _context25.f(9);
-                  case 10:
-                    _context25.n = 11;
-                    return context.sync();
-                  case 11:
-                    return _context25.a(2);
+                    return _context26.f(8);
+                  case 9:
+                    return _context26.a(2);
                 }
-              }, _callee24, null, [[2, 8, 9, 10]]);
+              }, _callee24, null, [[2, 7, 8, 9]]);
             }));
             return function (_x14) {
               return _ref11.apply(this, arguments);
             };
           }());
         case 1:
-          return _context26.a(2);
+          return _context27.a(2);
       }
     }, _callee25);
   }));
-  return _autoRenameSheetsByHeaders.apply(this, arguments);
+  return _test.apply(this, arguments);
 }

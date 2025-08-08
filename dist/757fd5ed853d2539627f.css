@@ -38,4 +38,11 @@ tbody tr {
 tbody tr:hover {
   background: #014055;
 }
+.covered {
+  background: #1e5631 !important;
+}
+.covered td {
+  color: #fff;
+  font-weight: bold;
+}
 

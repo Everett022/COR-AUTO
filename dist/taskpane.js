@@ -32,6 +32,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   handleCellChange: function() { return /* binding */ handleCellChange; }
 /* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t.return || t.return(); } finally { if (u) throw o; } } }; }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i.return) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { if (r) i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n;else { var o = function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); }; o("next", 0), o("throw", 1), o("return", 2); } }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
@@ -83,7 +92,7 @@ function outputData() {
 }
 function _outputData() {
   _outputData = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3() {
-    var storedValue, data, output, html;
+    var storedValue, data, output, totalInventory, jobs, coveredJobKeys, inventoryLeft, _iterator, _step, job, key, html;
     return _regenerator().w(function (_context3) {
       while (1) switch (_context3.n) {
         case 0:
@@ -92,11 +101,48 @@ function _outputData() {
           if (storedValue) {
             data = JSON.parse(storedValue);
             output = document.getElementById('data-output');
+            totalInventory = Number(localStorage.getItem('currentInventory'));
+            if (!totalInventory || isNaN(totalInventory)) {
+              totalInventory = 0;
+            }
+            jobs = data.filter(function (row) {
+              return row.qty > 0 && (row.date || row.fDate);
+            }).map(function (row) {
+              return _objectSpread(_objectSpread({}, row), {}, {
+                dateObj: new Date(row.date || row.fDate)
+              });
+            });
+            jobs.sort(function (a, b) {
+              return a.dateObj - b.dateObj;
+            });
+            coveredJobKeys = new Set();
+            inventoryLeft = totalInventory;
+            _iterator = _createForOfIteratorHelper(jobs);
+            try {
+              for (_iterator.s(); !(_step = _iterator.n()).done;) {
+                job = _step.value;
+                if (inventoryLeft >= job.qty) {
+                  key = "".concat(job.job, "__").concat(job.dateObj.toISOString());
+                  coveredJobKeys.add(key);
+                  inventoryLeft -= job.qty;
+                }
+              }
+            } catch (err) {
+              _iterator.e(err);
+            } finally {
+              _iterator.f();
+            }
             html = "<table>\n        <thead>\n            <tr>\n            <th>Item Code</th>\n            <th>Job Number</th>\n            <th>Quantity</th>\n            <th>Start Date</th>\n            </tr>\n        </thead>\n        <tbody>\n        ";
             data.forEach(function (row) {
-              var _row$code, _row$job, _row$qty, _row$fDate;
+              var _row$code, _row$job, _row$qty, _ref2, _row$fDate;
               var isDisabled = row.qty === 0 || row.date === "" || row.date == null;
-              html += "<tr".concat(isDisabled ? ' class="disabled"' : '', ">\n            <td>").concat((_row$code = row.code) !== null && _row$code !== void 0 ? _row$code : "", "</td>\n            <td>").concat((_row$job = row.job) !== null && _row$job !== void 0 ? _row$job : "", "</td>\n            <td>").concat((_row$qty = row.qty) !== null && _row$qty !== void 0 ? _row$qty : "", "</td>\n            <td>").concat((_row$fDate = row.fDate) !== null && _row$fDate !== void 0 ? _row$fDate : "", "</td>\n            </tr>\n        ");
+              var dateStr = row.date || row.fDate || '';
+              var dateObj = dateStr ? new Date(dateStr) : null;
+              var key = row.job && dateObj ? "".concat(row.job, "__").concat(dateObj.toISOString()) : '';
+              var isCovered = coveredJobKeys.has(key);
+              var rowClass = isDisabled ? 'disabled' : '';
+              if (isCovered) rowClass += (rowClass ? ' ' : '') + 'covered';
+              html += "<tr".concat(rowClass ? " class=\"".concat(rowClass, "\"") : '', ">\n            <td>").concat((_row$code = row.code) !== null && _row$code !== void 0 ? _row$code : "", "</td>\n            <td>").concat((_row$job = row.job) !== null && _row$job !== void 0 ? _row$job : "", "</td>\n            <td>").concat((_row$qty = row.qty) !== null && _row$qty !== void 0 ? _row$qty : "", "</td>\n            <td>").concat((_ref2 = (_row$fDate = row.fDate) !== null && _row$fDate !== void 0 ? _row$fDate : row.date) !== null && _ref2 !== void 0 ? _ref2 : "", "</td>\n            </tr>\n        ");
             });
             html += "  </tbody>\n        </table>";
             output.innerHTML = html;
@@ -174,7 +220,7 @@ function _openSettings() {
   \***********************************/
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "0d4eb8db7fb5335a19cb.css";
+module.exports = __webpack_require__.p + "f12a41c31f591815d881.css";
 
 /***/ }),
 
@@ -184,7 +230,7 @@ module.exports = __webpack_require__.p + "0d4eb8db7fb5335a19cb.css";
   \**********************************/
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "b9948054491d0d4ee372.js";
+module.exports = __webpack_require__.p + "0df70a83f6826f4a2fcc.js";
 
 /***/ })
 
@@ -358,7 +404,7 @@ Office.onReady(function (info) {
       return tryCatch(_settings_settings_js__WEBPACK_IMPORTED_MODULE_1__.openSettings);
     };
     setInterval(function () {
-      autoRenameSheetsByHeaders().catch(console.error);
+      test().catch(console.error);
     }, 5000);
   }
 });
@@ -1702,7 +1748,7 @@ function _displayData() {
           _context20.n = 1;
           return Excel.run(/*#__PURE__*/function () {
             var _ref0 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee18(context) {
-              var sheet, range, match, allDataICR, allDatajob, allDataQR, allDatadate, _loop, i;
+              var sheet, range, match, allDataICR, allDatajob, allDataQR, allDatadate, _orderingTable, tableRange, headers, headerRow, codeIdx, invIdx, currentInventory, i, code, _loop, _i8;
               return _regenerator().w(function (_context19) {
                 while (1) switch (_context19.n) {
                   case 0:
@@ -1715,7 +1761,7 @@ function _displayData() {
                     console.log("Index Number", range.columnIndex);
                     outputJobs.clear();
                     if (!(range.columnIndex == 0)) {
-                      _context19.n = 5;
+                      _context19.n = 9;
                       break;
                     }
                     matchingData.length = 0;
@@ -1732,15 +1778,44 @@ function _displayData() {
                     allDatadate = allData.map(function (item) {
                       return [item.date];
                     });
+                    _orderingTable = sheet.tables.getItem("OrderingTable");
+                    tableRange = _orderingTable.getDataBodyRange().load("values");
+                    headers = _orderingTable.getHeaderRowRange().load("values");
+                    _context19.n = 2;
+                    return context.sync();
+                  case 2:
+                    headerRow = headers.values[0];
+                    codeIdx = headerRow.indexOf("Case #");
+                    invIdx = headerRow.indexOf("Current Inventory");
+                    currentInventory = 0;
+                    i = 0;
+                  case 3:
+                    if (!(i < tableRange.values.length)) {
+                      _context19.n = 5;
+                      break;
+                    }
+                    code = String(tableRange.values[i][codeIdx]).trim();
+                    if (!(code === match[0])) {
+                      _context19.n = 4;
+                      break;
+                    }
+                    currentInventory = Number(tableRange.values[i][invIdx]) || 0;
+                    return _context19.a(3, 5);
+                  case 4:
+                    i++;
+                    _context19.n = 3;
+                    break;
+                  case 5:
+                    localStorage.setItem('currentInventory', currentInventory);
                     _loop = /*#__PURE__*/_regenerator().m(function _loop() {
                       var code, job, qty, date, fDate, duplicateDate, idx;
                       return _regenerator().w(function (_context18) {
                         while (1) switch (_context18.n) {
                           case 0:
-                            code = allDataICR[i][0];
-                            job = allDatajob[i][0];
-                            qty = allDataQR[i][0];
-                            date = allDatadate[i][0];
+                            code = allDataICR[_i8][0];
+                            job = allDatajob[_i8][0];
+                            qty = allDataQR[_i8][0];
+                            date = allDatadate[_i8][0];
                             fDate = formatDate(date);
                             if (match == code) {
                               if (!outputJobs.has(job)) {
@@ -1748,7 +1823,8 @@ function _displayData() {
                                   code: code,
                                   job: job,
                                   qty: qty,
-                                  fDate: fDate
+                                  fDate: fDate,
+                                  date: date
                                 });
                                 outputJobs.add(job);
                               } else {
@@ -1766,29 +1842,29 @@ function _displayData() {
                         }
                       }, _loop);
                     });
-                    i = 0;
-                  case 2:
-                    if (!(i < allDataICR.length)) {
-                      _context19.n = 4;
+                    _i8 = 0;
+                  case 6:
+                    if (!(_i8 < allDataICR.length)) {
+                      _context19.n = 8;
                       break;
                     }
-                    return _context19.d(_regeneratorValues(_loop()), 3);
-                  case 3:
-                    i++;
-                    _context19.n = 2;
+                    return _context19.d(_regeneratorValues(_loop()), 7);
+                  case 7:
+                    _i8++;
+                    _context19.n = 6;
                     break;
-                  case 4:
+                  case 8:
                     console.log("intial finding of Matching Data", matchingData);
                     (0,_display_display_js__WEBPACK_IMPORTED_MODULE_0__.handleCellChange)([].concat(matchingData));
                     matchingData.sort(function (a, b) {
                       return a.date - b.date;
                     });
                     localStorage.setItem("matchingData", JSON.stringify(matchingData));
-                    _context19.n = 6;
+                    _context19.n = 10;
                     break;
-                  case 5:
+                  case 9:
                     console.log("Not in range");
-                  case 6:
+                  case 10:
                     return _context19.a(2);
                 }
               }, _callee18);
@@ -2129,111 +2205,133 @@ function formatDate(dateString) {
     day: '2-digit'
   }).replace(/\//g, '-');
 }
-function autoRenameSheetsByHeaders() {
-  return _autoRenameSheetsByHeaders.apply(this, arguments);
+function test() {
+  return _test.apply(this, arguments);
 }
-function _autoRenameSheetsByHeaders() {
-  _autoRenameSheetsByHeaders = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee25() {
-    return _regenerator().w(function (_context26) {
-      while (1) switch (_context26.n) {
+function _test() {
+  _test = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee25() {
+    return _regenerator().w(function (_context27) {
+      while (1) switch (_context27.n) {
         case 0:
-          _context26.n = 1;
+          _context27.n = 1;
           return Excel.run(/*#__PURE__*/function () {
             var _ref11 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee24(context) {
-              var sheets, currentNames, _iterator11, _step11, sheet, ws, usedRange, headers, targetName, finalName, counter, _t5;
-              return _regenerator().w(function (_context25) {
-                while (1) switch (_context25.n) {
+              var sheets, targetSheets, _iterator11, _step11, _loop2, _t5;
+              return _regenerator().w(function (_context26) {
+                while (1) switch (_context26.n) {
                   case 0:
                     sheets = context.workbook.worksheets;
                     sheets.load("items/name");
-                    _context25.n = 1;
+                    _context26.n = 1;
                     return context.sync();
                   case 1:
-                    // Collect all current sheet names for quick lookup
-                    currentNames = new Set(sheets.items.map(function (s) {
-                      return s.name;
-                    }));
-                    _iterator11 = _createForOfIteratorHelper(sheets.items);
-                    _context25.p = 2;
+                    targetSheets = sheets.items.filter(function (s) {
+                      return ["Sheet1", "Sheet2", "Sheet3"].includes(s.name);
+                    });
+                    _iterator11 = _createForOfIteratorHelper(targetSheets);
+                    _context26.p = 2;
+                    _loop2 = /*#__PURE__*/_regenerator().m(function _loop2() {
+                      var sheet, ws, usedRange, headers, targetName, nameTaken, counter, newName;
+                      return _regenerator().w(function (_context25) {
+                        while (1) switch (_context25.n) {
+                          case 0:
+                            sheet = _step11.value;
+                            ws = sheets.getItem(sheet.name);
+                            ws.load("name");
+                            _context25.n = 1;
+                            return context.sync();
+                          case 1:
+                            usedRange = ws.getUsedRangeOrNullObject();
+                            usedRange.load("values");
+                            _context25.n = 2;
+                            return context.sync();
+                          case 2:
+                            if (!(!usedRange.values || usedRange.values.length === 0)) {
+                              _context25.n = 3;
+                              break;
+                            }
+                            return _context25.a(2, 1);
+                          case 3:
+                            headers = usedRange.values[0].map(function (h) {
+                              return String(h).trim().toLowerCase();
+                            });
+                            targetName = null;
+                            if (headers.includes("item code") && headers.includes("inventory qty") && headers.includes("location") && headers.includes("inventory date")) {
+                              targetName = "INVENTORY";
+                            } else if (headers.includes("work center") && headers.includes("planned start") && headers.includes("corrugate") && headers.includes("number of corrugate")) {
+                              targetName = "DYNAMIC";
+                            } else if (headers.includes("item code") && headers.includes("outstanding qty")) {
+                              targetName = "OPEN PO'S";
+                            }
+                            if (!(targetName && ws.name !== targetName)) {
+                              _context25.n = 4;
+                              break;
+                            }
+                            nameTaken = sheets.items.some(function (s) {
+                              return s.name === targetName;
+                            });
+                            if (!nameTaken) {
+                              ws.name = targetName;
+                            } else {
+                              counter = 2;
+                              newName = "".concat(targetName, " (").concat(counter, ")");
+                              while (sheets.items.some(function (s) {
+                                return s.name === newName;
+                              })) {
+                                counter++;
+                                newName = "".concat(targetName, " (").concat(counter, ")");
+                              }
+                              ws.name = newName;
+                            }
+                            _context25.n = 4;
+                            return context.sync();
+                          case 4:
+                            return _context25.a(2);
+                        }
+                      }, _loop2);
+                    });
                     _iterator11.s();
                   case 3:
                     if ((_step11 = _iterator11.n()).done) {
-                      _context25.n = 7;
+                      _context26.n = 6;
                       break;
                     }
-                    sheet = _step11.value;
-                    ws = sheets.getItem(sheet.name);
-                    usedRange = ws.getUsedRangeOrNullObject();
-                    usedRange.load("values");
-                    _context25.n = 4;
-                    return context.sync();
+                    return _context26.d(_regeneratorValues(_loop2()), 4);
                   case 4:
-                    if (!(!usedRange.values || usedRange.values.length === 0)) {
-                      _context25.n = 5;
+                    if (!_context26.v) {
+                      _context26.n = 5;
                       break;
                     }
-                    return _context25.a(3, 6);
+                    return _context26.a(3, 5);
                   case 5:
-                    headers = usedRange.values[0].map(function (h) {
-                      return String(h).trim().toLowerCase();
-                    });
-                    targetName = null; // INVENTORY: "Item Code", "Inventory Qty", "Location", "Inventory Date"
-                    if (headers.includes("item code") && headers.includes("inventory qty") && headers.includes("location") && headers.includes("inventory date")) {
-                      targetName = "INVENTORY";
-                    }
-                    // DYNAMIC: "Work center", "Planned Start", "Corrugate", "Number of Corrugate"
-                    else if (headers.includes("work center") && headers.includes("planned start") && headers.includes("corrugate") && headers.includes("number of corrugate")) {
-                      targetName = "DYNAMIC";
-                    }
-                    // OPEN PO'S: "Item Code", "Outstanding Qty"
-                    else if (headers.includes("item code") && headers.includes("outstanding qty")) {
-                      targetName = "OPEN PO'S";
-                    }
-                    if (targetName && ws.name !== targetName) {
-                      // If the target name is already taken by another sheet, append a number
-                      finalName = targetName;
-                      counter = 2;
-                      while (currentNames.has(finalName) && ws.name !== finalName) {
-                        finalName = "".concat(targetName, " (").concat(counter, ")");
-                        counter++;
-                      }
-                      if (ws.name !== finalName) {
-                        ws.name = finalName;
-                        currentNames.add(finalName);
-                      }
-                    }
+                    _context26.n = 3;
+                    break;
                   case 6:
-                    _context25.n = 3;
+                    _context26.n = 8;
                     break;
                   case 7:
-                    _context25.n = 9;
-                    break;
-                  case 8:
-                    _context25.p = 8;
-                    _t5 = _context25.v;
+                    _context26.p = 7;
+                    _t5 = _context26.v;
                     _iterator11.e(_t5);
-                  case 9:
-                    _context25.p = 9;
+                  case 8:
+                    _context26.p = 8;
                     _iterator11.f();
-                    return _context25.f(9);
-                  case 10:
-                    _context25.n = 11;
-                    return context.sync();
-                  case 11:
-                    return _context25.a(2);
+                    return _context26.f(8);
+                  case 9:
+                    return _context26.a(2);
                 }
-              }, _callee24, null, [[2, 8, 9, 10]]);
+              }, _callee24, null, [[2, 7, 8, 9]]);
             }));
             return function (_x14) {
               return _ref11.apply(this, arguments);
             };
           }());
         case 1:
-          return _context26.a(2);
+          return _context27.a(2);
       }
     }, _callee25);
   }));
-  return _autoRenameSheetsByHeaders.apply(this, arguments);
+  return _test.apply(this, arguments);
 }
 }();
 // This entry needs to be wrapped in an IIFE because it needs to be isolated against other entry modules.
@@ -2248,7 +2346,7 @@ var ___HTML_LOADER_IMPORT_1___ = new URL(/* asset import */ __webpack_require__(
 var ___HTML_LOADER_IMPORT_2___ = new URL(/* asset import */ __webpack_require__(/*! ../../assets/SW.png */ "./assets/SW.png"), __webpack_require__.b);
 var ___HTML_LOADER_IMPORT_3___ = new URL(/* asset import */ __webpack_require__(/*! ./taskpane.js */ "./src/taskpane/taskpane.js?4727"), __webpack_require__.b);
 // Module
-var code = "<!-- Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT License. -->\r\n<!-- This file shows how to design a first-run page that provides a welcome screen to the user about the features of the add-in. -->\r\n\r\n<!DOCTYPE html>\r\n<html>\r\n\r\n<head>\r\n    <meta charset=\"UTF-8\" />\r\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\" />\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\r\n    <title>COR-AUTO Task Pane</title>\r\n\r\n    <!-- Office JavaScript API -->\r\n    <" + "script type=\"text/javascript\" src=\"https://appsforoffice.microsoft.com/lib/1/hosted/office.js\"><" + "/script>\r\n\r\n    <!-- For more information on Fluent UI, visit https://developer.microsoft.com/fluentui#/. -->\r\n    <link rel=\"stylesheet\" href=\"https://res-1.cdn.office.net/files/fabric-cdn-prod_20230815.002/office-ui-fabric-core/11.1.0/css/fabric.min.css\"/>\r\n\r\n    <!-- Template styles -->\r\n    <link href=\"" + ___HTML_LOADER_IMPORT_0___ + "\" rel=\"stylesheet\" type=\"text/css\" />\r\n</head>\r\n\r\n<body class=\"ms-font-m ms-welcome ms-Fabric\">\r\n    <header class=\"ms-welcome__header ms-bgColor-neutralLighter\">\r\n        <button class=\"setttings\" id=\"settings-button\" title=\"Settings\" aria-label=\"Settings\">\r\n            <img width=\"30\" height=\"30\" src=\"" + ___HTML_LOADER_IMPORT_1___ + "\" alt=\"Settings\">\r\n        </button>\r\n        <img width=\"90\" height=\"90\" src=\"" + ___HTML_LOADER_IMPORT_2___ + "\" alt=\"Smurfit-Westrock\" title=\"Smurfit-Westrock\" />\r\n        <h1 class=\"header_font\">COR-AUTO</h1>\r\n        <h5 class=\"subheader_font\">Corrugated Supply Made Easy</h5>\r\n    </header>\r\n    <section id=\"sideload-msg\" class=\"ms-welcome__main\">\r\n        <h2 class=\"ms-font-xl\">element <a target=\"_blank\" href=\"https://learn.microsoft.com/office/dev/add-ins/testing/test-debug-office-add-ins#sideload-an-office-add-in-for-testing\">sideload</a> your add-in to see app body.</h2>\r\n    </section>\r\n    <main id=\"app-body\" class=\"ms-welcome__main\" style=\"display: none;\">\r\n        <div class=\"report-row\">\r\n            <button class=\"button-80\" id=\"generate-ordering-report\">Ordering Report</button><br/><br/>\r\n            <button class=\"button-80\" id=\"generate-inventory-report\">Inventory Report</button><br/><br/>\r\n        </div>\r\n        <div id=\"message-area\" class=\"msg-format\"></div>\r\n        <div class = \"filter-row\">\r\n            <label for=\"order-filtering\"></label>\r\n            <select class=\"button-80\" name=\"order-filtering\" id=\"order-filtering\">\r\n                <option class=\"button-80\" value=\"Intial\">Order Filtering</option>\r\n                <option class = \"button-80\" value=\"cor-minimum\">Ordering Min</option>\r\n                <option class=\"button-80\" value=\"over-300\">Over 300</option>\r\n                <option class=\"button-80\" value=\"Must-buy\">Must Buy</option>\r\n                <option class=\"button-80\" value=\"Can-buy\">Can Buy</option>\r\n                <option class=\"button-80\" value=\"Can-make\">Can Make</option>\r\n            </select>\r\n            <label for=\"inventory-filtering\"></label>\r\n            <select class=\"button-80\" name=\"inventory-filtering\" id=\"inventory-filtering\">\r\n                <option class=\"button-80\" value=\"Intial case\">Inv Filtering</option>\r\n                <option class=\"button-80\" value=\"over-300\">Over 300</option>\r\n            </select>\r\n        </div>\r\n        <form action=\"/action_page.php\"><br/>\r\n            <div class=\"date-row\">\r\n                <div class =\"date-col\">\r\n                    <label class=\"date-font\"for=\"start-date\">Start Date: </label>\r\n                    <input class=\"date-format\" type=\"date\" id=\"start-date\" name=\"start-date\">\r\n                </div>\r\n                <div class =\"date-col\">\r\n                    <label class=\"date-font\"for=\"start-date\">Through Date: </label>\r\n                    <input class=\"date-format\" type=\"date\" id=\"end-date\" name=\"end-date\">\r\n                </div>\r\n            <label id=\"user-name\"></label><br/><br/>\r\n        </form>\r\n    </main>\r\n    <" + "script src=\"" + ___HTML_LOADER_IMPORT_3___ + "\"><" + "/script>\r\n</body>\r\n\r\n</html>\r\n";
+var code = "<!-- Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT License. -->\n<!-- This file shows how to design a first-run page that provides a welcome screen to the user about the features of the add-in. -->\n\n<!DOCTYPE html>\n<html>\n\n<head>\n    <meta charset=\"UTF-8\" />\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <title>COR-AUTO Task Pane</title>\n\n    <!-- Office JavaScript API -->\n    <" + "script type=\"text/javascript\" src=\"https://appsforoffice.microsoft.com/lib/1/hosted/office.js\"><" + "/script>\n\n    <!-- For more information on Fluent UI, visit https://developer.microsoft.com/fluentui#/. -->\n    <link rel=\"stylesheet\" href=\"https://res-1.cdn.office.net/files/fabric-cdn-prod_20230815.002/office-ui-fabric-core/11.1.0/css/fabric.min.css\"/>\n\n    <!-- Template styles -->\n    <link href=\"" + ___HTML_LOADER_IMPORT_0___ + "\" rel=\"stylesheet\" type=\"text/css\" />\n</head>\n\n<body class=\"ms-font-m ms-welcome ms-Fabric\">\n    <header class=\"ms-welcome__header ms-bgColor-neutralLighter\">\n        <button class=\"setttings\" id=\"settings-button\" title=\"Settings\" aria-label=\"Settings\">\n            <img width=\"30\" height=\"30\" src=\"" + ___HTML_LOADER_IMPORT_1___ + "\" alt=\"Settings\">\n        </button>\n        <img width=\"90\" height=\"90\" src=\"" + ___HTML_LOADER_IMPORT_2___ + "\" alt=\"Smurfit-Westrock\" title=\"Smurfit-Westrock\" />\n        <h1 class=\"header_font\">COR-AUTO</h1>\n        <h5 class=\"subheader_font\">Corrugated Supply Made Easy</h5>\n    </header>\n    <section id=\"sideload-msg\" class=\"ms-welcome__main\">\n        <h2 class=\"ms-font-xl\">element <a target=\"_blank\" href=\"https://learn.microsoft.com/office/dev/add-ins/testing/test-debug-office-add-ins#sideload-an-office-add-in-for-testing\">sideload</a> your add-in to see app body.</h2>\n    </section>\n    <main id=\"app-body\" class=\"ms-welcome__main\" style=\"display: none;\">\n        <div class=\"report-row\">\n            <button class=\"button-80\" id=\"generate-ordering-report\">Ordering Report</button><br/><br/>\n            <button class=\"button-80\" id=\"generate-inventory-report\">Inventory Report</button><br/><br/>\n        </div>\n        <div id=\"message-area\" class=\"msg-format\"></div>\n        <div class = \"filter-row\">\n            <label for=\"order-filtering\"></label>\n            <select class=\"button-80\" name=\"order-filtering\" id=\"order-filtering\">\n                <option class=\"button-80\" value=\"Intial\">Order Filtering</option>\n                <option class = \"button-80\" value=\"cor-minimum\">Ordering Min</option>\n                <option class=\"button-80\" value=\"over-300\">Over 300</option>\n                <option class=\"button-80\" value=\"Must-buy\">Must Buy</option>\n                <option class=\"button-80\" value=\"Can-buy\">Can Buy</option>\n                <option class=\"button-80\" value=\"Can-make\">Can Make</option>\n            </select>\n            <label for=\"inventory-filtering\"></label>\n            <select class=\"button-80\" name=\"inventory-filtering\" id=\"inventory-filtering\">\n                <option class=\"button-80\" value=\"Intial case\">Inv Filtering</option>\n                <option class=\"button-80\" value=\"over-300\">Over 300</option>\n            </select>\n        </div>\n        <form action=\"/action_page.php\"><br/>\n            <div class=\"date-row\">\n                <div class =\"date-col\">\n                    <label class=\"date-font\"for=\"start-date\">Start Date: </label>\n                    <input class=\"date-format\" type=\"date\" id=\"start-date\" name=\"start-date\">\n                </div>\n                <div class =\"date-col\">\n                    <label class=\"date-font\"for=\"start-date\">Through Date: </label>\n                    <input class=\"date-format\" type=\"date\" id=\"end-date\" name=\"end-date\">\n                </div>\n            <label id=\"user-name\"></label><br/><br/>\n        </form>\n    </main>\n    <" + "script src=\"" + ___HTML_LOADER_IMPORT_3___ + "\"><" + "/script>\n</body>\n\n</html>\n";
 // Exports
 /* harmony default export */ __webpack_exports__["default"] = (code);
 }();

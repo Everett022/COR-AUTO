@@ -70,6 +70,9 @@
         <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812"/>
         <bt:Url id="Commands.Url" DefaultValue="https://everett022.github.io/COR-AUTO/commands.html"/>
         <bt:Url id="Taskpane.Url" DefaultValue="https://everett022.github.io/COR-AUTO/taskpane.html"/>
+        <bt:Url id="Display.Url" DefaultValue="https://everett022.github.io/COR-AUTO/display.html"/>
+        <bt:Url id="OrderingSet.Url" DefaultValue="https://everett022.github.io/COR-AUTO/orderingSet.html"/>
+        <bt:Url id="InventorySet.Url" DefaultValue="https://everett022.github.io/COR-AUTO/inventorySet.html"/>
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="GetStarted.Title" DefaultValue="Get started with your sample add-in!"/>
